@@ -10,7 +10,7 @@ Features:
 * Exportable CSV files
 * Awards are PDF-generated and emailed to honorees
 
-Taks:
+Tasks:
 - [ ] Create Site
 - [ ] Create DB
 - [ ] Create Awards
@@ -18,3 +18,9 @@ Taks:
 - [ ] Create Authentication
 - [ ] BackEnd Work
 - [ ] FrontEnd Work
+
+Usage:
+install npm --save
+node app.js
+
+View:  localhost:5642
