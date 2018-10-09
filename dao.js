@@ -1,5 +1,4 @@
 const sqlite3 = require('sqlite3').verbose();
-//const Promise = require('bluebird');
 
 class AwardDao {
   constructor(filePath) {
@@ -14,6 +13,7 @@ class AwardDao {
 
   doRun(sql, params = []) {
     return new Promise((resolve, reject) => {
+      // db.run is used for things like CREATE and INSERT
       this.db.run(sql, params, (error) => {
         if (error) {
           console.log('Error running sql: ' + sql, error);
@@ -29,6 +29,7 @@ class AwardDao {
 
   doGet(sql, params = []) {
     return new Promise((resolve, reject) => {
+      // db.get returns the FIRST row found, even if several matched
       this.db.get(sql, params, (error, result) => {
         if (error) {
           console.log('Error running get sql: ' + sql, error);
@@ -42,6 +43,7 @@ class AwardDao {
 
   doGetAll(sql, params = []) {
     return new Promise((resolve, reject) => {
+      // db.all returns all found rows in an array
       this.db.all(sql, params, (error, results) => {
         if (error) {
           console.log('Error running get all sql: ' + sql, error);

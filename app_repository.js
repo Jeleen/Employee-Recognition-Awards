@@ -13,12 +13,37 @@ class AppRepository {
       VALUES (?, ?, ?)`, [email, password, creation_time]);
   }
 
-  getUser(name) {
-    return this.dao.doGet(`SELECT * FROM users WHERE name = ?`, [name])
+  createAward(recipient_name, recipient_email, creation_time, award_type) {
+    return this.dao.doRun(`INSERT INTO awards (recipient_name, recipient_email, creation_time, award_type)
+      VALUES(?, ?, ?, ?)`, [recipient_name, recipient_email, creation_time, award_type]);
+  }
+
+  getUserByName(name) {
+    return this.dao.doGet(`SELECT * FROM users WHERE name = ?`, [name]);
+  }
+
+  getUserById(id) {
+    return this.dao.doGet(`SELECT * FROM users WHERE id = ?`, [id]);
   }
 
   getAllUsers() {
     return this.dao.doGetAll(`SELECT * FROM users`);
+  }
+
+  getAdmin(id) {
+    return this.dao.doGet(`SELECT * FROM admins WHERE id = ?`, [id]);
+  }
+
+  getAllAdmins() {
+    return this.dao.doGetAll(`SELECT * FROM admins`);
+  }
+
+  getAward(id) {
+    return this.dao.doGet(`SELECT * FROM awards WHERE id = ?`, [id]);
+  }
+
+  getAllAwards() {
+    return this.dao.doGetAll(`SELECT * FROM awards`);
   }
 
   createUsersTable() {
