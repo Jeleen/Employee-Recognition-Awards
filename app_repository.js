@@ -30,6 +30,14 @@ class AppRepository {
     return this.dao.doGetAll(`SELECT * FROM users`);
   }
 
+  updateUsersName(id, newName) {
+    return this.dao.run(`UPDATE users SET name = ? WHERE id = ?`, [newName, id]);
+  }
+
+  deleteUser(id) {
+    return this.dao.run(`DELETE FROM users WHERE id = ?`, [id]);
+  }
+
   getAdmin(id) {
     return this.dao.doGet(`SELECT * FROM admins WHERE id = ?`, [id]);
   }
@@ -78,8 +86,10 @@ class AppRepository {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         recipient_name TEXT,
         recipient_email TEXT,
+        award_type INTEGER,
         creation_time TEXT,
-        award_type INTEGER
+        creator_id INTEGER,
+        FOREIGN KEY(creator_id) REFERENCES users(id)
       )`)
   }
 
