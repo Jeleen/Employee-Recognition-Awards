@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
   .then((users) => console.log('Number of users: ' + users.length))
   .catch(error => console.log('Error getting all users: ', error));
 
-  appRepo.getUser('Joe').then((user) => {
+  appRepo.getUserByName('Joe').then((user) => {
     res.render('index', { title: user.name });
   }).catch(error => console.log('Error getting Joe: ', error))
   //res.render('index', { title: 'OK OK' });
