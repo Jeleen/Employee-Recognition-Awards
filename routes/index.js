@@ -14,14 +14,11 @@ router.get('/', function(req, res, next) {
     .then((data) => console.log('Succesfully created Joe'))
     .catch((error) => console.log('Joe problems', error));
 
-  appRepo.getAllUsers()
-  .then((users) => console.log('Number of users: ' + users.length))
-  .catch(error => console.log('Error getting all users: ', error));
-
-  appRepo.getUserByName('Joe').then((user) => {
-    res.render('index', { title: user.name });
-  }).catch(error => console.log('Error getting Joe: ', error))
-  //res.render('index', { title: 'OK OK' });
+  appRepo.createAdmin('admin@admin.com', 'adminPass', 'admin creation time')
+    .then((data) => console.log('Succesfully created admin'))
+    .catch((error) => console.log('admin creation problems', error));  
+  
+    res.render('index', { title: "Employee Recognition Awards"});
 });
 
 module.exports = router;
