@@ -1,2 +1,20 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+ <div class="login_div">
+ <h1>{{title}}</h1>
+ <body>
+ <p></p>
+
+<form method="post" action="/admins1" class="form_login">
+     <select name="loginType">    
+      <option value="user" name="user">Login as User</option>
+      <option value="admin" name="admin">Login as Admin</option>
+     </select>
+     <input type="text" id="username" placeholder="Enter Email" name="email" required>
+     <p> 
+     <input type="password" class="password" placeholder="Enter Password" name="password" required>
+     </p>
+     <input class="submitbutton" type="submit" value="Login"> 
+  </form>
+   
+       </div>
+</body>
+
