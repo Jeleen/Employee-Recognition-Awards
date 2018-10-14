@@ -1,0 +1,36 @@
+<h1>{{title}}</h1>
+<head>
+</head>
+<!-- 
+<div id="leftmenuinner" style="padding-top: 112px;">
+<h2 class="left"><span class="left_h2">HTML</span> Reference</h2>
+<a target="_top" href="default.asp"></a>
+<a target="_top" href="ref_byfunc.asp"></a>
+-->
+      </div>
+{{#if admins}}
+<table border="solid" name="admin" id="table1" style="table-layout:fixed">
+<th>ID
+    <th>Email
+    <th>Password 
+    <th>Last Login 
+    <th>Login Attempts
+    <th>Account Created
+    </th>  
+    {{#each admins}}
+	 <tr>
+	 <!-- <form method="get" action="/adminsProfileEdit" > -->
+	 <form>
+	  <td>   <input type="text" name="id" value="{{this.id}}" STYLE="background-color: WhiteSmoke"  ></td>
+	  <td>   <input type="text" name="email" value="{{this.email}}" STYLE="background-color: WhiteSmoke" onclick="changeMe()" id="highlight" ></td>
+	  <td>   <input type="text" name="password" value="{{this.password}}" STYLE="background-color: WhiteSmoke" onclick="changeMe()" id="highlight" ></td>
+	  <td>   <input type="text" name="last_login" value="{{this.last_login}}" STYLE="background-color: WhiteSmoke" onclick="changeMe()" id="highlight" ></td>
+	  <td>   <input type="text" name="login_attempts" value="{{this.login_attempts}}" STYLE="background-color: WhiteSmoke" onclick="changeMe()" id="highlight" ></td>
+	  <td>   <input type="text" name="creation_time" value="{{this.creation_time}}" STYLE="background-color: WhiteSmoke" onclick="changeMe()" id="highlight" ></td>
+	 </tr>
+ {{/each}}
+</table>
+<input id="Save" type="submit" name="Save" value="Save" >
+<input id="delete" type="submit" name="Delete" value="Delete" >
+</form>
+{{/if}}
