@@ -10,8 +10,15 @@ var loginRouter = require('./routes/login');
 var userDashboardRouter = require('./routes/user_dashboard');
 var createAwardRouter = require('./routes/create_award');
 var editProfileRouter = require('./routes/edit_profile');
+var awardRouter = require('./routes/award');
 
 var app = express();
+
+const AwardDao = require('./dao');
+const AppRepository = require('./app_repository');
+// const dao = new AwardDao('./newdb.db');
+const dao = new AwardDao(':memory:');
+appRepo = new AppRepository(dao);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +36,7 @@ app.use('/login', loginRouter);
 app.use('/user_dashboard', userDashboardRouter);
 app.use('/create_award', createAwardRouter);
 app.use('/edit_profile', editProfileRouter);
+app.use('/award', awardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
