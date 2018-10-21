@@ -1,7 +1,6 @@
 class AppRepository {
   constructor(dao) {
     this.dao = dao;
-    this.createRepo();
   }
 
   createUser(name, email, password, region, creation_time) {
