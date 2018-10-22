@@ -18,4 +18,3 @@ Tasks:
 - [ ] Create Authentication
 - [ ] BackEnd Work
 - [ ] FrontEnd Work
-

@@ -3,7 +3,7 @@ var router = express.Router();
 
 const AwardDao = require('../dao.js');
 const AppRepository = require('../app_repository');
-const dao = new AwardDao('../mydb.db3');
+const dao = new AwardDao('./mydb.db3');
 const appRepo = new AppRepository(dao);
 
 router.get('/login2', function(req, res, next) {

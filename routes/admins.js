@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const AppRepository = require('../app_repository');
-const AwardDao = require('../dao');
+const AwardDao = require('./dao');
 // const dao = new AwardDao('./newdb.db');
 const dao = new AwardDao(':memory:');
 

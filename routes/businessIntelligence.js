@@ -3,7 +3,7 @@ var router = express.Router();
 
 const AwardDao = require('../dao');
 const AppRepository = require('../app_repository');
-const dao = new AwardDao('../mydb.db3');
+const dao = new AwardDao('./mydb.db3');
 const appRepo = new AppRepository(dao);
 
 router.get('/businessIntelligence', function(req, res, next){
