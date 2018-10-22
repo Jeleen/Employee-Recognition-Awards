@@ -19,8 +19,3 @@ Tasks:
 - [ ] BackEnd Work
 - [ ] FrontEnd Work
 
-Usage:
-install npm --save
-node app.js
-
-View:  localhost:5642
