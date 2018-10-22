@@ -40,8 +40,7 @@
 
 
 %opening
-\title{}
-\author{}
+
 
 \DTLloaddb{names}{namelist.csv}
 \begin{document}
@@ -53,20 +52,30 @@
 
 
 \begin{landscape}
-%\TileWallPaper{4cm}{4cm}{N-00.png}% 
+
+
+%\backgroundsetup{contents={background/old-paper.jpg}}
 \definecolor{title}{RGB}{180,0,0}
 \definecolor{other}{RGB}{171,0,255}
 \definecolor{name}{RGB}{255,0,0}
 \definecolor{phd}{RGB}{0,0,250}
-\maketitle
+
   \pagestyle{empty}
   
   \DTLforeach{names}{%   %%% these constitute running content
 		\honoree=Hname, \awardDate=Date, \creator=Cname, \typeAward=Type}{
-  
-  
+  \TileWallPaper{4cm}{4cm}{data/background/JOrbs.png}% Loads faster
+  \rotatebox{90}{\CenterWallPaper{0.4}{data/seal/seal.pdf}}%
+  %\TileWallPaper{1\paperwidth}{1\paperheight}{background/old-paper.jpg}%loads slower
+  \hspace*{-20pt}
+		\noindent
+		\begin{minipage}[l]{1.4in}%
+			%\noindent
+			\includegraphics[width=.85\textwidth]{data/image/Vkcmu.png}
+		\end{minipage}%
+		\hfill
  
-	\vskip1.8em	
+	%\vskip1.8em	
 	{%
 		\doublespacing	
 	%	This is to certify that \uuline{\emph{\large\sffamily\honoree}} is awesome!
@@ -96,7 +105,7 @@
 		  
 		  
 		  \begin{minipage}[r]{2.25in}
-			\sigskip \signature{\includegraphics[trim=2cm 1cm 0 -1cm]{sig.png}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
+			\sigskip \signature{\includegraphics[trim=2cm 1cm 0 -1cm]{data/sig.png}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
 		\end{minipage}
 		  
 		  
