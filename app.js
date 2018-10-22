@@ -4,11 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var routes = require('./routes');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var adminsRouter = require('./routes/admins');
-
+var login2Router = require('./routes/login2');
+var adminMainRouter = require('./routes/adminMain');
+var adminProfileRouter = require('./routes/adminProfile');
+var adminProfileEditRouter = require('./routes/adminProfileEdit');
+var addUserRouter = require('./routes/addUser');
+var businessIntelligenceRouter = require('./routes/businessIntelligence');
+var preAddUserRouter = require('./routes/preAddUser');
+var editUserRouter = require('./routes/editUser');
 
 var app = express();
 
@@ -22,13 +27,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/admins', adminsRouter);
-app.use('/adminsProfile', adminsRouter);
-app.use('/adminsUsers', adminsRouter);
-app.use('/googleTestChart', adminsRouter);
+app.use('/login2', login2Router);
+app.use('/adminMain', adminMainRouter);
+app.use('/adminProfile', adminProfileRouter);
+app.use('/adminProfileEdit', adminProfileEditRouter);
+app.use('/businessIntelligence', businessIntelligenceRouter);
+app.use('/addUser', addUserRouter);
+app.use('/preAddUser', preAddUserRouter);
+app.use('/editUser', editUserRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

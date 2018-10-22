@@ -26,6 +26,10 @@ class AppRepository {
     return this.dao.doGet(`SELECT * FROM users WHERE id = ?`, [id]);
   }
 
+  getAdminById(id) {
+    return this.dao.doGet(`SELECT * FROM admins WHERE id = ?`, [id]);
+  }
+
   getAllUsers() {
     return this.dao.doGetAll(`SELECT * FROM users`);
   }
@@ -35,7 +39,6 @@ class AppRepository {
   }
 
   getAllAdmins() {
-	  console.log("PPPPPPPPPPPPPPPPP\n\n");
     return this.dao.doGetAll(`SELECT * FROM admins`);
   }
 
@@ -46,6 +49,18 @@ class AppRepository {
   getAllAwards() {
     return this.dao.doGetAll(`SELECT * FROM awards`);
   }
+
+  removeUser(id){
+	return this.dao.doRun(`DELETE FROM users WHERE id = ?`, [id]);
+  }
+  updateAdminEmail(email, id){
+	return this.dao.doRun(`UPDATE admins SET email = ? WHERE id = ?`, [email, id]);
+  }
+
+  updateUserEmail(email, id){
+	return this.dao.doRun(`UPDATE users SET email = ? WHERE id = ?`, [email, id]);
+  }
+
 
   createUsersTable() {
     return this.dao.doRun(`
