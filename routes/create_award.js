@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
-
+var awardCreate = require('../award/createPDF.js');
 /* GET users listing. */
 
 router.get('/', function(req, res, next) {
- // res.render('create_award')
-
+	console.log("Inside the get route for award");
+	awardCreate();  
+	res.render('create_award')
 
 });
 
