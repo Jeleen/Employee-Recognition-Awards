@@ -22,6 +22,10 @@ class AppRepository {
     return this.dao.doGet(`SELECT * FROM users WHERE name = ?`, [name]);
   }
 
+  getAdminByName(name) {
+    return this.dao.doGet(`SELECT * FROM admins WHERE name = ?`, [name]);
+  }
+
   getUserById(id) {
     return this.dao.doGet(`SELECT * FROM users WHERE id = ?`, [id]);
   }
@@ -32,10 +36,6 @@ class AppRepository {
 
   getAllUsers() {
     return this.dao.doGetAll(`SELECT * FROM users`);
-  }
-
-  getAdmin(id) {
-    return this.dao.doGet(`SELECT * FROM admins WHERE id = ?`, [id]);
   }
 
   getAllAdmins() {
@@ -52,6 +52,9 @@ class AppRepository {
 
   removeUser(id){
 	return this.dao.doRun(`DELETE FROM users WHERE id = ?`, [id]);
+  }
+  removeAdmin(id){
+  	return this.dao.doRun(`DELETE FROM admins WHERE id = ?`, [id]);
   }
   updateAdminEmail(email, id){
 	return this.dao.doRun(`UPDATE admins SET email = ? WHERE id = ?`, [email, id]);

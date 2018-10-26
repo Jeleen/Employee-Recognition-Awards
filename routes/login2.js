@@ -1,11 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-const AwardDao = require('../dao.js');
-const AppRepository = require('../app_repository');
-const dao = new AwardDao('./mydb.db3');
-const appRepo = new AppRepository(dao);
-
 router.get('/login2', function(req, res, next) {
 	//if(req.body['loginType'] == "admin"){
   appRepo.getAdminById(1).then((admin) => {
