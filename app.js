@@ -32,12 +32,6 @@ var awardRouter = require('./routes/award');
 
 var app = express();
 
-const AwardDao = require('./dao');
-const AppRepository = require('./app_repository');
-// const dao = new AwardDao('./newdb.db');
-const dao = new AwardDao(':memory:');
-appRepo = new AppRepository(dao);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
