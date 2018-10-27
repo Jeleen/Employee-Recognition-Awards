@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/accountsMain', function(req, res, next){
-	res.render('accountsMain',  {title: "Accounts" });
+	res.render('accountsMain',  {title: "Accounts", layout: "layoutDM.hbs" });
   });
 
 module.exports = router;

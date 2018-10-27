@@ -1,12 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-
-const AwardDao = require('../dao');
-const AppRepository = require('../app_repository');
-const dao = new AwardDao('./mydb.db3');
-const appRepo = new AppRepository(dao);
-
 router.get('/adminProfile', function(req, res, next){
 	//until we save current admin logged in, just return 1st admin to my profile
 	//appRepo.getAdminById(req.body.id).then((admin) => {

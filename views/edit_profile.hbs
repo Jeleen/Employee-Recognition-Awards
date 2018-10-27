@@ -1,0 +1,36 @@
+<h1>Edit Profile</h1>
+<p>Existing Email Address: {{existing}}</p>
+<form action="/edit_profile" method="post">
+  <div class="form-group">
+    <label>New Email Address</label>
+    <input type="text" class="form-control" name="new_email">
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Update Profile</button>
+</form>
+<h2>View and Delete awards you previously gnerated</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Recipient Name</th>
+      <th scope="col">Recipient Email</th>
+      <th scope="col">Award Type</th>
+      <th scope="col">Creation Time</th>
+      <th scope="col">Created by User</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each awards}}
+    <tr>
+      <th scope="row">{{this.id}}</th>
+      <td>{{this.recipient_name}}</td>
+      <td>{{this.recipient_email}}</td>
+      <td>{{this.award_type}}</td>
+      <td>{{this.creation_time}}</td>
+      <td>{{this.creation_time}}</td>
+      <td>{{this.creator_id}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn btn-primary mb-2">Delete All Awards</button>

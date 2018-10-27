@@ -14,7 +14,7 @@ router.post('/editUsers', function(req, res, next) {
       .catch((error) => console.log('Error updating user email', error));
      }
      appRepo.getAllUsers().then((users) => {
-  	 res.render('adminMain',  {users: users, title: "Accounts" });
+  	 res.render('adminMain',  {users: users, title: "Accounts", layout: "layoutAccounts.hbs"});
      }).catch(error => console.log('Error getting all users: ', error));
 });
 

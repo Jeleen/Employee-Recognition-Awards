@@ -1,0 +1,32 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.login_div {
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -150px;
+}
+
+.form_login {
+    width0: 1000px;
+    height: 1000px;
+    margin: 60px;
+    padding: 10px;
+}
+
+.password {
+    margin-left: 118px;
+}
+
+.submitbutton {
+    margin-left: 214px;
+}

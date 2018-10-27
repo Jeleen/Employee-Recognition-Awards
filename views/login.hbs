@@ -1,9 +1,9 @@
  <body>
  
-<form method="get" action="/login2" class="form_login">
+<form method="post" action="/login2" class="form_login">
      <select name="loginType">   
-      <option value="user" name="user">Login as User</option>
-      <option value="admin" name="admin">Login as Admin</option>
+      <option id="user" value="user" name="user">Login as User</option>
+      <option id="admin" value="admin" name="admin">Login as Admin</option>
      </select>
      <input type="text" id="username" placeholder="Enter Email" name="email" required>
      <p> 

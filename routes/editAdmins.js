@@ -9,7 +9,7 @@ router.post('/editAdmins', function(req, res, next) {
 	   .catch((error) => console.log('Error removing admin', error));
 
       appRepo.getAllAdmins().then((admins) => {
-	   	 res.render('adminMain',  {admins: admins, title: "Accounts",  });
+	   	 res.render('adminMain',  {admins: admins, title: "Accounts", layout: "layoutAccounts.hbs" });
      }).catch(error => console.log('Error getting all admin: ', error));
      }
      else{
@@ -18,7 +18,7 @@ router.post('/editAdmins', function(req, res, next) {
       .catch((error) => console.log('Error updating admin email', error));
 
       appRepo.getAllAdmins().then((admins) => {
-	   	 res.render('adminMain',  {admins: admins, notice: req.body.id, title: "Accounts" });
+	   	 res.render('adminMain',  {admins: admins, notice: req.body.id, title: "Accounts", layout: "layoutAccounts.hbs" });
      }).catch(error => console.log('Error getting all admin: ', error));
      }
 });
