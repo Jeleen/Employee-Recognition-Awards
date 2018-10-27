@@ -1,14 +1,17 @@
-<h1>Employee Recognition Awards System</h1>
-<p>Login Here</p>
-<form>
-  <div class="form-group">
-    <label>Username (email)</label>
-    <input type="text" class="form-control" name="username">
-  </div>
-  <div class="form-group">
-    <label>Password</label>
-    <input type="password" class="form-control" name="password">
-  </div>
-  <!-- FIXME:  Update to submit form -->
-  <a href="/user_dashboard">Login</a>
-</form>
+
+ <body>
+
+<form method="get" action="/login2" class="form_login">
+     <select name="loginType">
+      <option value="user" name="user">Login as User</option>
+      <option value="admin" name="admin">Login as Admin</option>
+     </select>
+     <input type="text" id="username" placeholder="Enter Email" name="email" required>
+     <p>
+     <input type="password" class="password" placeholder="Enter Password" name="password" required>
+     </p>
+     <input class="submitbutton" type="submit" value="Login">
+  </form>
+       </div>
+
+</body>
