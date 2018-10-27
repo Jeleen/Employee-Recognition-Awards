@@ -28,8 +28,15 @@ var editAdminsRouter = require('./routes/editAdmins');
 
 var getAllAdminsRouter = require('./routes/getAllAdmins');
 var getAllUsersRouter = require('./routes/getAllUsers');
+var awardRouter = require('./routes/award');
 
 var app = express();
+
+const AwardDao = require('./dao');
+const AppRepository = require('./app_repository');
+// const dao = new AwardDao('./newdb.db');
+const dao = new AwardDao(':memory:');
+appRepo = new AppRepository(dao);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,6 +65,7 @@ app.post('/editUsers', editUsersRouter);
 app.get('/businessIntelligence', businessIntelligenceRouter);
 app.get('/addUser', addUserRouter);
 app.get('/preAddUser', preAddUserRouter);
+app.use('/award', awardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

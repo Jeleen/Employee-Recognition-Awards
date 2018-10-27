@@ -18,6 +18,10 @@ class AppRepository {
       VALUES(?, ?, ?, ?)`, [recipient_name, recipient_email, creation_time, award_type]);
   }
 
+  editUser(idOfUser, newEmail) {
+    return this.dao.doRun(`UPDATE users SET email = ? WHERE id = ?`, [newEmail, idOfUser]);
+  }
+
   getUserByName(name) {
     return this.dao.doGet(`SELECT * FROM users WHERE name = ?`, [name]);
   }
