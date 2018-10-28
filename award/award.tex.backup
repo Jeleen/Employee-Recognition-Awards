@@ -1,0 +1,122 @@
+\documentclass[a4paper,15pt]{scrartcl}%allows for custom fonts
+\usepackage[utf8]{inputenc}%necessary for non ACII chars to display INPUT encode
+
+
+%adjust page margins
+\usepackage[a4paper,left=1.8cm,right=1.8cm,top=2cm,bottom=2cm,heightrounded]{geometry}
+\usepackage{pdflscape}%for pdflatex use lscape for latex--landscape
+
+%spacing
+\usepackage{setspace}%allows for doublespace
+\usepackage[normalem]{ulem}
+\usepackage[all]{nowidow} %used to prevent slinglines atop of page ALL for whole doc; provides macros
+%\clubpenalty10000
+%\widowpenalty10000
+
+%colors
+\usepackage[svgnames]{xcolor}
+%\definecolor{placehodler}{RGB){256,256,256}
+
+
+
+%fonts
+\usepackage[T1]{fontenc} %uses fonts that have 256 glyphs (twice as much) FONT encode
+\usepackage{bookman}  %font for Headings
+\usepackage{microtype} %general apperance, word spaceing, more words per line, necessary like fire
+
+%images
+\usepackage{wallpaper} %allows use of background images
+\usepackage{graphicx}% for importing graphics
+
+%Border
+\usepackage{background}
+\usepackage{niceframe}
+
+
+%
+
+%data import
+\usepackage{datatool}
+
+
+%opening
+
+
+\DTLloaddb{names}{namelist.csv}
+\begin{document}
+\def\signature#1#2{\parbox[b]{1in}{\smash{#1}\vskip12pt}
+\hfill \parbox[t]{2.2in}{\shortstack{\vrule width 2.2in height 0.4pt\\\small#2}}}
+\def\sigskip{\vskip0.4in plus 0.1in}
+		\def\beginskip{\vskip0.5875in plus 0.1in}
+
+
+
+\begin{landscape}
+
+
+%\backgroundsetup{contents={background/old-paper.jpg}}
+\definecolor{title}{RGB}{180,0,0}
+\definecolor{other}{RGB}{171,0,255}
+\definecolor{name}{RGB}{255,0,0}
+\definecolor{phd}{RGB}{0,0,250}
+
+  \pagestyle{empty}
+  
+  \DTLforeach{names}{%   %%% these constitute running content
+		\honoree=Hname, \awardDate=Date, \creator=Cname, \typeAward=Type}{
+  \TileWallPaper{4cm}{4cm}{background/JOrbs.png}% Loads faster
+  %\TileWallPaper{1\paperwidth}{1\paperheight}{background/old-paper.jpg}%loads slower
+  \hspace*{-20pt}
+		\noindent
+		\begin{minipage}[c]{7.2in}%
+			{\centering
+			{\onehalfspacing
+			{\LARGE\bfseries {\color{other}{\fontfamily{pzc}\selectfont{Department of Questions \& Answers}}}}\\[0.6em]
+			{\LARGE\bfseries {\color{phd}{{\TeX.stackexchange.com}}}}\\[0.3em]%\initfamily
+			{\calligra World wide web} -- {\calligra INFTY\\}}
+			%\vskip0.4em
+			{\large \TeX.Stack Exchange Activities on\\}%
+			{\large\bfseries\color{phd}{Answer the Unanswered}}
+			\par}%
+		\end{minipage}%
+ 
+	%\vskip1.8em	
+	{%
+		\doublespacing	
+	%	This is to certify that \uuline{\emph{\large\sffamily\honoree}} is awesome!
+	%	That they have been awarded \typeAward by    \creator
+	%	Awarded to them on \awardDate.
+	
+	%	}		
+	This is to certify that\, \uuline{\emph{\large\sffamily\color{name}{{{\color{DarkRed}\fontfamily{frc}\selectfont{\bfseries \honoree}}}}}},
+		has been awarded the title {\bfseries \color{FireBrick}{\typeAward}}
+		at  `` Oregon State University''
+		
+		}
+		\hfill
+		
+		
+		
+		 \begin{minipage}[c]{3.4in}%
+		 Awarded on:
+		  {\large\bfseries\color{phd}{\awardDate}}
+		  \end{minipage}%
+	    \hfill
+	    
+	    	 \begin{minipage}[c]{3.4in}%
+		 Awarded by:
+	
+		  \end{minipage}%
+		  
+		  
+		  \begin{minipage}[r]{2.25in}
+			\sigskip \signature{\includegraphics[trim=2cm 1cm 0 -1cm]{sig.png}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
+		\end{minipage}
+		  
+		  
+		  
+		\pagebreak %seperate pdfs
+}
+\end{landscape}
+
+\end{document}
