@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+
 // FIXME: handle this when support exists for logged in user
 const loggedInUserId = 1;
 

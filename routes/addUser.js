@@ -1,11 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-const AwardDao = require('../dao');
-const AppRepository = require('../app_repository');
-const dao = new AwardDao('./mydb.db3');
-const appRepo = new AppRepository(dao);
-
 /* GET home page. */
 router.post('/', function(req, res, next) {
 	appRepo.createUser(req.body.name, req.body.email, "12345", req.body.region, "%$%#")
@@ -18,4 +13,3 @@ appRepo.getAllUsers().then((users) => {
 });
 
 module.exports = router;
-

@@ -26,8 +26,12 @@ class AppRepository {
     return this.dao.doGet(`SELECT * FROM users WHERE name = ?`, [name]);
   }
 
-  getAdminByName(name) {
-    return this.dao.doGet(`SELECT * FROM admins WHERE name = ?`, [name]);
+  getUserByEmail(email) {
+    return this.dao.doGet(`SELECT * FROM users WHERE email = ?`, [email]);
+  }
+
+  getAdminByEmail(name) {
+    return this.dao.doGet(`SELECT * FROM admins WHERE email = ?`, [name]);
   }
 
   getUserById(id) {
@@ -109,8 +113,30 @@ class AppRepository {
     return this.createUsersTable()
       .then(() => this.createAdminsTable())
       .then(() => this.createAwardsTable())
-      .then(() => console.log('Successfully created all database tables'))
-      .catch((error) => console.log('Error creating database tables: ', error));
+      .then(() => {
+        // create default user if they don't exist
+        return this.getUserByEmail("defaultUser").then((foundUser) => {
+          if(foundUser) {
+            console.log('Default User, default already exists in db');
+          } else {
+            console.log('No existing default user found in db, creating default user');
+            return this.createUser("defaultUser", "defaultUser", "pass", "Americas", "10/20/2018 09:32:00");
+          }
+        });
+      })
+      .then(() => {
+        // create default admin if they don't exist
+        return this.getAdminByEmail("defaultAdmin").then((foundAdmin) => {
+          if (foundAdmin) {
+            console.log('Default Admin, defaultAdmin already exists in db');
+          } else {
+            console.log('No existing default Admin found in db, creating defaultAdmin');
+            return this.createAdmin("defaultAdmin", "pass", "10/21/2018 10:33:00");
+          }
+        });
+      })
+      .then(() => console.log('Successfully created all database tables and default User/Admin'))
+      .catch((error) => console.log('Error creating database tables or default User/Admin: ', error));
   }
 }
 

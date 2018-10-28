@@ -3,9 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 const bodyParser = require('body-parser');
 const latex = require('node-latex');
 const fs = require('fs');
+
+var sessionConfig = {
+  secret: 'so secretive',
+  cookie: { }
+};
 
 const AwardDao = require('./dao');
 const AppRepository = require('./app_repository');
@@ -16,6 +22,7 @@ appRepo.createRepo();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 var userDashboardRouter = require('./routes/user_dashboard');
 var createAwardRouter = require('./routes/create_award');
 var editProfileRouter = require('./routes/edit_profile');
@@ -44,10 +51,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session(sessionConfig));
 
+
+app.use('/login', loginRouter);
+// Check if user is logged in for ever route except ones above this line (like login)
+app.use(function(req, res, next) {
+  if (!req.session || !req.session.loggedInId) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+});
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 app.use('/user_dashboard', userDashboardRouter);
 app.use('/create_award', createAwardRouter);
 app.use('/edit_profile', editProfileRouter);

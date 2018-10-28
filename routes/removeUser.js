@@ -1,11 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-const AwardDao = require('../dao');
-const AppRepository = require('../app_repository');
-const dao = new AwardDao('./mydb.db3');
-const appRepo = new AppRepository(dao);
-
 /* GET home page. */
 router.post('/', function(req, res, next) {
 	appRepo.removeUser(req.body.id)
@@ -18,4 +13,3 @@ appRepo.getAllUsers().then((users) => {
 });
 
 module.exports = router;
-

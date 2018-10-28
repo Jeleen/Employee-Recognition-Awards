@@ -1,13 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-const AppRepository = require('../app_repository');
-const AwardDao = require('./dao');
-// const dao = new AwardDao('./newdb.db');
-const dao = new AwardDao(':memory:');
-
-const appRepo = new AppRepository(dao);
-appRepo.createRepo();
 appRepo.createAdmin('anAdmin@admin.com', 'adminPass', 'admin creation time')
     .then((data) => console.log('Successfully created anAdmin'))
     .catch((error) => console.log('anAdmin problems', error));

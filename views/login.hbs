@@ -1,17 +1,13 @@
-
- <body>
-
-<form method="get" action="/login2" class="form_login">
-     <select name="loginType">
-      <option value="user" name="user">Login as User</option>
-      <option value="admin" name="admin">Login as Admin</option>
-     </select>
-     <input type="text" id="username" placeholder="Enter Email" name="email" required>
-     <p>
-     <input type="password" class="password" placeholder="Enter Password" name="password" required>
-     </p>
-     <input class="submitbutton" type="submit" value="Login">
-  </form>
-       </div>
-
-</body>
+<form method="post" action="/login" class="form_login">
+  <select name="loginType">
+    <option value="user" name="user">Login as User</option>
+    <option value="admin" name="admin">Login as Admin</option>
+  </select>
+  <div>
+    <input type="text" id="username" placeholder="Enter Email" name="email" required>
+    <p>
+    <input type="password" class="password" placeholder="Enter Password" name="password" required>
+    </p>
+    <input class="submitbutton" type="submit">
+  </div>
+</form>
