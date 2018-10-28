@@ -20,12 +20,7 @@ router.post('/', function(req, res, next){
 });
 
 
-=======
-  appRepo.getAllUsers()
-    .then((users) => console.log('Number of users from create award: ' + users.length))
-    .catch(error => console.log('Error getting all users: ', error));
-  res.render('create_award');
-});
+
 
 router.post('/', function(req, res, next) {
   var award = req.body;
