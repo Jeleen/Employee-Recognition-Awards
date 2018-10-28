@@ -11,16 +11,6 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.post('/', function(req, res, next){
-//input sql query and given input into a csv creator
-//then input csv into a pdf generator
-
-
-
-});
-
-
-
 
 router.post('/', function(req, res, next) {
   var award = req.body;
