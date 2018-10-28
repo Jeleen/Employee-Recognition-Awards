@@ -1,12 +1,12 @@
 <h1>Create Award</h1>
 <p>Please enter award details</p>
-<form>
+<form action="/create_award" method="post">
   <div class="form-group">
     <label>Type</label>
     <select class="form-control" name="type">
-      <option>Weekly</option>
-      <option>Monthly</option>
-      <option>Yearly</option>
+      <option value="1">Weekly</option>
+      <option value="2">Monthly</option>
+      <option value="3">Yearly</option>
     </select>
   </div>
   <div class="form-group">

@@ -18,20 +18,28 @@ class AppRepository {
       VALUES(?, ?, ?, ?)`, [recipient_name, recipient_email, creation_time, award_type]);
   }
 
+  editUser(idOfUser, newEmail) {
+    return this.dao.doRun(`UPDATE users SET email = ? WHERE id = ?`, [newEmail, idOfUser]);
+  }
+
   getUserByName(name) {
     return this.dao.doGet(`SELECT * FROM users WHERE name = ?`, [name]);
+  }
+
+  getAdminByName(name) {
+    return this.dao.doGet(`SELECT * FROM admins WHERE name = ?`, [name]);
   }
 
   getUserById(id) {
     return this.dao.doGet(`SELECT * FROM users WHERE id = ?`, [id]);
   }
 
-  getAllUsers() {
-    return this.dao.doGetAll(`SELECT * FROM users`);
+  getAdminById(id) {
+    return this.dao.doGet(`SELECT * FROM admins WHERE id = ?`, [id]);
   }
 
-  getAdmin(id) {
-    return this.dao.doGet(`SELECT * FROM admins WHERE id = ?`, [id]);
+  getAllUsers() {
+    return this.dao.doGetAll(`SELECT * FROM users`);
   }
 
   getAllAdmins() {
@@ -44,6 +52,20 @@ class AppRepository {
 
   getAllAwards() {
     return this.dao.doGetAll(`SELECT * FROM awards`);
+  }
+
+  removeUser(id){
+	return this.dao.doRun(`DELETE FROM users WHERE id = ?`, [id]);
+  }
+  removeAdmin(id){
+  	return this.dao.doRun(`DELETE FROM admins WHERE id = ?`, [id]);
+  }
+  updateAdminEmail(email, id){
+	return this.dao.doRun(`UPDATE admins SET email = ? WHERE id = ?`, [email, id]);
+  }
+
+  updateUserEmail(email, id){
+	return this.dao.doRun(`UPDATE users SET email = ? WHERE id = ?`, [email, id]);
   }
 
   createUsersTable() {

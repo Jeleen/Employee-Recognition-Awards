@@ -1,9 +1,9 @@
 <h1>Edit Profile</h1>
 <p>Existing Email Address: {{existing}}</p>
-<form>
+<form action="/edit_profile" method="post">
   <div class="form-group">
     <label>New Email Address</label>
-    <input type="text" class="form-control" name="email">
+    <input type="text" class="form-control" name="new_email">
   </div>
   <button type="submit" class="btn btn-primary mb-2">Update Profile</button>
 </form>

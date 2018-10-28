@@ -7,12 +7,31 @@ const bodyParser = require('body-parser');
 const latex = require('node-latex');
 const fs = require('fs');
 
+const AwardDao = require('./dao');
+const AppRepository = require('./app_repository');
+const dao = new AwardDao('./mydb.db3');
+appRepo = new AppRepository(dao);
+appRepo.createRepo();
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var userDashboardRouter = require('./routes/user_dashboard');
 var createAwardRouter = require('./routes/create_award');
 var editProfileRouter = require('./routes/edit_profile');
+var login2Router = require('./routes/login2');
+var accountsMainRouter = require('./routes/accountsMain');
+var adminProfileRouter = require('./routes/adminProfile');
+var adminProfileEditRouter = require('./routes/adminProfileEdit');
+var addUserRouter = require('./routes/addUser');
+var businessIntelligenceRouter = require('./routes/businessIntelligence');
+var preAddUserRouter = require('./routes/preAddUser');
+var editUsersRouter = require('./routes/editUsers');
+var editAdminsRouter = require('./routes/editAdmins');
+
+var getAllAdminsRouter = require('./routes/getAllAdmins');
+var getAllUsersRouter = require('./routes/getAllUsers');
+var awardRouter = require('./routes/award');
 
 var app = express();
 
@@ -32,6 +51,18 @@ app.use('/login', loginRouter);
 app.use('/user_dashboard', userDashboardRouter);
 app.use('/create_award', createAwardRouter);
 app.use('/edit_profile', editProfileRouter);
+app.get('/login2', login2Router);
+app.get('/accountsMain', accountsMainRouter);
+app.get('/adminProfile', adminProfileRouter);
+app.post('/adminProfileEdit', adminProfileEditRouter);
+app.get('/getAllAdmins', getAllAdminsRouter);
+app.get('/getAllUsers', getAllUsersRouter);
+app.post('/editAdmins', editAdminsRouter);
+app.post('/editUsers', editUsersRouter);
+app.get('/businessIntelligence', businessIntelligenceRouter);
+app.get('/addUser', addUserRouter);
+app.get('/preAddUser', preAddUserRouter);
+app.use('/award', awardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
