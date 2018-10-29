@@ -1,4 +1,4 @@
-// Include the cluster module
+/*// Include the cluster module
 var cluster = require('cluster');
 
 // Code to run if we're in the master process
@@ -22,16 +22,29 @@ if (cluster.isMaster) {
     });
 
 // Code to run if we're in a worker process
-} else {
-    var AWS = require('aws-sdk');
+} else {*/
+  //  var AWS = require('aws-sdk');
     var createError = require('http-errors');
 	var express = require('express');
 	var path = require('path');
 	var cookieParser = require('cookie-parser');
 	var logger = require('morgan');
-    AWS.config.region = process.env.REGION
-	var sns = new AWS.SNS();
-    var ddb = new AWS.DynamoDB();
+  //  AWS.config.region = process.env.REGION
+	//var sns = new AWS.SNS();
+    //var ddb = new AWS.DynamoDB();
+	var session = require('express-session');
+	const bodyParser = require('body-parser');
+	const latex = require('node-latex');
+	const fs = require('fs');
+
+	var sessionConfig = {
+	  secret: 'so secretive',
+	  cookie: { }
+	};
+
+
+
+
 	const AwardDao = require('./dao');
 	const AppRepository = require('./app_repository');
 	const dao = new AwardDao('./mydb.db3');
@@ -105,9 +118,9 @@ if (cluster.isMaster) {
 	  res.status(err.status || 500);
 	  res.render('error');
 	});
-//module.exports = app;
- 	var port = process.env.PORT || 3000;
-    var server = app.listen(port, function () {
-        console.log('Server running at http://127.0.0.1:' + port + '/');
-    });
-}
+module.exports = app;
+// 	var port = process.env.PORT || 3000;
+//    var server = app.listen(port, function () {
+//        console.log('Server running at http://127.0.0.1:' + port + '/');
+//    });
+//}
