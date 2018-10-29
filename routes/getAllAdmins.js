@@ -3,9 +3,9 @@ var router = express.Router();
 
 
 /* GET home page. */
-router.get('/getAllAdmins', function(req, res, next) {
+router.get('/', function(req, res, next) {
 appRepo.getAllAdmins().then((admins) => {
-	res.render('adminMain',  {admins: admins, title: "Accounts", layout: "layoutAccounts.hbs"});
+	res.render('accountsMain',  {admins: admins, title: "Accounts"});
   }).catch(error => console.log('Error getting all admin: ', error));
 });
 module.exports = router;
