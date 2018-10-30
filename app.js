@@ -95,8 +95,8 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-
+//For uploading to AWS, include:
 //var port = process.env.PORT || 3000;
 //var server = app.listen(port, function () {
-//   console.log('Server running at http://127.0.0.1:' + port + '/');
+  // console.log('Server running at http://127.0.0.1:' + port + '/');
 //});

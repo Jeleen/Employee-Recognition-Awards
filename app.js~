@@ -20,19 +20,16 @@ appRepo = new AppRepository(dao);
 appRepo.createRepo();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var userDashboardRouter = require('./routes/user_dashboard');
 var createAwardRouter = require('./routes/create_award');
 var editProfileRouter = require('./routes/edit_profile');
-var login2Router = require('./routes/login2');
 var accountsMainRouter = require('./routes/accountsMain');
 var adminProfileRouter = require('./routes/adminProfile');
-var adminProfileEditRouter = require('./routes/adminProfileEdit');
 var addUserRouter = require('./routes/addUser');
+var addAdminRouter = require('./routes/addAdmin');
 var businessIntelligenceRouter = require('./routes/businessIntelligence');
-var preAddUserRouter = require('./routes/preAddUser');
 var editUsersRouter = require('./routes/editUsers');
 var editAdminsRouter = require('./routes/editAdmins');
 
@@ -63,23 +60,21 @@ app.use(function(req, res, next) {
     next();
   }
 });
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/logout', logoutRouter);
 app.use('/user_dashboard', userDashboardRouter);
 app.use('/create_award', createAwardRouter);
 app.use('/edit_profile', editProfileRouter);
-app.get('/login2', login2Router);
-app.get('/accountsMain', accountsMainRouter);
-app.get('/adminProfile', adminProfileRouter);
-app.post('/adminProfileEdit', adminProfileEditRouter);
-app.get('/getAllAdmins', getAllAdminsRouter);
-app.get('/getAllUsers', getAllUsersRouter);
-app.post('/editAdmins', editAdminsRouter);
-app.post('/editUsers', editUsersRouter);
-app.get('/businessIntelligence', businessIntelligenceRouter);
-app.get('/addUser', addUserRouter);
-app.get('/preAddUser', preAddUserRouter);
+app.use('/accountsMain', accountsMainRouter);
+app.use('/adminProfile', adminProfileRouter);
+app.use('/getAllAdmins', getAllAdminsRouter);
+app.use('/getAllUsers', getAllUsersRouter);
+app.use('/editAdmins', editAdminsRouter);
+app.use('/editUsers', editUsersRouter);
+app.use('/businessIntelligence', businessIntelligenceRouter);
+app.use('/addUser', addUserRouter);
+app.use('/addAdmin', addAdminRouter);
 app.use('/award', awardRouter);
 
 // catch 404 and forward to error handler
@@ -99,3 +94,9 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
+var port = process.env.PORT || 3000;
+var server = app.listen(port, function () {
+   console.log('Server running at http://127.0.0.1:' + port + '/');
+});
