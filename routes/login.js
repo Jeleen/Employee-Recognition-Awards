@@ -31,7 +31,7 @@ router.post('/', function(req, res, next) {
       .then((existingAdmin) => {
         if (existingAdmin.password == submitted.password) {
           req.session.loggedInId = existingAdmin.id;
-          res.redirect('/login2');
+          res.render('adminProfile', {admin: existingAdmin, title: "My Profile" });
         } else {
           console.log("Admin with email found, but password did not match")
           res.redirect('/login');
