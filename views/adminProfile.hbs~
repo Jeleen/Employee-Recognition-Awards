@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="../starter-template.css" rel="stylesheet">
+    
+  </head>
+  <body>
+     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" *ngIf="!showNav">
+       <a class="navbar-brand" href="#">Employee Recognition Awards System</a>
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" Id="navbarNavDropdown">
+         <ul class="navbar-nav">
+           <li class="nav-item active" >
+             <a class="nav-link" href="/adminProfile">My Profile <span class="sr-only">(current)</span></a>
+           </li>
+           <li class="nav-item" >
+             <a class="nav-link" href="/accountsMain">Accounts <span class="sr-only">(current)</span></a>
+	   </li>
+           <li class="nav-item">
+             <a class="nav-link" href="#">BI Reports</a>
+           </li>
+   
+         </ul>
+       </div>
+</nav>
+  
+      <div class="container-fluid" >
+        <div class="row">
+          <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <h2>{{{title}}}</h2>
+          </nav>
+  
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"> 
+                     
+              <div class="table-responsive">
+                  {{#if admin}}
+	          <table class="table">
+	              <thead class="thead-light">
+	                    <tr>
+	                      <th>ID</th>
+	                      <th>Email</th>
+	                      <th>Last Login</th>
+	                      <th>Login Attempts</th>
+	                      <th>Created</th>
+	                      <th>Action</th>
+	                    </tr>
+	              </thead>
+	              <tbody>
+	                  <tr>
+	                     <form method="post" action="/adminProfileEdit" >
+	                      <td>{{admin.id}}<input type="hidden" name="id" id="id" value="{{admin.id}}"></td>
+	                      <td><input type="text" name="email" id="email" placeholder="{{admin.email}}" ></td>
+	                      <td>{{admin.last_login}}</td>
+	                      <td>{{admin.login_attempts}}</td>
+	                      <td>{{admin.creation_time}}</td>
+	                      <td><input id="Save" type="submit" name="Save" value="Save" >
+	                      </form>
+	                 </tr>
+	               {{/if}}
+	               </tbody>
+              </table>
+              
+              
+          </main>
+        </div>
+      </div>
+ </body>
+</html>
+

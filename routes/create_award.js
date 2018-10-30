@@ -6,8 +6,8 @@ var awardCreate = require('../award/createPDF.js');
 router.get('/', function(req, res, next) {
 
 	console.log("Inside the get route for award");
-	awardCreate();  
-	res.render('create_award')
+	//awardCreate();
+	res.render('create_award');
 
 });
 

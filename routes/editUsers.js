@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.post('/editUsers', function(req, res, next) {
+router.post('/', function(req, res, next) {
 	if(req.body.delete == "delete"){
 	   appRepo.removeUser(req.body.id)
        .then((data) => console.log('Succesfully removed user'))
@@ -14,7 +14,7 @@ router.post('/editUsers', function(req, res, next) {
       .catch((error) => console.log('Error updating user email', error));
      }
      appRepo.getAllUsers().then((users) => {
-  	 res.render('adminMain',  {users: users, title: "Accounts" });
+		res.render('accountsMain',  {users: users, title: "Accounts" });
      }).catch(error => console.log('Error getting all users: ', error));
 });
 
