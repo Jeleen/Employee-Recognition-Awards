@@ -13,9 +13,9 @@ class AppRepository {
       VALUES (?, ?, ?)`, [email, password, creation_time]);
   }
 
-  createAward(recipient_name, recipient_email, creation_time, award_type) {
-    return this.dao.doRun(`INSERT INTO awards (recipient_name, recipient_email, creation_time, award_type)
-      VALUES(?, ?, ?, ?)`, [recipient_name, recipient_email, creation_time, award_type]);
+  createAward(recipient_name, recipient_email, creation_time, award_type, creator_id) {
+    return this.dao.doRun(`INSERT INTO awards (recipient_name, recipient_email, creation_time, award_type, creator_id)
+      VALUES(?, ?, ?, ?, ?)`, [recipient_name, recipient_email, creation_time, award_type, creator_id]);
   }
 
   editUser(idOfUser, newEmail) {
@@ -104,8 +104,10 @@ class AppRepository {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         recipient_name TEXT,
         recipient_email TEXT,
-        creation_time TEXT,
-        award_type INTEGER
+        creation_time INTEGER,
+        award_type TEXT,
+        creator_id INTEGER,
+        FOREIGN KEY(creator_id) REFERENCES users(id)
       )`)
   }
 

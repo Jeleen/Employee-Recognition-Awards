@@ -15,7 +15,8 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var award = req.body;
   console.log(award);
-  appRepo.createAward(award.recipient_name, award.recipient_email, "now", award.type)
+	var date = new Date();
+  appRepo.createAward(award.recipient_name, award.recipient_email, date.getTime(), award.type, req.session.loggedInId)
     .then((data) => {
       var awardId = data.id;
       console.log("Award Created with DB id: " + awardId);

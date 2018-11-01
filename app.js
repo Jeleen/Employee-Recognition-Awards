@@ -10,6 +10,8 @@ const fs = require('fs');
 
 var sessionConfig = {
   secret: 'so secretive',
+  saveUninitialized: true,
+  resave: true,
   cookie: { }
 };
 
