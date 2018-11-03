@@ -5,15 +5,15 @@ const absolutePath = path.join(__dirname,'../');
 
 const AwardDao = require('../dao');
 const AppRepository = require('../app_repository');
-const dao = new AwardDao('../mydb.db3');
-appRepo = new AppRepository(dao);
+//const dao = new AwardDao('../mydb.db3');
+//appRepo = new AppRepository(dao);
 
 var awardPDF = require('../award/createPDF.js');
 
 const moment =require('../node_modules/moment')
 const csv = require('../node_modules/csv-writer').createObjectCsvWriter;
 const csvWriter = csv({
-  path: './data/namelist.csv',
+  path: absolutePath+'award/data/namelist.csv',
   header: [
     {id:'recipient_name', title: "Hname"},
     {id:'creation_time', title: "Date"},
@@ -57,3 +57,6 @@ csvWriter.writeRecords(records)
   awardPDF(records[0].award_id);
 ;})
 }
+
+
+module.exports = awardObject;
