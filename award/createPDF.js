@@ -4,17 +4,19 @@ const path = require('path');
 const { join, resolve } =path
 const absolutePath = path.join(__dirname,'../');
 
-function createPDF(){
+function createPDF(id){
 	//point to node-latex
 	const latex = require('../node_modules/node-latex/');
-	//require file stream	
+	//require file stream
 	const fs = require('fs');
 
 	//node module with working with directors
-	
+
 
 	const input = fs.createReadStream(absolutePath+"award/award.tex");
-	const output = fs.createWriteStream(absolutePath+'award/output.pdf')
+	var AwardPath = "award/" +id+".pdf"
+	console.log(AwardPath);
+	const output = fs.createWriteStream(absolutePath+AwardPath)
 	const options = {
 		inputs: resolve(join(__dirname, 'data'))}
 	latex(input, options).pipe(output);
