@@ -3,6 +3,9 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  if (req.session.isAdmin) {
+    res.redirect('/login');
+  }
   var awardId = req.query.id;
   console.log('Award page: ' + awardId);
   appRepo.getAward(awardId).then(lookup => {

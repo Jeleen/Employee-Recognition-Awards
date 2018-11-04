@@ -7,15 +7,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  console.log(req.body);
   var submitted = req.body;
   if (submitted.loginType == "user") {
     console.log("User attempting to log in with email address: " + submitted.email);
     appRepo.getUserByEmail(submitted.email)
       .then((existingUser) => {
-        console.log("Existing user object: " + existingUser);
         if (existingUser.password == submitted.password) {
           req.session.loggedInId = existingUser.id;
+          req.session.isAdmin = false;
           res.redirect('/user_dashboard');
         } else {
           console.log("User with email found, but password did not match");
@@ -31,7 +30,8 @@ router.post('/', function(req, res, next) {
       .then((existingAdmin) => {
         if (existingAdmin.password == submitted.password) {
           req.session.loggedInId = existingAdmin.id;
-          res.render('adminProfile', {admin: existingAdmin, title: "My Profile" });
+          req.session.isAdmin = true;
+          res.redirect('/adminProfile');
         } else {
           console.log("Admin with email found, but password did not match")
           res.redirect('/login');

@@ -52,9 +52,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(sessionConfig));
 
-
+app.use('/', indexRouter);
 app.use('/login', loginRouter);
-// Check if user is logged in for ever route except ones above this line (like login)
+// Check if user is logged in for every route except ones above this line (like login)
 app.use(function(req, res, next) {
   if (!req.session || !req.session.loggedInId) {
     res.redirect('/login');
@@ -62,12 +62,20 @@ app.use(function(req, res, next) {
     next();
   }
 });
-
-app.use('/', indexRouter);
 app.use('/logout', logoutRouter);
 app.use('/user_dashboard', userDashboardRouter);
 app.use('/create_award', createAwardRouter);
 app.use('/edit_profile', editProfileRouter);
+app.use('/award', awardRouter);
+
+// Admin pages
+app.use(function(req, res, next) {
+  if (!req.session.isAdmin) {
+    res.redirect('/login')
+  } else {
+    next();
+  }
+})
 app.use('/accountsMain', accountsMainRouter);
 app.use('/adminProfile', adminProfileRouter);
 app.use('/getAllAdmins', getAllAdminsRouter);
@@ -77,7 +85,6 @@ app.use('/editUsers', editUsersRouter);
 app.use('/businessIntelligence', businessIntelligenceRouter);
 app.use('/addUser', addUserRouter);
 app.use('/addAdmin', addAdminRouter);
-app.use('/award', awardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
