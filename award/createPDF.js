@@ -4,9 +4,15 @@ const path = require('path');
 const { join, resolve } =path
 const absolutePath = path.join(__dirname,'../');
 
+//necessary libary
+const latex = require('../node_modules/node-latex/');
+
+/*
+* createPDF(id) takes award Id, to make a <award ID>.PDF
+*/
 function createPDF(id){
 	//point to node-latex
-	const latex = require('../node_modules/node-latex/');
+	
 	//require file stream
 	const fs = require('fs');
 

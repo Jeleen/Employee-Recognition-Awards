@@ -1,27 +1,19 @@
-
+//pathing
 const path = require('path');
 const { join, resolve } =path
 const absolutePath = path.join(__dirname,'../');
 
+//database
 const AwardDao = require('../dao');
 const AppRepository = require('../app_repository');
-//const dao = new AwardDao('../mydb.db3');
-//appRepo = new AppRepository(dao);
 
-var awardPDF = require('../award/createPDF.js');
-
+//needed libraries
+const createCSV = require('../award/createCSV.js');
 const moment =require('../node_modules/moment')
-const csv = require('../node_modules/csv-writer').createObjectCsvWriter;
-const csvWriter = csv({
-  path: absolutePath+'award/data/namelist.csv',
-  header: [
-    {id:'recipient_name', title: "Hname"},
-    {id:'creation_time', title: "Date"},
-    {id:'creator_name', title: "Cname"},
-    {id:'award_type', title: "Type"},
- ]
-})
 
+/*
+* awardObjec(id); id is the award id; the output is an object with the necesary award info
+*/
 function awardObject(id){
 
 var result ={};
@@ -38,7 +30,10 @@ return appRepo.getAward(id)
     return getCreator(result);
 })
 }
-
+/*
+* getCreator(obj) takes awardObj, creates array, adds creator name to the object array, 
+*          and passes object arrat to CSV creator (which expects object array format)
+*/
 function getCreator(obj){
   const array =[]
   return appRepo.getUserById(obj.creator_id)
@@ -46,16 +41,9 @@ function getCreator(obj){
       obj.creator_name = cName.name
       array.push(obj)
     //console.log(array);
-    csvFee(array);
+    createCSV(array);
   })
 
-}
-function csvFee(records){
-csvWriter.writeRecords(records)
-.then(()=>{console.log('DONE with csv')
-  //console.log(records[0].award_id);
-  awardPDF(records[0].award_id);
-;})
 }
 
 
