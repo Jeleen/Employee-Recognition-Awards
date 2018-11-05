@@ -31,7 +31,7 @@ return appRepo.getAward(id)
 })
 }
 /*
-* getCreator(obj) takes awardObj, creates array, adds creator name to the object array, 
+* getCreator(obj) takes awardObj, creates array, adds creator name to the object array,
 *          and passes object arrat to CSV creator (which expects object array format)
 */
 function getCreator(obj){
