@@ -12,7 +12,7 @@ const latex = require('../node_modules/node-latex/');
 */
 function createPDF(id){
 	//point to node-latex
-	
+
 	//require file stream
 	const fs = require('fs');
 
