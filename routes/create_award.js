@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var awardCreate = require('../award/createPDF.js');
+var awardCreate = require('../award/awardObject.js');
 /* GET users listing. */
 
 router.get('/', function(req, res, next) {
@@ -20,9 +20,12 @@ router.post('/', function(req, res, next) {
     .then((data) => {
       var awardId = data.id;
       console.log("Award Created with DB id: " + awardId);
+
       // User has submitted form, Award now exists in database.
       // We have the id and can look it up from the database and generate a PDF from it
-      res.redirect('/award?id=' + awardId);
+			awardCreate(awardId);
+			res.redirect('/award?id=' + awardId);
+
     }).catch((error) => console.warn("Error creating award: ", error));
 });
 
