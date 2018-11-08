@@ -3,14 +3,16 @@ class AppRepository {
     this.dao = dao;
   }
 
-  createUser(name, email, password, region, creation_time) {
-    return this.dao.doRun(`INSERT INTO users (name, email, password, region, creation_time)
-      VALUES (?, ?, ?, ?, ?)`, [name, email, password, region, creation_time]);
+  createUser(name, email, password, region, adminID) {
+      var d = new Date();
+	  return this.dao.doRun(`INSERT INTO users (name, email, password, login_attempts, region, creation_time, creator_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`, [name, email, password, 0, region, d.getTime(), adminID]);
   }
 
-  createAdmin(email, password, creation_time) {
-    return this.dao.doRun(`INSERT INTO admins (email, password, creation_time)
-      VALUES (?, ?, ?)`, [email, password, creation_time]);
+  createAdmin(email, password, cId) {
+      var d = new Date();
+	  return this.dao.doRun(`INSERT INTO admins (email, password, login_attempts, creation_time, creator_id)
+      VALUES (?, ?, ?, ?, ?)`, [email, password, 0, d.getTime(), cId]);
   }
 
   createAward(recipient_name, recipient_email, creation_time, award_type, creator_id) {
@@ -50,27 +52,56 @@ class AppRepository {
     return this.dao.doGetAll(`SELECT * FROM admins`);
   }
 
-  getAward(id) {
-    return this.dao.doGet(`SELECT * FROM awards WHERE id = ?`, [id]);
+  getAllUsersCreatedBy(id) {
+    return this.dao.doGetAll(`SELECT * FROM users WHERE creator_id = ?`, [id]);
   }
 
-  getAllAwards() {
+  getAllAwardsCreatedBy(id) {
+      return this.dao.doGetAll(`SELECT * FROM awards WHERE creator_id = ?`, [id]);
+  }
+
+ getAllAwards() {
     return this.dao.doGetAll(`SELECT * FROM awards`);
+  }
+
+ getAward(id) {
+    return this.dao.doGet(`SELECT * FROM awards WHERE id = ?`, [id]);
   }
 
   removeUser(id){
 	return this.dao.doRun(`DELETE FROM users WHERE id = ?`, [id]);
   }
-  removeAdmin(id){
+
+ removeAdmin(id){
   	return this.dao.doRun(`DELETE FROM admins WHERE id = ?`, [id]);
   }
-  updateAdminEmail(email, id){
+
+ updateAdminEmail(email, id){
 	return this.dao.doRun(`UPDATE admins SET email = ? WHERE id = ?`, [email, id]);
   }
 
   updateUserEmail(email, id){
 	return this.dao.doRun(`UPDATE users SET email = ? WHERE id = ?`, [email, id]);
   }
+
+  updateUserLoginAttempts(email){
+  	return this.dao.doRun(`UPDATE users SET login_attempts = login_attempts + 1 WHERE email = ?`, [email]);
+  }
+
+  updateAdminLoginAttempts(email){
+    	return this.dao.doRun(`UPDATE admins SET login_attempts = login_attempts + 1 WHERE email = ?`, [email]);
+  }
+
+  updateUserLastLogin(id){
+	var d = new Date();
+	return this.dao.doRun(`UPDATE users SET last_login = ? WHERE id = ?`, [d.getTime(), id]);
+  }
+
+  updateAdminLastLogin(id){
+    var d = new Date();
+	return this.dao.doRun(`UPDATE admins SET last_login = ? WHERE id = ?`, [d.getTime(), id]);
+  }
+
 
   createUsersTable() {
     return this.dao.doRun(`
@@ -80,10 +111,13 @@ class AppRepository {
         email TEXT,
         password TEXT,
         region TEXT,
-        last_login TEXT,
+        last_login INTEGER,
+        login_attempts INTEGER,
         sig_image_path TEXT,
-        creation_time TEXT)`
-    );
+        creation_time INTEGER,
+        creator_id INTEGER,
+        FOREIGN KEY(creator_id) REFERENCES admins(id)
+      )`)
   }
 
   createAdminsTable() {
@@ -92,10 +126,12 @@ class AppRepository {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT,
         password TEXT,
-        last_login TEXT,
-        login_attempts TEXT,
-        creation_time TEXT)`
-    );
+        last_login INTEGER,
+        login_attempts INTEGER,
+        creation_time INTEGER,
+        creator_id INTEGER,
+        FOREIGN KEY(creator_id) REFERENCES admins(id)
+      )`)
   }
 
   createAwardsTable() {
@@ -122,7 +158,7 @@ class AppRepository {
             console.log('Default User, default already exists in db');
           } else {
             console.log('No existing default user found in db, creating default user');
-            return this.createUser("defaultUser", "defaultUser", "pass", "Americas", "10/20/2018 09:32:00");
+            return this.createUser("defaultUser", "defaultUser", "pass", "Americas", 1);
           }
         });
       })
@@ -133,7 +169,7 @@ class AppRepository {
             console.log('Default Admin, defaultAdmin already exists in db');
           } else {
             console.log('No existing default Admin found in db, creating defaultAdmin');
-            return this.createAdmin("defaultAdmin", "pass", "10/21/2018 10:33:00");
+            return this.createAdmin("defaultAdmin", "pass", 1);
           }
         });
       })

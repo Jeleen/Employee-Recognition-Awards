@@ -13,8 +13,7 @@ router.post('/', function(req, res, next) {
 	}
 	else{
 		var d = new Date();
-		var b = d.toString();
-		appRepo.createAdmin(req.body.email, "12345", b)
+		appRepo.createAdmin(req.body.email, "12345", d.getTime(), req.session.loggedInId)
 		.then((data) => console.log('Succesfully created admin'))
 		.catch((error) => console.log('Error creating admin', error));
 

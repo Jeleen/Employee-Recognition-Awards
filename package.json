@@ -7,15 +7,17 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
+    "csv-export": "^1.0.2",
     "csv-writer": "^1.2.0",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
+    "google-charts-component": "^1.0.0",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
     "moment": "^2.22.2",
     "morgan": "~1.9.0",
     "node-latex": "^2.4.4",
-    "sqlite3": "^4.0.2"
+    "sqlite3": "^4.0.3"
   }
 }
