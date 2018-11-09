@@ -4,7 +4,9 @@ var awardCreate = require('../award/awardObject.js');
 /* GET users listing. */
 
 router.get('/', function(req, res, next) {
-
+	if (req.session.isAdmin) {
+    res.redirect('/login');
+  }
 	console.log("Inside the get route for award");
 	//awardCreate();
 	res.render('create_award');

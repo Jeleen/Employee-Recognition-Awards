@@ -3,6 +3,9 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  if (req.session.isAdmin) {
+    res.redirect('/login');
+  }
   appRepo.getUserById(req.session.loggedInId)
     .then(user => res.render('edit_profile', { existing: user.email }))
     .catch(() => res.render('edit_profile', { existing: '(error no user found)' }));
