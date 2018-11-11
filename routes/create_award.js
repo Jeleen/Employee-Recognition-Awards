@@ -25,7 +25,7 @@ router.post('/', function(req, res, next) {
 
       // User has submitted form, Award now exists in database.
       // We have the id and can look it up from the database and generate a PDF from it
-			awardCreate(awardId);
+			//awardCreate(awardId);
 			res.redirect('/award?id=' + awardId);
 
     }).catch((error) => console.warn("Error creating award: ", error));

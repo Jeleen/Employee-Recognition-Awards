@@ -1,36 +1,57 @@
-<h1>Edit Profile</h1>
-<p>Existing Email Address: {{existing}}</p>
-<form action="/edit_profile" method="post">
-  <div class="form-group">
-    <label>New Email Address</label>
-    <input type="text" class="form-control" name="new_email">
-  </div>
-  <button type="submit" class="btn btn-primary mb-2">Update Profile</button>
-</form>
-<h2>View and Delete awards you previously gnerated</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">Recipient Name</th>
-      <th scope="col">Recipient Email</th>
-      <th scope="col">Award Type</th>
-      <th scope="col">Creation Time</th>
-      <th scope="col">Created by User</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each awards}}
-    <tr>
-      <th scope="row">{{this.id}}</th>
-      <td>{{this.recipient_name}}</td>
-      <td>{{this.recipient_email}}</td>
-      <td>{{this.award_type}}</td>
-      <td>{{this.creation_time}}</td>
-      <td>{{this.creation_time}}</td>
-      <td>{{this.creator_id}}</td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
-<button class="btn btn-primary mb-2">Delete All Awards</button>
+<!--Hide alert div when its empty (success message for image upload) -->
+<style>
+  div:empty {
+     display: none;
+  }
+</style>
+
+<a href="/user_dashboard" class="btn btn-outline-secondary" role="button">Return To User Dashboard</a>
+<div>
+  <h1>Edit Profile</h1>
+  <div class="alert alert-success" role="alert">{{info}}</div>
+  <p>Existing Email Address: {{existing}}</p>
+  <form action="/edit_profile" method="post">
+    <div class="form-group">
+      <label>New Email Address</label>
+      <input type="text" class="form-control" name="new_email">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Update Profile</button>
+  </form>
+</div>
+<div>
+  <h2>Upload Signature Image</h2>
+  <form action="/edit_profile/upload" enctype="multipart/form-data" method="post">
+		<input type="file" name="upload" />
+		<br>
+    <br>
+    <button type="submit" class="btn btn-primary mb-2">Upload Image</button>
+  </form>
+</div>
+<div>
+  <h2>Previously Created Awards by Me</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Recipient Name</th>
+        <th scope="col">Recipient Email</th>
+        <th scope="col">Award Type</th>
+        <th scope="col">Creation Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each awards}}
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.recipient_name}}</td>
+        <td>{{this.recipient_email}}</td>
+        <td>{{this.award_type}}</td>
+        <td>{{this.creation_time}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <form action="/edit_profile/delete" method="post">
+    <button class="btn btn-primary mb-2">Delete All Awards</button>
+  </form>
+</div>
