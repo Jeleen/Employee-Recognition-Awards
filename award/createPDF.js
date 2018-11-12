@@ -6,7 +6,7 @@ const absolutePath = path.join(__dirname,'../');
 
 //necessary libary
 const latex = require('../node_modules/node-latex/');
-
+const createMail = require('../award/createMail.js');
 /*
 * createPDF(id) takes award Id, to make a <award ID>.PDF
 */
@@ -27,10 +27,19 @@ function createPDF(id){
 		inputs: resolve(join(__dirname, 'data'))}
 	latex(input, options).pipe(output);
 
-	//const pdf = latex(input)
 	console.log("PDF CREATED!!");
-	//pdf.pipe(output)
-	//pdf.on('error', err => console.error(err))
+
+	createMail(id);
+
+	//createImage(id);
+
 };
+
+
+
+function createImage(id){
+
+///FIND AN IMAGE MAKER that works
+}
 
 module.exports = createPDF;
