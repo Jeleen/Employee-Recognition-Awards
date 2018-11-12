@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-      <link href="../starter-template.css" rel="stylesheet">
+      <meta content="width=device-width, initial-scale=1" name="viewport">
+       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
+       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="../starter-template.css" rel="stylesheet">
    </head>
    <body>
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" *ngIf="!showNav">
          <a class="navbar-brand" href="#">Employee Recognition Awards System</a>
-         <button class="navbar-toggler" id="hideMe5" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+         <button class="navbar-toggler" id="hideMe5" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
          </button>
          <div class="collapse navbar-collapse" Id="navbarNavDropdown">
@@ -19,10 +23,12 @@
                   <a class="nav-link" href="/accountsMain">Accounts <span class="sr-only">(current)</span></a>
                </li>
                <li class="nav-item" id="hideMe3">
-                  <a class="nav-link" href="#">BI Reports</a>
+                  <a class="nav-link" href="/businessIntelligence">BI Reports</a>
                </li>
             </ul>
          </div>
+                       <a href="/logout" >Sign out</a>
+
       </nav>
       <div class="container-fluid" >
       <div class="row">
@@ -30,7 +36,7 @@
             <h2>{{{title}}}</h2>
             <div class="sidebar-sticky">
                <ul class="nav flex-column">
-                  <li class="nav-item">
+                  <li class="nav-item active">
                      <a id="hideAdmin" class="nav-link active" href="/getAllAdmins" value="Admins">
                      Admins<span class="sr-only">(current)</span>
                      </a>

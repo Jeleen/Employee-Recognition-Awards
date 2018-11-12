@@ -15,6 +15,7 @@
     "google-charts-component": "^1.0.0",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "morgan": "~1.9.0",
     "node-latex": "^2.4.4",
