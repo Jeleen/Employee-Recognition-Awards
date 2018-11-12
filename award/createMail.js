@@ -91,18 +91,18 @@ function transportWrapper(obj, id){
         subject: subjectLine, // Subject line
         text: 'Congratulations!', // plain text body optional
         //use html to embed images with "cid" value
-        html: 'Embedded image: <img src="cid:picture@hah@2a.com"/>', // html body
+        html: '<B>You are a...<b><br/><br /> DOWNLOAD your PDF!<img src="cid:picture@hah@2a.com"/>', // html body
         //setup the pdf attachment here
   attachments: [{
 		filename: id+'.pdf',
-		path: absolutePath+'award/'+id+'.pdf'}
+		path: absolutePath+'award/'+id+'.pdf'},
     //cid: <same as cid value in html
 //  {//filename, path, cid
-//{
-	//	filename: 'test.png',
-		//path: absolutePath+'award/'+'test.png',
-    //cid: 'picture@hah@2a.com'
-	//}
+{
+		filename: 'winner.png',
+		path: absolutePath+'award/data/image/'+'winner.png',
+    cid: 'picture@hah@2a.com'
+	}
 
 ]
     };
