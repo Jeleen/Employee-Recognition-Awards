@@ -95,14 +95,14 @@ function transportWrapper(obj, id){
         //setup the pdf attachment here
   attachments: [{
 		filename: id+'.pdf',
-		path: absolutePath+'award/'+id+'.pdf'},
+		path: absolutePath+'award/'+id+'.pdf'}
     //cid: <same as cid value in html
 //  {//filename, path, cid
-{
-		filename: 'test.png',
-		path: absolutePath+'award/'+'test.png',
-    cid: 'picture@hah@2a.com'
-	}
+//{
+	//	filename: 'test.png',
+		//path: absolutePath+'award/'+'test.png',
+    //cid: 'picture@hah@2a.com'
+	//}
 
 ]
     };
