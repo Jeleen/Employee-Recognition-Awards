@@ -1,6 +1,6 @@
 body {
-  padding-top: 80px;
-  padding-left: 50px;
+  padding-top: 62px;
+  padding-left: 0px;
 }
 
 .starter-template {
@@ -16,7 +16,32 @@ body {
     font-size: 14px;
     
 }
-  
+#panel-body {
+    font-size: 14px;
+    padding-left: 10px;
+    
+}
+
+//input {
+//    font-size: 14px;
+//    padding-left: 20px;
+//    width: 20px;
+    
+//}
+#chart_div_time {
+      padding-left: 0px;
+      background-color: rgb(34, 34, 34);
+
+}
+
+
+#generateReport {
+    font-size: 14px;
+}
+
+.side-nav {
+	width:10px;
+}
 .editMe {
 	width: 30px;
 }
