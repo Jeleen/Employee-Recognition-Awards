@@ -29,7 +29,7 @@ router.post('/upload', multipartMiddleware, function(req, res) {
   appRepo.getUserById(req.session.loggedInId)
     .then(user => {
       var file = req.files.upload;
-      var sigImagePath = 'images/' + user.email + '_' + file.name;
+      var sigImagePath = 'images/' + user.id + '_' + file.name;
       fs.renameSync(file.path, sigImagePath);
       appRepo.editUserImage(req.session.loggedInId, sigImagePath).then(() => {
         res.render('edit_profile', { existing: user.email, info: "Successfully uploaded image"})
