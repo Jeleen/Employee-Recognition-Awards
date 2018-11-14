@@ -29,20 +29,22 @@ console.log(req.body.thisReport);
 				csv = false;
 			}else{ var exportCSV = "";}
 
-
 			//Sort admins and group by time of account creation
 			var sortedAdmins = _.orderBy(admins, ['creation_time'], ['asc']);
 			var myJSON = JSON.stringify(getCreationTimes(sortedAdmins));
+			var myJSONlogin = JSON.stringify(getLoginAttempts(admins));
+
             //render page
 			res.render('businessIntelligence', {
 				admins: admins,
-		        searchtitle: "Query: All Admins",
-		        title: "Business Intelligence Reports",
+		        title: "Business Intelligence",
+		        queryTitle: "Admin Report",
 		        exportCSV: exportCSV,
-		        myJSON: myJSON,
+		        myJSON: myJSON, myJSONlogin: myJSONlogin,
 		        myJSON2: 0,
 		        myJSONorgchart: 0,
-		        chartTitle: "Admin account creation by date",
+		        chartTitle: "Admin Account Creations By Date",
+		        chartTitleLogin: "Admin Login Attempts",
 		        thisReport: "allAdmins"
 
 		    });
@@ -58,6 +60,7 @@ console.log(req.body.thisReport);
 				csv = false;
 			}
       		else { var exportCSV = "";}
+			var myJSONlogin = JSON.stringify(getLoginAttempts(users));
 
 			//Sort and group users by time of account creation
 			var sortedUsers = _.orderBy(users, ['creation_time'], ['asc']);
@@ -66,11 +69,11 @@ console.log(req.body.thisReport);
 		        users: users,
 		        myJSON: myJSON,
 		        myJSON2: 0,
-		        myJSONorgchart: 0,
-		        title: "Business Intelligence Reports",
+		        myJSONorgchart: 0, myJSONlogin: myJSONlogin,
+		        title: "Business Intelligence",
 		        exportCSV: exportCSV,
-		        searchtitle: "Query: All Users",
-		        chartTitle: "Number of user accounts created on a date",
+		        chartTitle: "User Account Creations By Date",
+		        chartTitleLogin: "User Login Attempts",
 		        thisReport: "allUsers"
 			});
 	    }).catch(error => console.log('Error getting all users: ', error));
@@ -92,12 +95,17 @@ console.log(req.body.thisReport);
 		        myarray[i][1] = users[i].name;
 		        myarray[i][2] = users[i].creator_id;
 			}
+			var myJSONlogin = JSON.stringify(getLoginAttempts(users));
+
+			var sortedUsers = _.orderBy(users, ['creation_time'], ['asc']);
+			var myJSON = JSON.stringify(getCreationTimes(sortedUsers));
 			var myJSONorgchart = JSON.stringify(myarray);
 			res.render('businessIntelligence', {
 		        users: users,
-		        myJSON: 0, myJSON2: 0, myJSONorgchart: myJSONorgchart,
-		        chartTitle2: "Users created by Admin ID = " + req.body.adminIdText,
-		        chartTitle: "Number of user accounts created on a date",
+		        myJSON: myJSON, myJSON2: 0, myJSONorgchart: myJSONorgchart, myJSONlogin: myJSONlogin,
+		        chartTitle2: "Users created by Admin "+ req.body.adminIdText,
+		        chartTitle: "User Account Creations By Date",
+		        chartTitleLogin: "User Login Attempts",
 		        title: "Business Intelligence Reports",
 		        exportCSV: exportCSV,
 		        thisReport: "allUsersByAdmin"
@@ -117,15 +125,18 @@ console.log(req.body.thisReport);
 			else{ var exportCSV = "";}
 			var sortedAwards = _.orderBy(awards, ['creation_time'], ['asc']);
 	        var myJSON = JSON.stringify(getCreationTimes(sortedAwards));
+	        			console.log(awards);
+			console.log(myJSON);
+
 			//PIE CHART
 			var myJSON2 = JSON.stringify(awardPieChart(awards));
     		res.render('businessIntelligence', {
     		    awards: awards,
     		    title: "Business Intelligence Reports",
-    		    searchtitle: "All Awards", chartTitle: "Number of awards created by date",
-    		    chartTitle2: "Award by type",
+    		    chartTitle: "Award Creations by Date",
+    		    chartTitle3: "Awards by Type",
     		    exportCSV: exportCSV,
-    		    myJSON: myJSON, myJSON2: myJSON2, myJSONorgchart: 0,
+    		    myJSON: myJSON, myJSON2: myJSON2, myJSONorgchart: 0, myJSONlogin: 0,
     		    thisReport: "allAwards"
     		});
     	}).catch(error => console.log('Error getting all awards: ', error));
@@ -146,11 +157,11 @@ console.log(req.body.thisReport);
 			res.render('businessIntelligence', {
 				awards: awards,
 				title: "Business Intelligence Reports",
-				searchtitle: "Awards created By User ",
-				chartTitle2: "Award by type",
+				chartTitle3: "Awards by Type",
+				chartTitle: ("Awards created by" + req.body.userIdText),
 				exportCSV: exportCSV,
 				myJSON: myJSON,
-				myJSON2: myJSON2,
+				myJSON2: myJSON2, myJSONlogin: 0,
 				myJSONorgchart: 0,
 				thisReport: "allAwardsByUser"
 			});
@@ -162,8 +173,17 @@ console.log(req.body.thisReport);
 
 
 });
+function getLoginAttempts(group)
+{
+		var myarray = new Array();
 
-
+	for (var i = 0; i < group.length; i++) {
+		myarray.push([]);
+		myarray[i][0] = group[i].id;
+		myarray[i][1] = group[i].login_attempts;
+	}
+	return myarray;
+}
 function getCreationTimes(sortedUsers)
 {
 	var myarray = new Array();
@@ -173,14 +193,14 @@ function getCreationTimes(sortedUsers)
         var year = date1.getFullYear();
         var month = ('0' + (date1.getMonth() + 1)).slice(-2);
 		var date = ('0' + date1.getDate()).slice(-2);
-		var hours = ('0' + date1.getUTCHours()).slice(-2);
-		var minutes = ('0' + date1.getUTCMinutes()).slice(-2);
-		var seconds = ('0' + date1.getUTCSeconds()).slice(-2);
-        var shortDate = month + '/' + date + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' UTC';
-       // var integer = parseInt(shortDate);
-		console.log(shortDate);
+		//var hours = ('0' + date1.getUTCHours()).slice(-2);
+		//var minutes = ('0' + date1.getUTCMinutes()).slice(-2);
+		//var seconds = ('0' + date1.getUTCSeconds()).slice(-2);
+        //var shortDate = month + '/' + date + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' UTC';
+		        var shortDate = month + '/' + date + '/' + year;
+console.log(shortDate);
 		if(i != 0){
-	    	if(sortedUsers[i].creation_time == sortedUsers[i-1].creation_time){
+	    	if(myarray[myarray.length - 1][0] == shortDate){
 				var temp = myarray[myarray.length - 1][1];
 				temp++;
 				myarray[myarray.length - 1][1] = temp;
@@ -309,27 +329,27 @@ function writeToCSVaward(awards){
 function awardPieChart(awards){
 	var myarray2 = new Array();
 		  myarray2.push([]);
-	      myarray2[0][0] = "WEEKLY";
+	      myarray2[0][0] = "WEEK";
 	      myarray2[0][1] = 0;
 	      myarray2.push([]);
-	      myarray2[1][0] = "MONTHLY";
+	      myarray2[1][0] = "MONTH";
 	      myarray2[1][1] = 0;
 	      myarray2.push([]);
-		  myarray2[2][0] = "YEARLY";
+		  myarray2[2][0] = "YEAR";
 	      myarray2[2][1] = 0;
 	      for(var i = 0; i < awards.length; i++){
 			  switch(awards[i].award_type){
-				  case "WEEKLY":
+				  case "WEEK":
 				 	var temp = myarray2[0][1];
 				  	temp++;
 		  			myarray2[0][1] = temp;
 				  	break;
-				  case "MONTHLY":
+				  case "MONTH":
 					var temp = myarray2[1][1];
 				  	temp++;
 		  			myarray2[1][1] = temp;
 		  			break;
-				  case "YEARLY":
+				  case "YEAR":
 					var temp = myarray2[2][1];
 				  	temp++;
 		  			myarray2[2][1] = temp;
