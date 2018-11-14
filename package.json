@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "connect-multiparty": "^2.2.0",
     "cookie-parser": "~1.4.3",
     "csv-export": "^1.0.2",
     "csv-writer": "^1.2.0",
@@ -19,6 +20,7 @@
     "moment": "^2.22.2",
     "morgan": "~1.9.0",
     "node-latex": "^2.4.4",
+    "nodemailer": "^4.6.8",
     "sqlite3": "^4.0.3"
   }
 }

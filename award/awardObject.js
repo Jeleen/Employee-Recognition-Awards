@@ -7,27 +7,28 @@ const absolutePath = path.join(__dirname,'../');
 const AwardDao = require('../dao');
 const AppRepository = require('../app_repository');
 
-//needed libraries
+//needed libraries (create CSV and transcribe Time)
 const createCSV = require('../award/createCSV.js');
 const moment =require('../node_modules/moment')
+
+//create a global constant:
 
 /*
 * awardObjec(id); id is the award id; the output is an object with the necesary award info
 */
 function awardObject(id){
 
-var result ={};
+const resultAwardInfo ={}
 return appRepo.getAward(id)
  .then(user => {
-   result.award_id = id;
-   result.recipient_name =user.recipient_name
-    result.recipient_email =user.recipient_email
-    result.award_type =user.award_type
-    result.creation_time =moment(user.creation_time)
+   resultAwardInfo.award_id = id;
+   resultAwardInfo.recipient_name =user.recipient_name
+    resultAwardInfo.recipient_email =user.recipient_email
+    resultAwardInfo.award_type =user.award_type
+    resultAwardInfo.creation_time =moment(user.creation_time)
     .format('MMM Do, YYYY')
-
-      result.creator_id =user.creator_id
-    return getCreator(result);
+    resultAwardInfo.creator_id =user.creator_id
+    return getCreator(resultAwardInfo)
 })
 }
 /*
@@ -35,9 +36,10 @@ return appRepo.getAward(id)
 *          and passes object arrat to CSV creator (which expects object array format)
 */
 function getCreator(obj){
-  const array =[]
+  const array =[];
   return appRepo.getUserById(obj.creator_id)
   .then(cName => {
+      console.log("WHAT IS IN cNAME", cName);
       obj.creator_name = cName.name
       array.push(obj)
     //console.log(array);
@@ -47,4 +49,5 @@ function getCreator(obj){
 }
 
 
-module.exports = awardObject;
+module.exports.awardObject = awardObject;
+//module.exports.mailAwardObj=mailAwardObj;
