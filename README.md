@@ -11,10 +11,14 @@ Features:
 * Awards are PDF-generated and emailed to honorees
 
 Tasks:
-- [ ] Create Site
-- [ ] Create DB
-- [ ] Create Awards
-- [ ] Create Users/Admins
-- [ ] Create Authentication
+- [X] Create Site
+- [X] Create DB
+- [X] Create Awards
+- [X] Create Users/Admins
+- [X] Create Authentication
 - [ ] BackEnd Work
 - [ ] FrontEnd Work
+
+
+###Requirements
+LaTeX must be installed on your machine. You can download it [here](https://www.latex-project.org/get/).
