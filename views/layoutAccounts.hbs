@@ -24,7 +24,7 @@
              <a class="nav-link" href="/accountsMain">Accounts <span class="sr-only">(current)</span></a>
 	   </li>
            <li class="nav-item" >
-             <a class="nav-link" href="#">BI Reports</a>
+             <a class="nav-link" href="/businessIntelligence">BI Reports</a>
            </li>
    
          </ul>
@@ -56,18 +56,17 @@
             </div>
           </nav>
   
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-           {{#if admins}}
-           <form method="get" action="/preAddAdmin" >
-	      	  <input id="addUser" type="submit" name="addUser" value="+ Add" /></form>
-	     <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-          	                  
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-	   	    <h1 class="h2"></h1>
-	   	           <div class="btn-toolbar mb-2 mb-md-0">
-	   	           <div class="btn-group mr-2">
-				</div>
-            </div>           
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                  <h1 class="h2">{{{title}}}</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+            {{#if admins}}
+                <form method="post" action="/preAddAdmin">
+                   <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+		   <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export</button>
+                </form>
+		
+	     </div>          
             <div class="table-responsive-sm">
            
               <table class="table table-sm">

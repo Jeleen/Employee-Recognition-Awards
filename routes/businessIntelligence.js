@@ -5,7 +5,7 @@ var _ = require('lodash');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 router.get('/', function(req, res, next) {
   res.render('businessIntelligence', {
-    title: "Business Intelligence Reports"
+    main: "main", title: "Business Intelligence Reports"
   });
 });
 
@@ -33,7 +33,6 @@ console.log(req.body.thisReport);
 			var sortedAdmins = _.orderBy(admins, ['creation_time'], ['asc']);
 			var myJSON = JSON.stringify(getCreationTimes(sortedAdmins));
 			var myJSONlogin = JSON.stringify(getLoginAttempts(admins));
-
             //render page
 			res.render('businessIntelligence', {
 				admins: admins,
@@ -41,10 +40,10 @@ console.log(req.body.thisReport);
 		        queryTitle: "Admin Report",
 		        exportCSV: exportCSV,
 		        myJSON: myJSON, myJSONlogin: myJSONlogin,
-		        myJSON2: 0,
-		        myJSONorgchart: 0,
-		        chartTitle: "Admin Account Creations By Date",
+		        myJSON2: 0, myJSONorgchart: 0,
+		        chartTitleAU: "Admin Account Creations By Date",
 		        chartTitleLogin: "Admin Login Attempts",
+		        chartTitleLastLogin: "Admin Last Login",
 		        thisReport: "allAdmins"
 
 		    });
@@ -65,15 +64,20 @@ console.log(req.body.thisReport);
 			//Sort and group users by time of account creation
 			var sortedUsers = _.orderBy(users, ['creation_time'], ['asc']);
 			var myJSON = JSON.stringify(getCreationTimes(sortedUsers));
-			res.render('businessIntelligence', {
+						var myJSONregions = JSON.stringify(getRegions(users));
+console.log(myJSONregions);
+		res.render('businessIntelligence', {
 		        users: users,
 		        myJSON: myJSON,
+		        queryTitle: "User Report",
+
 		        myJSON2: 0,
-		        myJSONorgchart: 0, myJSONlogin: myJSONlogin,
+		        myJSONorgchart: 0, myJSONlogin: myJSONlogin, myJSONregions: myJSONregions,
 		        title: "Business Intelligence",
 		        exportCSV: exportCSV,
-		        chartTitle: "User Account Creations By Date",
+		        chartTitleAU: "User Account Creations By Date",
 		        chartTitleLogin: "User Login Attempts",
+		        chartTitleLastLogin: "User Last Login",
 		        thisReport: "allUsers"
 			});
 	    }).catch(error => console.log('Error getting all users: ', error));
@@ -81,33 +85,34 @@ console.log(req.body.thisReport);
 
 	// Request for: all users created by an admin
 	else if ((req.body.userRadio == "allUsers" && !(req.body.awardRadio) && (req.body.adminRadio != "allAdmins")) || (req.body.thisReport == "allUsersByAdmin")) {
-	    appRepo.getAllUsersCreatedBy(req.body.adminIdText).then((users) => {
+	    appRepo.getAllUsersCreatedBy(req.body.adminIdText).then((usersA) => {
 			if (csv) {
 		  		var exportCSV = "Report exported to CSV file:  data.csv";
-				writeToCSVuser(users);
+				writeToCSVuser(usersA);
 				csv = false;
 			} else{ var exportCSV = "";}
 
 			var myarray = new Array();
-			for (var i = 0; i < users.length; i++) {
+			for (var i = 0; i < usersA.length; i++) {
 		        myarray.push([]);
-		        myarray[i][0] = users[i].id;
-		        myarray[i][1] = users[i].name;
-		        myarray[i][2] = users[i].creator_id;
+		        myarray[i][0] = usersA[i].id;
+		        myarray[i][1] = usersA[i].name;
+		        myarray[i][2] = usersA[i].creator_id;
 			}
-			var myJSONlogin = JSON.stringify(getLoginAttempts(users));
+			var myJSONlogin = JSON.stringify(getLoginAttempts(usersA));
 
-			var sortedUsers = _.orderBy(users, ['creation_time'], ['asc']);
+			var sortedUsers = _.orderBy(usersA, ['creation_time'], ['asc']);
 			var myJSON = JSON.stringify(getCreationTimes(sortedUsers));
 			var myJSONorgchart = JSON.stringify(myarray);
 			res.render('businessIntelligence', {
-		        users: users,
+		        usersA: usersA,
 		        myJSON: myJSON, myJSON2: 0, myJSONorgchart: myJSONorgchart, myJSONlogin: myJSONlogin,
-		        chartTitle2: "Users created by Admin "+ req.body.adminIdText,
+		        chartTitleOrg: "Users created by Admin "+ req.body.adminIdText,
 		        chartTitle: "User Account Creations By Date",
 		        chartTitleLogin: "User Login Attempts",
 		        title: "Business Intelligence Reports",
-		        exportCSV: exportCSV,
+		        chartTitleLastLogin: "User Last Login",
+				exportCSV: exportCSV,
 		        thisReport: "allUsersByAdmin"
 			});
 	    }).catch(error => console.log('Error getting all users: ', error));
@@ -133,7 +138,7 @@ console.log(req.body.thisReport);
     		res.render('businessIntelligence', {
     		    awards: awards,
     		    title: "Business Intelligence Reports",
-    		    chartTitle: "Award Creations by Date",
+    		    chartTitleA: "Award Creations by Date",
     		    chartTitle3: "Awards by Type",
     		    exportCSV: exportCSV,
     		    myJSON: myJSON, myJSON2: myJSON2, myJSONorgchart: 0, myJSONlogin: 0,
@@ -161,7 +166,7 @@ console.log(req.body.thisReport);
 				chartTitle: ("Awards created by" + req.body.userIdText),
 				exportCSV: exportCSV,
 				myJSON: myJSON,
-				myJSON2: myJSON2, myJSONlogin: 0,
+				myJSON2: myJSON2, myJSONlogin: 0, myJSONlastLogin: 0,
 				myJSONorgchart: 0,
 				thisReport: "allAwardsByUser"
 			});
@@ -184,6 +189,46 @@ function getLoginAttempts(group)
 	}
 	return myarray;
 }
+
+function getRegions(group){
+	var myarray2 = new Array();
+	for(var i = 0; i < group.length; i++){
+
+	myarray2.push([]);
+		      myarray2[0][0] = "United States";
+		      myarray2[0][1] = 0;
+		      myarray2.push([]);
+		      myarray2[1][0] = "Canada";
+		      myarray2[1][1] = 0;
+		      myarray2.push([]);
+			  myarray2[2][0] = "Portugal";
+		      myarray2[2][1] = 0;
+		      for(var i = 0; i < group.length; i++){
+				  switch(group[i].region){
+					  case "United States":
+					 	var temp = myarray2[0][1];
+					  	temp++;
+			  			myarray2[0][1] = temp;
+					  	break;
+					  case "Canada":
+						var temp = myarray2[1][1];
+					  	temp++;
+			  			myarray2[1][1] = temp;
+			  			break;
+					  case "Portugal":
+						var temp = myarray2[2][1];
+					  	temp++;
+			  			myarray2[2][1] = temp;
+			  			break;
+			  		  default:
+			  		  	console.log("--");
+				  }
+	 	 }
+	 }
+	 	 return myarray2;
+}
+
+
 function getCreationTimes(sortedUsers)
 {
 	var myarray = new Array();

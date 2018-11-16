@@ -26,46 +26,118 @@
    
          </ul>
        </div>
-                     <a href="/logout" >Sign out</a>
+                     <a href="/logout" >Logout</a>
 
 </nav>
+<div class="sidebar">
+<h3 class="headingA">Accounts</h3>
+{{#if admins}}
+  <a class="active" href="/getAllAdmins" value="Admins">Admins</a>
+   <a href="/getAllUsers" value="Users">Users</a>
+ {{/if}}
+  {{#if users}}
+    <a href="/getAllAdmins" value="Admins">Admins</a>
+<a class="active" href="/getAllUsers" value="Users">Users</a>
+  {{/if}}
+  {{#if main}}
+    <a href="/getAllAdmins" value="Admins">Admins</a>
+    <a href="/getAllUsers" value="Users">Users</a>
+{{/if}}
+</div>
+
+
   
       <div class="container-fluid" >
         <div class="row">
-          <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
-              <ul class="nav flex-column">
-                         <h2>{{{title}}}</h2>
- <li class="nav-item">
-                  <a class="nav-link active" href="/getAllAdmins" value="Admins">
-                    Admins<span class="sr-only">(current)</span>
-                  </a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="/getAllUsers">Users </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-          
-          
-          
-          
- <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <div class="btn-toolbar mb-2 mb-md-0">
-            {{#if admins}}
          
-         
+          
+          
+          
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+	                  
+	                 {{#if admins}}
+                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-right pb-2 mb-3 border-bottom">
+	              <div class="btn-toolbar mb-2 mb-md-0">
+
          <form method="get" action="/addAdmin" >
-	      	  <button id="addAdmin" type="submit" name="addAdmin" value="+ Add" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton" >+ Add</button>
-	      	  </form>
+	      	  <button id="addAdmin" type="submit" name="addAdmin" value="+ Add" class="btn btn-sm btn-outline-secondary" >+ Add</button>
+ </form>
 	 {{/if}}
 	 {{#if users}}
+	 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-right pb-2 mb-3 border-bottom">
+	              <div class="btn-toolbar mb-2 mb-md-0">
 	        <form method="get" action="/addUser" >
 		<button id="addUser" type="submit" name="addUser" value="+ Add" class="btn btn-sm btn-outline-secondary"/>+ Add </button></form>
 	 {{/if}}
+	 
+	     </div>
+            
 	 </div>
-	 </div>
+	 <div class="table-responsive-sm">
+	              {{#if admins}}
+	               <table class="table table-sm">
+	 	       <thead class="thead-light">
+	                   <tr>
+	                     <th>ID</th>
+	                     <th>Email</th>
+	                     <th>Last Login</th>
+	                     <th>Login Attempts</th>
+	                     <th>Created</th>
+	                     <th>Action</th>
+	                   </tr>
+	                 </thead>
+	                 <tbody>
+	                 {{#each admins}}
+	 		   <tr>
+	 		     <form method="post" action="/editAdmins" >
+	 		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}" ></td>
+	 		      <td><input type="text" name="email" id="email" value="{{this.email}}" ></td>
+	 		        <td>{{this.last_login}}</td>
+	 		      <td>{{this.login_attempts}}</td>
+	 		     <td>{{this.creation_time}}</td>
+	 		      <td><input id="Save" type="submit" name="Save" value="Save" >
+	 		    <input id="delete" type="submit" name="delete" value="delete" ></td>
+	 		      </form>
+	 		    </tr>
+	                  {{/each}}
+	                   {{/if}}
+	                 </tbody>
+	               </table>
+	               
+	 	{{#if users}}
+	            <table class="table table-sm">
+	 	   <thead class="thead-light">
+	                   <tr>
+	                     <th>ID</th>
+	                     <th>Name</th>
+	                     <th>Email</th>
+	                     <th>Region</th>
+	                     <th>Last Login</th>
+	                     <th>Login Attempts</th>
+	                     <th>Created</th>
+	                     <th>Action</th>
+	 
+	                   </tr>
+	                 </thead>
+	                 <tbody>
+	                 {{#each users}}
+	                   <tr>
+	                   <form method="post" action="/editUsers" >
+	  		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}"></td>
+	 		   <td>{{this.name}}</td>
+	                    <td><input type="text" name="email" id="email" placeholder="{{this.email}}" ></td>
+	 		   <td>{{this.region}}</td>
+	 		   <td>{{this.last_login}}</td>
+	                    <td>{{this.login_attempts}}</td>
+	                    <td>{{this.creation_time}}</td>
+	                    <td><input id="save" type="submit" name="save" value="Save" >
+	                     <input id="delete" type="submit" name="delete" value="delete" ></td>
+	                   </tr></form>
+	                  {{/each}}
+	                   {{/if}}
+	                 </tbody>
+	               </table>
+            </div>
          <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
          <h1 class="h2"></h1>
@@ -73,71 +145,7 @@
          <div class="btn-group mr-2">
 	</div>
             </div>           
-            <div class="table-responsive-sm">
-             {{#if admins}}
-              <table class="table table-sm">
-	       <thead class="thead-light">
-                  <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Last Login</th>
-                    <th>Login Attempts</th>
-                    <th>Created</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {{#each admins}}
-		   <tr>
-		     <form method="post" action="/editAdmins" >
-		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}" ></td>
-		      <td><input type="text" name="email" id="email" value="{{this.email}}" ></td>
-		        <td>{{this.last_login}}</td>
-		      <td>{{this.login_attempts}}</td>
-		     <td>{{this.creation_time}}</td>
-		      <td><input id="Save" type="submit" name="Save" value="Save" >
-		    <input id="delete" type="submit" name="delete" value="delete" ></td>
-		      </form>
-		    </tr>
-                 {{/each}}
-                  {{/if}}
-                </tbody>
-              </table>
-              
-	{{#if users}}
-           <table class="table table-sm">
-	   <thead class="thead-light">
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Region</th>
-                    <th>Last Login</th>
-                    <th>Login Attempts</th>
-                    <th>Created</th>
-                    <th>Action</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                {{#each users}}
-                  <tr>
-                  <form method="post" action="/editUsers" >
- 		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}"></td>
-		   <td>{{this.name}}</td>
-                   <td><input type="text" name="email" id="email" placeholder="{{this.email}}" ></td>
-		   <td>{{this.region}}</td>
-		   <td>{{this.last_login}}</td>
-                   <td>{{this.login_attempts}}</td>
-                   <td>{{this.creation_time}}</td>
-                   <td><input id="save" type="submit" name="save" value="Save" >
-                    <input id="delete" type="submit" name="delete" value="delete" ></td>
-                  </tr></form>
-                 {{/each}}
-                  {{/if}}
-                </tbody>
-              </table>
-            </div>
+            
           </main>
         </div>
       </div>

@@ -13,12 +13,6 @@ router.post('/', function(req, res, next){
 		res.render('adminProfile',  {admin: admin, edit: "edit", timeC: convertDate(admin.creation_time), timeLL: convertDate(admin.last_login), title: "My Profile" });
 	    }).catch(error => console.log('Error getting admin: ', error));
     }
-
-    else if(req.body['view'] == "view"){
-		appRepo.getAdminById(req.session.loggedInId).then((admin) => {
-	    res.render('adminProfile',  {admin: admin, view: "view", timeC: convertDate(admin.creation_time), timeLL: convertDate(admin.last_login), title: "My Profile" });
-	    }).catch(error => console.log('Error getting admin: ', error));
-	}
 	else{
 		appRepo.updateAdminEmail(req.body.email, req.body.id)
   .then((data) => console.log('Succesfully updated admin email'))

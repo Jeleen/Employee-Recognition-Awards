@@ -9,10 +9,10 @@ class AppRepository {
       VALUES (?, ?, ?, ?, ?, ?, ?)`, [name, email, password, 0, region, d.getTime(), adminID]);
   }
 
-  createAdmin(email, password, cId) {
+  createAdmin(name, email, password, cId) {
       var d = new Date();
-	  return this.dao.doRun(`INSERT INTO admins (email, password, login_attempts, creation_time, creator_id)
-      VALUES (?, ?, ?, ?, ?)`, [email, password, 0, d.getTime(), cId]);
+	  return this.dao.doRun(`INSERT INTO admins (name, email, password, login_attempts, creation_time, creator_id)
+      VALUES (?, ?, ?, ?, ?, ?)`, [name, email, password, 0, d.getTime(), cId]);
   }
 
   createAward(recipient_name, recipient_email, creation_time, award_type, creator_id) {
@@ -36,10 +36,12 @@ class AppRepository {
     return this.dao.doGet(`SELECT * FROM users WHERE email = ?`, [email]);
   }
 
-  getAdminByEmail(name) {
-    return this.dao.doGet(`SELECT * FROM admins WHERE email = ?`, [name]);
+  getAdminByName(name) {
+    return this.dao.doGet(`SELECT * FROM admins WHERE name = ?`, [name]);
   }
-
+ getAdminByEmail(email) {
+    return this.dao.doGet(`SELECT * FROM admins WHERE email = ?`, [email]);
+  }
   getUserById(id) {
     return this.dao.doGet(`SELECT * FROM users WHERE id = ?`, [id]);
   }
@@ -132,6 +134,7 @@ class AppRepository {
     return this.dao.doRun(`
       CREATE TABLE IF NOT EXISTS admins (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
         email TEXT,
         password TEXT,
         last_login INTEGER,
@@ -177,7 +180,7 @@ class AppRepository {
             console.log('Default Admin, defaultAdmin already exists in db');
           } else {
             console.log('No existing default Admin found in db, creating defaultAdmin');
-            return this.createAdmin("defaultAdmin", "pass", 1);
+            return this.createAdmin("defaultAdmin", "defaultAdmin", "pass", 1);
           }
         });
       })

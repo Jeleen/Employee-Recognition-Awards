@@ -1,5 +1,5 @@
 body {
-  padding-top: 62px;
+  padding-top: 56px;
   padding-left: 0px;
 }
 
@@ -35,9 +35,7 @@ body {
 }
 
 
-#generateReport {
-    font-size: 14px;
-}
+
 
 .side-nav {
 	width:10px;
@@ -53,4 +51,159 @@ body {
 	height: 300px;
 }
 
+.btn-link{
+  border:none;
+  outline:none;
+  background:none;
+  cursor:pointer;
+  padding:0;
+  color:#0000EE;
+  text-decoration:none !important;
+  font-family:inherit;
+  font-size:inherit;
   
+}
+.side-nav-heading{
+  border:none;
+  outline:none;
+  background:none;
+  cursor:pointer;
+  color:#1A1A1A;
+  padding:0;
+  text-decoration:none !important;
+  font-family:inherit;
+  font-size:inherit;
+  
+}
+
+.export_csv_notice{
+  color: rgb(255, 0, 0);
+  text-align: right;
+  padding-right: 20px;
+  
+}
+
+.column1 {
+    float: left;
+    width: 50%;
+    
+}
+
+
+
+
+/* Clear floats after the columns */
+.row1 {
+    height: 300px;
+    
+}
+.column2 {
+    float: left;
+    width: 50%;
+    
+}
+
+.column3 {
+    float: right;
+    width: 50%;
+    height: 300px;
+}
+
+
+/* Clear floats after the columns */
+.row2 {
+    height: 300px;
+    
+}
+.backy {
+    background: #0000EE;
+    
+}
+
+#cancel {
+	    display: inline-block;
+	    float: left;
+
+}
+#Save {
+	    display: inline-block;
+	    float: left;
+
+}
+
+.headingA {
+	background-color: "none";
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+ body .btn-secondary {
+    background-color: #FFFFFF;
+    border-color: #A9A9A9;
+    }
+    
+    .sidebar-sticky a{
+    	float: left;
+    }
+    
+   /* The side navigation menu */
+   .sidebar {
+     margin: 0;
+     padding: 0;
+     width: 200px;
+     background-color: #f1f1f1;
+     position: fixed;
+     height: 100%;
+     overflow: auto;
+   }
+   
+   /* Sidebar links */
+   .sidebar a {
+     display: block;
+     color: black;
+     padding: 16px;
+     text-decoration: none;
+   }
+   
+   /* Active/current link */
+   .sidebar a.active {
+     background-color: #a8a8a8;
+     color: white;
+   }
+   
+   /* Links on mouse-over */
+   .sidebar a:hover:not(.active) {
+     background-color: #b7b7b7;
+     color: white;
+   }
+   
+   
+   
+   
+   
+   /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+   div.content {
+     margin-left: 200px;
+     padding: 1px 16px;
+     height: 1000px;
+   }
+   
+   /* On screens that are less than 700px wide, make the sidebar into a topbar */
+   @media screen and (max-width: 700px) {
+     .sidebar {
+       width: 100%;
+       height: auto;
+       position: relative;
+     }
+     .sidebar a {float: left;}
+     div.content {margin-left: 0;}
+   }
+   
+   /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+   @media screen and (max-width: 400px) {
+     .sidebar a {
+       text-align: center;
+       float: none;
+     }
+}
