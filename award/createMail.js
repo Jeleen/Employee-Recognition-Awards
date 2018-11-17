@@ -86,8 +86,8 @@ function transportWrapper(obj, id){
     var subjectLine= obj.recipient_name +"'s Employee of the " +obj.award_type+ " Award"
 
     let mailOptions = {
-      //  from: creatorEmail '<creatorEmail@haha>', // sender address
-        to: '<web3MailPdf@gmail.com>', // list of receivers
+        from: gmail.Username, // sender address
+        to: obj.recipient_email, // list of receivers
         subject: subjectLine, // Subject line
         text: 'Congratulations!', // plain text body optional
         //use html to embed images with "cid" value
