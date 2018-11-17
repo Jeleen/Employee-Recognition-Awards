@@ -100,22 +100,34 @@
   <a class="active"><button type="submit" name="adminRadio" value="allAdmins" class="btn-link">Admins</button></a>
    <a><button type="submit" name="userRadio" value="allUsers" class="btn-link">Users</button></a>
     <a><button type="submit" name="awardRadio" value="allAwards" class="btn-link">Awards</button></a>
+    <a><button type="submit" name="custom" value="custom" class="btn-link">Custom Report</button></a>
+    
 {{/if}}
 {{#if users}}
   <a><button type="submit" name="adminRadio" value="allAdmins" class="btn-link">Admins</button></a>
    <a class="active"><button type="submit" name="userRadio" value="allUsers" class="btn-link">Users</button></a>
     <a><button type="submit" name="awardRadio" value="allAwards" class="btn-link">Awards</button></a>
+    <a><button type="submit" name="custom" value="custom" class="btn-link">Custom Report</button></a>
 {{/if}}
 {{#if awards}}
   <a><button type="submit" name="adminRadio" value="allAdmins" class="btn-link">Admins</button></a>
    <a><button type="submit" name="userRadio" value="allUsers" class="btn-link">Users</button></a>
     <a class="active"><button type="submit" name="awardRadio" value="allAwards" class="btn-link">Awards</button></a>
+    <a><button type="submit" name="custom" value="custom" class="btn-link">Custom Report</button></a>
 {{/if}}
 {{#if main}}
   <a><button type="submit" name="adminRadio" value="allAdmins" class="btn-link">Admins</button></a>
    <a><button type="submit" name="userRadio" value="allUsers" class="btn-link">Users</button></a>
     <a><button type="submit" name="awardRadio" value="allAwards" class="btn-link">Awards</button></a>
+    <a><button type="submit" name="custom" value="custom" class="btn-link">Custom Report</button></a>
 {{/if}}
+ {{#if custom}}
+  <a><button type="submit" name="adminRadio" value="allAdmins" class="btn-link">Admins</button></a>
+   <a><button type="submit" name="userRadio" value="allUsers" class="btn-link">Users</button></a>
+    <a><button type="submit" name="awardRadio" value="allAwards" class="btn-link">Awards</button></a>
+    <a><button type="submit" name="custom" value="custom" class="btn-link">Custom Report</button></a>
+{{/if}}
+
 </form>
 </div>
 <div class="container-fluid" >
@@ -126,69 +138,75 @@
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h1 class="h2">{{{queryTitle}}}</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
-                 <h5 class="export_csv_notice" name="export_csv_notice" id="export_csv_notice">{{{exportCSV}}} </h5>
             </div>
             {{#if myJSON}}
-             <form method="post" action="/businessIntelligence">
+             <form method="post" action="/exportCSV">
                 <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
-                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export</button>
+                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
              </form>
 	    {{/if}}
 	 </div>
 	<div class="row1">
 
 	{{#if chartTitleAU}}
+	
 			  <div class="column1"> 
-			  	<p class="lead">{{{chartTitleAU}}}</p>
+			  	<h5 class="chartHeader">{{{chartTitleAU}}}</h5>
 				<canvas id="myChart" class="charty"></canvas>
 			  </div>
 			  <div class="column1">
-			  	<p class="lead">{{{chartTitleLogin}}}</p>
+			  	<h5 class="chartHeader">{{{chartTitleLogin}}}</h5>
 				<canvas id="myChartLogins" class="charty"></canvas>
 			  </div>
-  			
-	            <div class="column3" id="regions_div" ></div>
-
+  		{{#if users}}
+  		 <div class="column1">
+			<h5 class="chartHeader">{{{chartTitleRegion}}}</h5>
+			<canvas id="pie-chart-2" class="column3" ></canvas>
+	  	</div>
+                <div class="column1">
+ 		 	<h5 class="chartHeader">Map of Users by Region</h5>
+	            <div id="regions_div" ></div>
+	            </div>
+{{/if}}
 			  	
 			 	
        {{/if}}
       {{#if chartTitleOrg}}
       			  <div class="column1"> 
-      			  	<p class="lead">{{{chartTitle}}}</p>
-      				<canvas id="myChart" class="charty"></canvas>
+      			  	<h5 class="chartHeader">{{{chartTitle}}}</h5>
+      				<canvas id="myChart" ></canvas>
       			  </div>
       			  <div class="column1">
-      			  	<p class="lead">{{{chartTitleLogin}}}</p>
-      				<canvas id="myChartLogins" class="charty"></canvas>
+      			  	<h5 class="chartHeader">{{{chartTitleLogin}}}</h5>
+      				<canvas id="myChartLogins" ></canvas>
       			  </div>
       			   <div class="column1">
-			       	<p class="lead">{{{chartTitleOrg}}}</p>
+			       	<h5 class="chartHeader">{{{chartTitleOrg}}}</h5>
  				<div id="chart_div" ></div>
       			  </div>
        {{/if}}
 	
 	{{#if chartTitleA}}
       			  <div class="column1"> 
-      			  	<p class="lead">{{{chartTitleA}}}</p>
-      				<canvas id="myChart" class="charty"></canvas>
+      			  	<h5 class="chartHeader">{{{chartTitleA}}}</h5>
+      				<canvas id="myChart" ></canvas>
       			  </div>
       			  <div class="column1">
-      			  	<p class="lead">{{{chartTitle3}}}</p>
-      				<canvas id="pie-chart" class="charty"></canvas>
+      			  	<h5 class="chartHeader">{{{chartTitle3}}}</h5>
+      				<canvas id="pie-chart" ></canvas>
       			  </div>
       			 
        {{/if}}  
        
        
-      		</div>	       
-<br><br>
-     
-<br><br>	{{#if admins}}
-		
-		   <div class="table">
+      		</div>	
+	{{#if admins}}
+		      		<hr></hr>
+
+		   <div class="table-responsive-sm">
+		                  <table class="table table-sm">
+	 	       <thead class="thead-light"> 
 		   <h4>Admin Accounts:</h4>
-		      <table class="table table-striped table-sm">
-			 <thead>
 			     <tr>
 			       <th>ID</th>
 			       <th>Email</th>
@@ -205,8 +223,8 @@
 			       <td>{{this.id}}</td>
 			       <td>{{this.email}}</td>
 			       <td>{{this.login_attempts}}</td>
-			       <td>{{this.last_login}}</td>
-			       <td>{{this.creation_time}}</td>
+			       <td>{{convertDate this.last_login}}</td>
+			       <td>{{convertDate this.creation_time}}</td>
 			       <td>{{this.creator_id}}</td>
 			    </tr>
 			  {{/each}}
@@ -220,10 +238,12 @@
       
       	       
     {{#if usersAndAwards}} 
+          		<hr></hr>
+
     <h4>Awards Created by Users:</h4>
-       <div class="table">
-          <table class="table table-striped table-sm">
-            <thead>
+       <div class="table-responsive-sm">
+                      <table class="table table-sm">
+	 	       <thead class="thead-light"> 
               <tr>
                 <th>ID</th>
                 <th>Recipient Name</th>
@@ -239,7 +259,7 @@
                 <td>{{this.id}}</td>
                 <td>{{this.recipient_name}}</td>
                 <td>{{this.recipient_email}}</td>
-                <td>{{this.creation_time}}</td>
+                <td>{{convertDate this.creation_time}}</td>
          	<td>{{this.award_type}}</td>
         	<td>{{this.creator_id}}</td>
               </tr>
@@ -249,11 +269,12 @@
            </div>{{/if}}
         
         {{#if users}} 
-        <div class="table">
-        	<h4>User Accounts:</h4>
+              		<hr></hr>
 
-          <table class="table table-striped table-sm">
-            <thead>
+        	<h4>User Accounts:</h4>
+<div class="table-responsive-sm">
+               <table class="table table-sm">
+	 	       <thead class="thead-light"> 
               <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -273,9 +294,9 @@
                 <td>{{this.name}}</td>
                 <td>{{this.email}}</td>
                 <td>{{this.region}}</td>
-                <td>{{this.last_login}}</td>
+                <td>{{convertDate this.last_login}}</td>
                 <td>{{this.login_attempts}}</td>
-                <td>{{this.creation_time}}</td>
+                <td>{{convertDate this.creation_time}}</td>
                 <td>{{this.creator_id}}</td>
               </tr>
               {{/each}}
@@ -284,10 +305,12 @@
           </div>{{/if}}
          
         {{#if awards}} 
+              		<hr></hr>
+
 	<h4>Awards:</h4>
-	<div class="table">
-	<table class="table table-striped table-sm">
-	<thead>
+	<div class="table-responsive-sm">
+	               <table class="table table-sm">
+	 	       <thead class="thead-light"> 
 	  <tr>
    	   <th>ID</th>
 	   <th>Recipient Name</th>
@@ -303,7 +326,7 @@
 	   <td>{{this.id}}</td>
 	   <td>{{this.recipient_name}}</td>
 	   <td>{{this.recipient_email}}</td>
-	   <td>{{this.creation_time}}</td>
+	   <td>{{convertDate this.creation_time}}</td>
 	   <td>{{this.award_type}}</td>
 	   <td>{{this.creator_id}}</td>
 	</tr>
@@ -329,6 +352,47 @@
   
   <script>
   
+ 
+  
+  
+  
+  
+  
+   if({{{myJSONregions}}} != 0){
+    	var regA = new Array();
+       	regA.push([]);
+       	regA.push([]);
+       	var regJ = {{{myJSONregions}}};
+      	for(var i = 0; i < regJ.length; i++){
+      	 	regA[0][i] = regJ[i][0];
+      	        regA[1][i] = regJ[i][1];
+    	}
+     	new Chart(document.getElementById("pie-chart-2"), {
+     	    type: 'pie',
+     	    data: {
+     	      labels: regA[0],
+     	      datasets: [
+     	        {
+     	          label: "Country (millions)",
+     	          backgroundColor: ["blue","orange","green"],
+     	          data: regA[1]
+     	        }
+     	      ]
+     	    },
+     	    options: {
+     	      
+     	    }
+    	});
+}  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 if({{{myJSONlogin}}} != 0){
 	var ctxL = document.getElementById("myChartLogins").getContext('2d');
 	var glog = new Array();	
@@ -339,7 +403,7 @@ if({{{myJSONlogin}}} != 0){
 
   	var logs = {{{myJSONlogin}}};
   	for(var i = 0; i < logs.length; i ++){
-     		glog[0][i] = 'Admin:' + logs[i][0];
+     		glog[0][i] = 'ID:' + logs[i][0];
      		glog[1][i] = logs[i][1];
      		glog[2][i] = 'green';
     	glog[3][i] = 'green';
@@ -384,6 +448,7 @@ if({{{myJSONlogin}}} != 0){
 	  var g = new Array();
 	  g.push([]);
 	  var da = {{{myJSON}}};
+	 
 	  g.push([]);
 	  g.push([]);
 	  g.push([]);
@@ -417,7 +482,7 @@ if({{{myJSONlogin}}} != 0){
 		  }]
 	      },
 	      options: {
-		  scales: {
+	      	  scales: {
 		      yAxes: [{
 
 			  ticks: {
@@ -448,28 +513,24 @@ if({{{myJSONlogin}}} != 0){
           gg[0][i] = dag[i][0];
           gg[1][i] = dag[i][1];
       	}
-      
- new Chart(document.getElementById("pie-chart"), {
-     type: 'pie',
-     data: {
-       labels: gg[0],
-       datasets: [
-         {
-           label: "Population (millions)",
-           backgroundColor: ["blue","orange","green"],
-           data: gg[1]
-         }
-       ]
-     },
-     options: {
-       title: {
-         display: true,
-         text: 'Award Type'
-       }
-     }
+      new Chart(document.getElementById("pie-chart"), {
+           type: 'pie',
+           data: {
+             labels: gg[0],
+             datasets: [
+               {
+                 label: "Population (millions)",
+                 backgroundColor: ["blue","orange","green"],
+                 data: gg[1]
+               }
+             ]
+           },
+           options: {
+             
+           }
 });
 }
-  
+
   
 /*  if({{{myJSON}}} != 0){
    var myChartLine = new Chart(ctxLine, {

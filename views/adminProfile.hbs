@@ -30,34 +30,22 @@
      </div>
                <a href="/logout" >Logout</a>
   </nav>
-  
+   <div class="sidebar">
+                      <h3 class="headingA">My Profile</h3>
+                      
+                        <form action="/adminProfile" method="post">
+              
+                                      <a >
+                                         <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
+                                  </a>
+                           
+                  </form>
+                   
+                    </div>
      <div class="container-fluid" >
         <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                   <br> <h3>My Profile</h3>
-                    <div class="sidebar-sticky">
-                      <ul class="nav flex-column">
-                        <li class="nav-item">
-                      <form action="/adminProfile" method="post">
-            
-                          <div class="bs-example">
-                          <div class="panel-group" id="accordion">
-                              <div class="panel panel-default">
-                                 <div class="panel-heading">
-                                    <a class="panel-title">
-                                       <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
-                                </a>
-                                </div>
-                        
-                          </div>
-                          
-                           </div>
-                    </div>
-                </form>
-                    </li>
-                      </ul>
-                    </div>
-      </nav>
+
+    
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"> 
      	 	       
 	 <div class="table-responsive-sm">
@@ -81,9 +69,9 @@
                           <td>{{admin.id}}<input class="form-control" type="hidden" name="id" id="id" value="{{admin.id}}"></td>
                             <td><input type="text" class="form-control" name="name" id="name" value="{{admin.name}}" ></td>
 			    <td><input type="text" class="form-control" name="email" id="email" value="{{admin.email}}" ></td>
-                            <td>{{timeLL}}</td>
+                            <td>{{convertDate admin.last_login}}</td>
                             <td>{{admin.login_attempts}}</td>
-                            <td>{{timeC}}</td>
+                            <td>{{convertDate admin.creation_time}}</td>
                             <td><input class="form-control" id="Save" type="submit" name="Save" value="Save" > 
                            
 
@@ -92,9 +80,9 @@
                           <td>{{admin.id}}</td>
                           <td>{{admin.name}}</td>
                   	  <td>{{admin.email}}</td>
-                          <td>{{timeLL}}</td>
+                          <td>{{convertDate admin.last_login}}</td>
                           <td>{{admin.login_attempts}}</td>
-                          <td>{{timeC}}</td>
+                          <td>{{convertDate admin.creation_time}}</td>
                           </form>
                           </div>
 			{{/if}}

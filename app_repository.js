@@ -169,7 +169,7 @@ class AppRepository {
             console.log('Default User, default already exists in db');
           } else {
             console.log('No existing default user found in db, creating default user');
-            return this.createUser("defaultUser", "defaultUser", "pass", "Americas", 1);
+            return this.createUser("defaultUser", "defaultUser", "pass", "United States", 1);
           }
         });
       })

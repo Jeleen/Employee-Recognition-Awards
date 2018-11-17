@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="../starter-template.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+
+<script type="text/javascript">
+       
+        if({{{myJSONorgchart}}} != 0){
+        	google.charts.load('current', {'packages':['orgchart']});
+        	google.charts.setOnLoadCallback(drawChart2);
+        }
+	       if({{{myJSONregions}}} != 0){  
+	         google.charts.load('current', {
+	            'packages':['geochart'],
+	            // Note: you will need to get a mapsApiKey for your project.
+	            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+	            'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+	          });
+	          google.charts.setOnLoadCallback(drawRegionsMap);
+	    var gg = new Array();
+	            gg.push([]);
+	      	     gg[0][0] = "Country";
+	      	     gg[0][1] = "Popularity";
+	      	     
+	            var dag = {{{myJSONregions}}};
+	          	for(var i = 0; i < dag.length; i++){
+	              gg.push([]);
+	              gg[i + 1][0] = dag[i][0];
+	              gg[i + 1][1] = dag[i][1];
+	          	}
+      
+	          function drawRegionsMap() {
+	            var data = google.visualization.arrayToDataTable(gg);
+	    
+	            var options = {
+	            	sizeAxis: { minValue: 0, maxValue: 100 },
+			        region: '021', // Western Europe
+	    }
+	            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+	    
+	            chart.draw(data, options);
+	          }
+  		}
+       	
+      //ORGANIZATION CHART
+      function drawChart2() {
+	var da = {{{myJSONorgchart}}};
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Manager');
+        data.addColumn('string', 'ToolTip');
+        var p = 'Admin:';
+        var q = p + da[0][2].toString();
+        data.addRow([q,'', '']);
+        for(var i = 0; i < da.length; i ++){
+           data.addRow([da[i][1], q, '']); 
+        }
+        // Create the chart.
+        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+        // Draw the chart, setting the allowHtml option to true for the tooltips.
+        chart.draw(data, {allowHtml:true});
+      }
+      
+   </script>
+ </head>
+
+<body>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Employee Recognition Awards System</a> 
+    <button aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item" >
+          <a class="nav-link" href="/adminProfile">My Profile <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" href="/accountsMain">Accounts <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active" >
+          <a class="nav-link" href="/businessIntelligence">Business Intelligence</a>
+        </li>
+          
+      </ul>
+    </div>
+              <a href="/logout" >Logout</a>
+  </nav>
+ 
+ 
+ <div class="sidebar">
+
+<form action="/businessIntelligence" method="post">
+<h3 class="headingA">Business Intelligence</h3>
+
+  <a><button type="submit" name="adminRadio" value="allAdmins" class="btn-link">Admins</button></a>
+   <a><button type="submit" name="userRadio" value="allUsers" class="btn-link">Users</button></a>
+    <a><button type="submit" name="awardRadio" value="allAwards" class="btn-link">Awards</button></a>
+    <a class="active"><button type="submit" name="custom" value="custom" class="btn-link">Custom Report</button></a>
+
+</form>
+</div>
+<div class="container-fluid" >
+    <div class="row">
+      
+      
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" >
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            
+           	<p>dfgdfsg</p>
+
+	    
+	 </div>
+	
+	
+	           	<p>Please choose from the following options to customize a report</p>
+
+		1.  select specific user, admin by id
+		 <div class="table-responsive-sm">
+		 	               <table class="table table-sm">
+		 	 	       <h4>Search for user(s) by admin:</h4>
+		 	 	       <thead class="thead-light"> 
+		                            <tr>
+		                               <th>Admin ID</th>
+		                               <th>Email</th>
+		                               <th>Region</th>
+		                               <th>Action</th><th></th>
+		                            </tr>
+		                         </thead>
+		                         <tbody>
+		                            <tr> 
+		                            <div class="form-group">
+		                               <form method="post" action="/addUser" >
+<td>
+		 				  <select class="form-control" name="adminID">
+		 				  {{#each admins}}
+		 				    <option name="region" value="{{this.id}}">{{this.id}}</option>
+		 				   {{/each}}
+		 				  </select>
+		 				</td>                               		                                  <td><input type="text" class="form-control" id="email" name="email" placeholder="Enter email"/></td>
+		 				<td>
+		 				  <select class="form-control" name="region">
+		 				    <option name="region" value="United States">United States</option>
+		 				    <option name="region" value="Canada">Canada</option>
+		 				    <option name="region" value="Mexico">Mexico</option>
+		 				  </select>
+		 				</td>                               
+		 				
+		                                  <td><input class="form-control" id="save" type="submit" name="save" value="Save" /></td>
+		                                 <td> <input class="form-control" id="cancel" type="submit" name="Cancel" value="Cancel" />
+		                                  </td>
+		                               </form>
+		                               </div>
+		                            </tr>
+		                         </tbody>
+		                      </table>
+                  </div>
+		<br>
+2.  select specific creation date
+				<br>
+3.  select specific region for users
+				<br>
+4.  select specific award 
+		
+
+
+	
+      </main>
+    </div>
+  </div>
+  
+  
+  
+
+  
+  
+  
+  
+  
+  <script>
+  
+ 
+  
+  
+  
+  
+  
+   if({{{myJSONregions}}} != 0){
+    	var regA = new Array();
+       	regA.push([]);
+       	regA.push([]);
+       	var regJ = {{{myJSONregions}}};
+      	for(var i = 0; i < regJ.length; i++){
+      	 	regA[0][i] = regJ[i][0];
+      	        regA[1][i] = regJ[i][1];
+    	}
+     	new Chart(document.getElementById("pie-chart-2"), {
+     	    type: 'pie',
+     	    data: {
+     	      labels: regA[0],
+     	      datasets: [
+     	        {
+     	          label: "Country (millions)",
+     	          backgroundColor: ["blue","orange","green"],
+     	          data: regA[1]
+     	        }
+     	      ]
+     	    },
+     	    options: {
+     	      
+     	    }
+    	});
+}  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+if({{{myJSONlogin}}} != 0){
+	var ctxL = document.getElementById("myChartLogins").getContext('2d');
+	var glog = new Array();	
+  	glog.push([]);
+  	  	glog.push([]);
+  	glog.push([]);
+  	glog.push([]);
+
+  	var logs = {{{myJSONlogin}}};
+  	for(var i = 0; i < logs.length; i ++){
+     		glog[0][i] = 'ID:' + logs[i][0];
+     		glog[1][i] = logs[i][1];
+     		glog[2][i] = 'green';
+    	glog[3][i] = 'green';
+  	}
+  	
+   	var myChartL = new Chart(ctxL, {
+         type: 'bar',
+         data: {
+             labels: glog[0],
+             datasets: [{
+                 label: '# login attempts per ID',
+                 data: glog[1],
+                 backgroundColor: glog[2],
+                 borderColor: glog[3],
+                 borderWidth: 1
+             }]
+         },
+         options: {
+             scales: {
+                 yAxes: [{
+                	  
+                     ticks: {
+   			beginAtZero: true,
+                           callback: function (value) { if (Number.isInteger(value)) { return value; } },
+                           stepSize: 5                  }
+                 }],
+                 xAxes: [{
+                     ticks: {
+   	                min: glog[0][0],
+   	                autoSkip: false
+                    }
+                 }]
+             }
+         }
+     });
+  
+   }
+   
+   
+  if({{{myJSON}}} != 0){  
+	  var ctx = document.getElementById("myChart").getContext('2d');
+	  var g = new Array();
+	  g.push([]);
+	  var da = {{{myJSON}}};
+	 
+	  g.push([]);
+	  g.push([]);
+	  g.push([]);
+	  if(da.length == 1){
+		g[0][0] = 0;
+		g[1][0] = '';
+		g[0][1] = da[0][0];
+		g[1][1] = da[0][1];
+		g[0][2] = 0;
+		g[1][2] = '';
+	  }
+	  else{
+	  for(var i = 0; i < da.length; i ++){
+		g[0][i] = da[i][0];
+		g[1][i] = da[i][1];
+		g[2][i] = 'none';
+		g[3][i] = 'blue';
+	  }
+	  }
+
+	  var myChart = new Chart(ctx, {
+	      type: 'line',
+	      data: {
+		  labels: g[0],
+		  datasets: [{
+		      label: '# created',
+		      data: g[1],
+		      backgroundColor: 'rgba(153, 153, 176, 0.5)',
+		      borderColor: 'rgba(153, 153, 176)',
+		      borderWidth: 1
+		  }]
+	      },
+	      options: {
+	      	  scales: {
+		      yAxes: [{
+
+			  ticks: {
+				beginAtZero: true,
+				callback: function (value) { if (Number.isInteger(value)) { return value; } },
+				stepSize: 1                  }
+		      }],
+		      xAxes: [{
+			  ticks: {
+				min: g[0][0],
+				autoSkip: false
+			 }
+		      }]
+		  }
+	      }
+	  });
+  
+  }
+  
+  
+  
+  if({{{myJSON2}}} != 0){
+    	var gg = new Array();
+        gg.push([]);
+  	gg.push([]);
+        var dag = {{{myJSON2}}};
+      	for(var i = 0; i < dag.length; i++){
+          gg[0][i] = dag[i][0];
+          gg[1][i] = dag[i][1];
+      	}
+      new Chart(document.getElementById("pie-chart"), {
+           type: 'pie',
+           data: {
+             labels: gg[0],
+             datasets: [
+               {
+                 label: "Population (millions)",
+                 backgroundColor: ["blue","orange","green"],
+                 data: gg[1]
+               }
+             ]
+           },
+           options: {
+             
+           }
+});
+}
+
+  
+/*  if({{{myJSON}}} != 0){
+   var myChartLine = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: g[0],
+            datasets: [{
+                label: '# created',
+                data: g[1],
+                backgroundColor: g[2],
+                borderColor: g[3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+               	  
+                    ticks: {
+  			beginAtZero: true,
+                          callback: function (value) { if (Number.isInteger(value)) { return value; } },
+                          stepSize: 5                  }
+                }],
+                xAxes: [{
+                   
+  	         ticks: {
+  		                     min: g[0][0],
+  		                     autoSkip: false
+                  }
+                }]
+            }
+        }
+  });
+  }*/
+</script>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+  </script> 
+  <script>
+    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+  </script> 
+</body>
+</html>

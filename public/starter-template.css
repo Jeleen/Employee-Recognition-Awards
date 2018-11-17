@@ -76,50 +76,40 @@ body {
   
 }
 
-.export_csv_notice{
-  color: rgb(255, 0, 0);
-  text-align: right;
-  padding-right: 20px;
-  
-}
 
 .column1 {
     float: left;
     width: 50%;
+    padding-left: 10px;
+    padding-right: 15px;
     
 }
 
-
-
-
-/* Clear floats after the columns */
 .row1 {
-    height: 300px;
-    
+    height: 250px;      
 }
-.column2 {
-    float: left;
-    width: 50%;
-    
-}
-
-.column3 {
-    float: right;
-    width: 50%;
-    height: 300px;
-}
-
 
 /* Clear floats after the columns */
 .row2 {
-    height: 300px;
+    height: 250px;
+    
     
 }
 .backy {
     background: #0000EE;
     
 }
-
+ hr {
+ 
+       display: block;
+       position: relative;
+       padding-top: 20px;
+       width: 100%;
+       font-size: 1px;
+       clear: both;
+       border-top: 1px solid #aaaaaa;
+       border-bottom: 1px solid #ffffff;
+    }
 #cancel {
 	    display: inline-block;
 	    float: left;
@@ -141,11 +131,21 @@ body {
  body .btn-secondary {
     background-color: #FFFFFF;
     border-color: #A9A9A9;
+    
     }
     
     .sidebar-sticky a{
     	float: left;
     }
+  
+  .chartHeader {
+	text-align: center;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	padding-bottom: 10px;
+	padding-top: 30px;
+
+  }
+    
     
    /* The side navigation menu */
    .sidebar {

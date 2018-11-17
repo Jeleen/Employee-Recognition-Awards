@@ -7,6 +7,7 @@ var session = require('express-session');
 const bodyParser = require('body-parser');
 const latex = require('node-latex');
 const fs = require('fs');
+var hbs = require('hbs');
 
 var sessionConfig = {
   secret: 'so secretive',
@@ -34,10 +35,11 @@ var addAdminRouter = require('./routes/addAdmin');
 var businessIntelligenceRouter = require('./routes/businessIntelligence');
 var editUsersRouter = require('./routes/editUsers');
 var editAdminsRouter = require('./routes/editAdmins');
-
 var getAllAdminsRouter = require('./routes/getAllAdmins');
 var getAllUsersRouter = require('./routes/getAllUsers');
 var awardRouter = require('./routes/award');
+var exportCSVRouter = require('./routes/exportCSV');
+var customBIRouter = require('./routes/customBI');
 
 var app = express();
 
@@ -71,7 +73,7 @@ app.use('/award', awardRouter);
 // Admin pages
 app.use(function(req, res, next) {
   if (!req.session.isAdmin) {
-    res.redirect('/login')
+    res.redirect('/login');
   } else {
     next();
   }
@@ -85,6 +87,8 @@ app.use('/editUsers', editUsersRouter);
 app.use('/businessIntelligence', businessIntelligenceRouter);
 app.use('/addUser', addUserRouter);
 app.use('/addAdmin', addAdminRouter);
+app.use('/exportCSV', exportCSVRouter);
+app.use('/customBI', customBIRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -102,11 +106,25 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// helper function to convert dates to shorter format UTC time
+hbs.registerHelper('convertDate', function(myDate){
+	var date1 = new Date(myDate);
+	var year = date1.getFullYear();
+	var month = ('0' + (date1.getMonth() + 1)).slice(-2);
+	var date = ('0' + date1.getDate()).slice(-2);
+	var hours = ('0' + date1.getUTCHours()).slice(-2);
+	var minutes = ('0' + date1.getUTCMinutes()).slice(-2);
+	var seconds = ('0' + date1.getUTCSeconds()).slice(-2);
+	var shortDate = month + '/' + date + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' UTC';
+	return shortDate;
+});
+
+
 module.exports = app;
 
 //For uploading to AWS, include:
 
 //var port = process.env.PORT || 3000;
 //var server = app.listen(port, function () {
-  // console.log('Server running at http://127.0.0.1:' + port + '/');
+//   console.log('Server running at http://127.0.0.1:' + port + '/');
 //});

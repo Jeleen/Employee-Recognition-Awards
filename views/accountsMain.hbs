@@ -54,17 +54,15 @@
           
           
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-	                  
-	                 {{#if admins}}
-                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-right pb-2 mb-3 border-bottom">
-	              <div class="btn-toolbar mb-2 mb-md-0">
-
+	 {{#if admins}}
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+	   <div class="btn-toolbar mb-2 mb-md-0">
          <form method="get" action="/addAdmin" >
 	      	  <button id="addAdmin" type="submit" name="addAdmin" value="+ Add" class="btn btn-sm btn-outline-secondary" >+ Add</button>
- </form>
+ 	</form>
 	 {{/if}}
 	 {{#if users}}
-	 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-right pb-2 mb-3 border-bottom">
+	 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
 	              <div class="btn-toolbar mb-2 mb-md-0">
 	        <form method="get" action="/addUser" >
 		<button id="addUser" type="submit" name="addUser" value="+ Add" class="btn btn-sm btn-outline-secondary"/>+ Add </button></form>
@@ -92,9 +90,9 @@
 	 		     <form method="post" action="/editAdmins" >
 	 		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}" ></td>
 	 		      <td><input type="text" name="email" id="email" value="{{this.email}}" ></td>
-	 		        <td>{{this.last_login}}</td>
+	 		        <td>{{convertDate this.last_login}}</td>
 	 		      <td>{{this.login_attempts}}</td>
-	 		     <td>{{this.creation_time}}</td>
+	 		     <td>{{convertDate this.creation_time}}</td>
 	 		      <td><input id="Save" type="submit" name="Save" value="Save" >
 	 		    <input id="delete" type="submit" name="delete" value="delete" ></td>
 	 		      </form>
@@ -127,9 +125,9 @@
 	 		   <td>{{this.name}}</td>
 	                    <td><input type="text" name="email" id="email" placeholder="{{this.email}}" ></td>
 	 		   <td>{{this.region}}</td>
-	 		   <td>{{this.last_login}}</td>
+	 		   <td>{{convertDate this.last_login}}</td>
 	                    <td>{{this.login_attempts}}</td>
-	                    <td>{{this.creation_time}}</td>
+	                    <td>{{convertDate this.creation_time}}</td>
 	                    <td><input id="save" type="submit" name="save" value="Save" >
 	                     <input id="delete" type="submit" name="delete" value="delete" ></td>
 	                   </tr></form>
