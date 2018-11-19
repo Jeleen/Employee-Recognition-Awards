@@ -1,3 +1,24 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Employee Recognition Awards System</a>
+  <button aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item" >
+        <a class="nav-link" href="/user_dashboard">User Dashboard</a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link" href="/create_award">Create Award</a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link active" href="/edit_profile">Edit Profile</a>
+      </li>
+    </ul>
+  </div>
+  <a href="/logout" >Logout</a>
+</nav>
+
 <!--Hide alert div when its empty (success message for image upload) -->
 <style>
   div:empty {
@@ -5,15 +26,13 @@
   }
 </style>
 
-<a href="/user_dashboard" class="btn btn-outline-secondary" role="button">Return To User Dashboard</a>
 <div>
   <h1>Edit Profile</h1>
   <div class="alert alert-success" role="alert">{{info}}</div>
-  <p>Existing Email Address: {{existing}}</p>
   <form action="/edit_profile" method="post">
     <div class="form-group">
-      <label>New Email Address</label>
-      <input type="text" class="form-control" name="new_email">
+      <label>Update Email Address</label>
+      <input type="text" class="form-control" placeholder="{{existing}}" name="new_email">
     </div>
     <button type="submit" class="btn btn-primary mb-2">Update Profile</button>
   </form>
@@ -22,36 +41,9 @@
   <h2>Upload Signature Image</h2>
   <form action="/edit_profile/upload" enctype="multipart/form-data" method="post">
 		<input type="file" name="upload" />
-		<br>
+    <br>
     <br>
     <button type="submit" class="btn btn-primary mb-2">Upload Image</button>
   </form>
-</div>
-<div>
-  <h2>Previously Created Awards by Me</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">id</th>
-        <th scope="col">Recipient Name</th>
-        <th scope="col">Recipient Email</th>
-        <th scope="col">Award Type</th>
-        <th scope="col">Creation Time</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each awards}}
-      <tr>
-        <th scope="row">{{this.id}}</th>
-        <td>{{this.recipient_name}}</td>
-        <td>{{this.recipient_email}}</td>
-        <td>{{this.award_type}}</td>
-        <td>{{this.creation_time}}</td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <form action="/edit_profile/delete" method="post">
-    <button class="btn btn-primary mb-2">Delete All Awards</button>
-  </form>
+  <br>
 </div>
