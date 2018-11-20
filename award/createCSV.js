@@ -16,6 +16,7 @@ const csvWriter = csv({
     {id:'recipient_name', title: "Hname"},
     {id:'creation_time', title: "Date"},
     {id:'creator_name', title: "Cname"},
+    {id:'creator_sig', title: "Sigy"},
     {id:'award_type', title: "Type"},
  ]
 })
