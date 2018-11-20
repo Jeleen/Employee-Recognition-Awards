@@ -40,6 +40,7 @@ var getAllUsersRouter = require('./routes/getAllUsers');
 var awardRouter = require('./routes/award');
 var exportCSVRouter = require('./routes/exportCSV');
 var customBIRouter = require('./routes/customBI');
+var forgotPasswordRouter = require('./routes/forgotPassword');
 
 var app = express();
 
@@ -56,6 +57,7 @@ app.use(session(sessionConfig));
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/forgotPassword', forgotPasswordRouter);
 // Check if user is logged in for every route except ones above this line (like login)
 app.use(function(req, res, next) {
   if (!req.session || !req.session.loggedInId) {

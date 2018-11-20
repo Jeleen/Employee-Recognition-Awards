@@ -28,6 +28,14 @@ class AppRepository {
     return this.dao.doRun(`UPDATE users SET sig_image_path = ? WHERE id = ?`, [newPath, idOfUser]);
   }
 
+  editUserPassword(idOfUser, newPassword) {
+    return this.dao.doRun(`UPDATE users SET password = ? WHERE id = ?`, [newPassword, idOfUser]);
+  }
+
+  editAdminPassword(idOfAdmin, newPassword) {
+    return this.dao.doRun(`UPDATE admins SET password = ? WHERE id = ?`, [newPassword, idOfAdmin]);
+  }
+
   getUserByName(name) {
     return this.dao.doGet(`SELECT * FROM users WHERE name = ?`, [name]);
   }
@@ -72,6 +80,10 @@ class AppRepository {
 
  getAward(id) {
     return this.dao.doGet(`SELECT * FROM awards WHERE id = ?`, [id]);
+  }
+
+  removeAward(awardId) {
+    return this.dao.doRun(`DELETE FROM awards WHERE id = ?`, [awardId]);
   }
 
   removeAwardsOfUser(id){
