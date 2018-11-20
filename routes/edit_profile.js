@@ -17,6 +17,9 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   var newEmail = req.body.new_email;
+  if (!newEmail) {
+    res.render('edit_profile', { existing: newEmail, error: "Must specify an email" })
+  }
   appRepo.editUser(req.session.loggedInId, newEmail)
     .then(() => res.render('edit_profile', { existing: newEmail, info: "Email successfully updated" }))
     .catch((error) => console.log("Error editing user email: " + error));
@@ -33,6 +36,21 @@ router.post('/upload', multipartMiddleware, function(req, res) {
       });
     })
     .catch(error => console.log("Error uploading user image: ", error));
+});
+
+router.post('/password', function(req, res, next) {
+  var existing = req.body.old;
+  var newPassword = req.body.new;
+  appRepo.getUserById(req.session.loggedInId)
+    .then(user => {
+      if (user.password == existing) {
+        appRepo.editUserPassword(req.session.loggedInId, newPassword)
+          .then(() => res.render('edit_profile', { existing: user.email, info: "Password successfully updated" }));
+      } else {
+        res.render('edit_profile', { existing: user.email, error: "Incorrect password" });
+      }
+    })
+    .catch((error) => console.log(error));
 });
 
 module.exports = router;

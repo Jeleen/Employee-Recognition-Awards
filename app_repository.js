@@ -32,6 +32,10 @@ class AppRepository {
     return this.dao.doRun(`UPDATE users SET password = ? WHERE id = ?`, [newPassword, idOfUser]);
   }
 
+  editAdminPassword(idOfAdmin, newPassword) {
+    return this.dao.doRun(`UPDATE admins SET password = ? WHERE id = ?`, [newPassword, idOfAdmin]);
+  }
+
   getUserByName(name) {
     return this.dao.doGet(`SELECT * FROM users WHERE name = ?`, [name]);
   }

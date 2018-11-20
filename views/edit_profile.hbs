@@ -29,16 +29,17 @@
 <div>
   <h1>Edit Profile</h1>
   <div class="alert alert-success" role="alert">{{info}}</div>
+  <div class="alert alert-danger" role="alert">{{error}}</div>
   <form action="/edit_profile" method="post">
     <div class="form-group">
       <label>Update Email Address</label>
       <input type="text" class="form-control" placeholder="{{existing}}" name="new_email">
     </div>
-    <button type="submit" class="btn btn-primary mb-2">Update Profile</button>
+    <button type="submit" class="btn btn-primary mb-2">Update Email</button>
   </form>
 </div>
 <div>
-  <h2>Upload Signature Image</h2>
+  <h3>Upload Signature Image</h3>
   <form action="/edit_profile/upload" enctype="multipart/form-data" method="post">
 		<input type="file" name="upload" />
     <br>
@@ -46,4 +47,18 @@
     <button type="submit" class="btn btn-primary mb-2">Upload Image</button>
   </form>
   <br>
+</div>
+<div>
+  <h3>Change Password</h3>
+  <form action="/edit_profile/password" method="post">
+    <div class="form-group">
+      <label>Old Password</label>
+      <input class="form-control" type="password" class="form-control" name="old">
+      <br>
+      <label>New Password</label>
+      <input class="form-control" type="password" class="form-control" name="new">
+      <br>
+      <button type="submit" class="btn btn-primary mb-2">Change Password</button>
+    </div>
+  </form>
 </div>

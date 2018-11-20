@@ -15,16 +15,28 @@ router.post('/', function(req, res, next) {
   var emailOfForgotten = req.body.email;
   appRepo.getUserByEmail(emailOfForgotten).then((user) => {
     var newPassword = makeRandomPassword();
-    appRepo.editUserPassword(user.id, newPassword).then(() => {
-      // Email user their new Password
-      console.log("User's new password: " + newPassword);
-      sendEmail(user.email, newPassword);
-      res.render('forgot_password', { info: "If you entered a valid email associated with an account, an email has been sent"});
-    })
-    .catch((error) => {
-      console.log("Error attempting to reset user's password", error);
-      res.render('forgot_password', { info: "If you entered a valid email associated with an account, an email has been sent"});
-    });
+    if (user) {
+      appRepo.editUserPassword(user.id, newPassword).then(() => {
+        // Email user their new Password
+        console.log("User's new password: " + newPassword);
+        sendEmail(user.email, newPassword);
+        res.render('forgot_password', { info: "If you entered a valid email associated with an account, an email has been sent"});
+      });
+    } else {
+      appRepo.getAdminByEmail(emailOfForgotten).then((foundAdmin) =>{
+        if (foundAdmin) {
+          appRepo.editAdminPassword(foundAdmin.id, newPassword).then(() => {
+            console.log("Admin's new password: " + newPassword);
+            sendEmail(foundAdmin.email, newPassword);
+          });
+        }
+        res.render('forgot_password', { info: "If you entered a valid email associated with an account, an email has been sent"});
+      });
+    }
+  })
+  .catch((error) => {
+    console.log("Error attempting to reset user's password", error);
+    res.render('forgot_password', { info: "If you entered a valid email associated with an account, an email has been sent"});
   });
 });
 
