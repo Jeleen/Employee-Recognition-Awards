@@ -58,7 +58,7 @@
  % 
 \newcount\rowIdx
 \DTLforeach{names}
-    {\honoree=Hname, \awardDate=Date, \creator=Cname, \typeAward=Type}{
+    {\honoree=Hname, \awardDate=Date, \creator=Cname, \typeAward=Type, \sigy=Sigy}{
 \DTLiflastrow{
 %tile the background
   \TileWallPaper{4cm}{4cm}{background/JOrbs.png}% Loads faster
@@ -123,7 +123,8 @@
 		 Awarded by:
 		 % \end{minipage}%
 		%  \begin{minipage}[b]{2.25in}
-		\sigskip \signature{\includegraphics[trim=2cm 1cm 0 -1cm]{sig.png}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
+		\graphicspath{{sigy}}
+		\sigskip \signature{\includegraphics[trim=2cm 1cm 0 -1cm]{\sigy}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
 		\end{minipage}
 		\hfill
 		%grapic========================middlle bottom

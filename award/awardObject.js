@@ -41,6 +41,10 @@ function getCreator(obj){
   .then(cName => {
       console.log("WHAT IS IN cNAME", cName);
       obj.creator_name = cName.name
+      console.log("Before", cName.sig_image_path);
+      var sig_path= cName.sig_image_path.substring(cName.sig_image_path.lastIndexOf("sigs"));
+    //  cName.sig_image_path.substring(0, cName.sig_image_path.lastIndexOf("/"));
+      obj.creator_sig=sig_path
       array.push(obj)
     //console.log(array);
     createCSV(array);
