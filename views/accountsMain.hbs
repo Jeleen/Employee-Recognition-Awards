@@ -77,6 +77,7 @@
 	 	       <thead class="thead-light">
 	                   <tr>
 	                     <th>ID</th>
+	                     <th>Name</th>
 	                     <th>Email</th>
 	                     <th>Last Login</th>
 	                     <th>Login Attempts</th>
@@ -89,7 +90,8 @@
 	 		   <tr>
 	 		     <form method="post" action="/editAdmins" >
 	 		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}" ></td>
-	 		      <td><input type="text" name="email" id="email" value="{{this.email}}" ></td>
+	 		   <td>{{this.name}}</td>
+	 		   <td><input type="text" name="email" id="email" value="{{this.email}}" ></td>
 	 		        <td>{{convertDate this.last_login}}</td>
 	 		      <td>{{this.login_attempts}}</td>
 	 		     <td>{{convertDate this.creation_time}}</td>
@@ -113,6 +115,7 @@
 	                     <th>Last Login</th>
 	                     <th>Login Attempts</th>
 	                     <th>Created</th>
+	                     <th>Creator ID</th>
 	                     <th>Action</th>
 	 
 	                   </tr>
@@ -128,7 +131,8 @@
 	 		   <td>{{convertDate this.last_login}}</td>
 	                    <td>{{this.login_attempts}}</td>
 	                    <td>{{convertDate this.creation_time}}</td>
-	                    <td><input id="save" type="submit" name="save" value="Save" >
+	                    <td>{{this.creator_id}}</td>
+				<td><input id="save" type="submit" name="save" value="Save" >
 	                     <input id="delete" type="submit" name="delete" value="delete" ></td>
 	                   </tr></form>
 	                  {{/each}}

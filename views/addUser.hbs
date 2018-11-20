@@ -29,7 +29,7 @@
                </li>
             </ul>
          </div>
-                       <a href="/logout" >Sign out</a>
+                       <a href="/logout" >Logout</a>
 
       </nav>
          <div class="sidebar">
@@ -80,9 +80,9 @@
                                  <td><input type="text" class="form-control" id="email" name="email" placeholder="Enter email"/></td>
 				<td>
 				  <select class="form-control" name="region">
-				    <option name="region" value="United States">United States</option>
-				    <option name="region" value="Canada">Canada</option>
-				    <option name="region" value="Mexico">Mexico</option>
+				  {{#each countries}}
+				    <option name="region" value="{{this}}">{{this}}</option>
+				   {{/each}}
 				  </select>
 				</div></td>                               
 				

@@ -8,6 +8,12 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link href="../starter-template.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<!-- <script>
+$(window).load(function() {
+var t = document.getElementById("searchType1b");
+  $( t ).hide();
+});
+</script>  -->
 
 <script type="text/javascript">
        
@@ -104,78 +110,230 @@
 
 </form>
 </div>
-<div class="container-fluid" >
-    <div class="row">
-      
-      
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" >
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            
-           	<p>dfgdfsg</p>
 
-	    
-	 </div>
-	
-	
-	           	<p>Please choose from the following options to customize a report</p>
+<div class="mainy">  
 
-		1.  select specific user, admin by id
-		 <div class="table-responsive-sm">
-		 	               <table class="table table-sm">
-		 	 	       <h4>Search for user(s) by admin:</h4>
-		 	 	       <thead class="thead-light"> 
-		                            <tr>
-		                               <th>Admin ID</th>
-		                               <th>Email</th>
-		                               <th>Region</th>
-		                               <th>Action</th><th></th>
-		                            </tr>
-		                         </thead>
-		                         <tbody>
-		                            <tr> 
-		                            <div class="form-group">
-		                               <form method="post" action="/addUser" >
-<td>
-		 				  <select class="form-control" name="adminID">
-		 				  {{#each admins}}
-		 				    <option name="region" value="{{this.id}}">{{this.id}}</option>
-		 				   {{/each}}
-		 				  </select>
-		 				</td>                               		                                  <td><input type="text" class="form-control" id="email" name="email" placeholder="Enter email"/></td>
-		 				<td>
-		 				  <select class="form-control" name="region">
-		 				    <option name="region" value="United States">United States</option>
-		 				    <option name="region" value="Canada">Canada</option>
-		 				    <option name="region" value="Mexico">Mexico</option>
-		 				  </select>
-		 				</td>                               
-		 				
-		                                  <td><input class="form-control" id="save" type="submit" name="save" value="Save" /></td>
-		                                 <td> <input class="form-control" id="cancel" type="submit" name="Cancel" value="Cancel" />
-		                                  </td>
-		                               </form>
-		                               </div>
-		                            </tr>
-		                         </tbody>
-		                      </table>
-                  </div>
-		<br>
-2.  select specific creation date
-				<br>
-3.  select specific region for users
-				<br>
-4.  select specific award 
-		
 
 
 	
-      </main>
-    </div>
+<form method="post" action="/customBI" >
+<button id="filter" name="filter" class="btn btn-sm btn-outline-secondary" type="submit" >Submit Query </button><p>Select search parameters from one or more columns below, then select Submit Query.</p>
+<p></p>
+<table class="table table-bordered table-dark">
+<thead>
+	<tr >
+		<th>Search parameter</th>
+		<th>(Optional) <p> Add another parameter</p></th>
+		<th>(Optional)<p>   Data parameter</p></th>
+	</tr>
+</thead>
+<tbody>
+<tr >
+<td class="tableRow">
+<div class="form-group">
+<select name="searchType1" id="searchType1a" class="form-control">
+	       <option>Select data to target:</option>
+	       <option>Admin</option>
+	       <option>User</option>
+	       <option>Award</option>
+	       </select>
+	<p></p>
+ 	     
+	   </td>
+
+<td class="tableRow">
+       <p>   Optional:</p>
+	    <input type="checkbox" name="column2And" > AND </input>
+	     <br><input type="checkbox" name="column2AndNot" > AND NOT </input>
+</td>	 
+
+	  
+	  
+
+<td class="tableRow">
+	      <select class="form-control" name="searchType3">
+ 		<option>Select:</option>
+	       <option>Admin</option>
+	       <option>User</option>
+	       <option>Award</option>
+ 		<option>All Admins</option>
+	       <option>All Users</option>
+	       <option>All Awards</option>           
+	       </select>
+       <p></p>
+	     <h5>Optional:</h5>
+ 	     <select class="form-control" name="searchType3" id="searchType3">
+	        <option>Select:</option>
+		<option>ID</option>
+	       <option>Name</option>
+	       <option>Email</option>
+	       <option>Last Login</option>
+	       <option>Login Attempts</option>
+	       <option>Creation Date</option>
+	       <option>Creator ID</option>
+	       <option>Region</option>
+	       <option>Award Type</option>
+	       <option>Recipient Name</option>
+	       <option>Recipient Email</option>	       
+	       </select>
+	       	<input class="form-control" type="text" width="20px" name="formInput1" placeholder="Enter value..."></input>
+  </td>   
+        
+	 
+
+
+	  
+	   
+</form>
+	   
+
+</tr>
+</tbody>
+</table>
+{{#if admin}}
+	
+		      		<hr></hr>
+ <form method="post" action="/exportCSV">
+                <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
+             </form>
+		   <div class="table-responsive-sm">
+		                  <table class="table table-sm">
+	 	       <thead class="thead-light"> 
+		   <h4>Admin Account</h4>
+			     <tr>
+			       <th>ID</th>
+			       <th>Email</th>
+			       <th>Login Attempts</th> 
+			       <th>Last Login</th>
+			       <th>Creation Time</th>
+			       <th>Creator ID</th>
+
+			       </tr>
+			</thead>
+			  <tbody>
+			    {{#each admin}}
+			 <tr>
+			       <td>{{this.id}}</td>
+			       <td>{{this.email}}</td>
+			       <td>{{this.login_attempts}}</td>
+			       <td>{{convertDate this.last_login}}</td>
+			       <td>{{convertDate this.creation_time}}</td>
+			       <td>{{this.creator_id}}</td>
+			    </tr>
+			    {{/each}}
+			  </tbody>
+		  </table>
+		  </div>  
+		  {{/if}}
+  
+ {{#if user}} 
+              		<hr></hr>
+ <form method="post" action="/exportCSV">
+                <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
+             </form>
+<h4>User Accounts:</h4>
+<div class="table-responsive-sm">
+               <table class="table table-sm">
+	 	       <thead class="thead-light"> 
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Region</th>
+                <th>Last Login</th>
+                <th>Login Attempts</th>
+                <th>Creation Time</th>
+		<th>Creator ID</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+            {{#each user}}
+              <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.region}}</td>
+                <td>{{convertDate this.last_login}}</td>
+                <td>{{this.login_attempts}}</td>
+                <td>{{convertDate this.creation_time}}</td>
+                <td>{{this.creator_id}}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          </div>{{/if}} 
+  {{#if award}} 
+                		<hr></hr>
+   <form method="post" action="/exportCSV">
+                  <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
+               </form>
+  <h4>{{{searchtitle}}}</h4>
+  <div class="table-responsive-sm">
+                 <table class="table table-sm">
+  	 	       <thead class="thead-light"> 
+                <tr>
+                  <th>ID</th>
+                  <th>Recipient Name</th>
+                  <th>Recipient Email</th>
+                  <th>Award Type</th>
+                  <th>Creation Time</th>
+  		<th>Creator ID</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+              {{#each award}}
+                <tr>
+                  <td>{{this.id}}</td>
+                  <td>{{this.recipient_name}}</td>
+                  <td>{{this.recipient_email}}</td>
+                  <td>{{this.award_type}}</td>
+                  <td>{{convertDate this.creation_time}}</td>
+                  <td>{{this.creator_id}}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>{{/if}} 
+
+
+{{#if both}}
+<hr></hr>
+ <form method="post" action="/exportCSV">
+                <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
+             </form>
+		   <div class="table-responsive-sm">
+		                  <table class="table table-sm">
+	 	       <thead class="thead-light"> 
+		   <h4>Admin Account</h4>
+			     <tr>
+			       <th>ID</th>
+			       <th>Name</th>
+			       <th>Email</th> 
+			         </tr>
+			</thead>
+			  <tbody>
+			    {{#each both}}
+			 <tr>
+			       <td>{{this.id}}</td>
+			       <td>{{this.name}}</td>
+			       <td>{{this.email}}</td>
+			       
+			    </tr>
+			    {{/each}}
+			  </tbody>
+		  </table>
+		  </div>  
+		  {{/if}}
+  
+  
   </div>
   
-  
-  
-
   
   
   
@@ -398,10 +556,19 @@ if({{{myJSONlogin}}} != 0){
   }*/
 </script>
   
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+ 
+  
   </script> 
-  <script>
-    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
-  </script> 
+
+<script>
+
+$( "#searchType1a" ).change(function() {
+if(!(document.getElementById("searchType1b"))){
+$('#searchType1a').after('<p></p><select class="form-control" name="searchType1b" id="searchType1b"><option>Select attribute:</option><option>ID</option><option>Name</option><option>Email</option><option>Last Login</option> <option>Login Attempts</option><option>Creation Date</option>	       <option>Creator ID</option>	       <option>Region</option>	       <option>Award Type</option>	       <option>Recipient Name</option>	      <option>Recipient Email</option>	    </select> <input class="form-control" type="text" width="20px" id="searchType1c" name="searchType1c" placeholder="Enter value..."></input>');
+}
+
+});
+</script>
 </body>
 </html>
