@@ -66,19 +66,83 @@ class AppRepository {
     return this.dao.doGetAll(`SELECT * FROM admins`);
   }
 
+  getAllUsersById(id) {
+     return this.dao.doGetAll(`SELECT * FROM users WHERE id = ?`, [id]);
+  }
+
+  getAllAdminsById(id) {
+     return this.dao.doGetAll(`SELECT * FROM admins WHERE id = ?`, [id]);
+  }
+
+ getAllUsersByName(name){
+	 return this.dao.doGetAll(`SELECT * FROM users WHERE name = ?`, [name]);
+  }
+
+  getAllAdminsByEmail(email){
+  	 return this.dao.doGetAll(`SELECT * FROM admins WHERE email = ?`, [email]);
+  }
+
+  getAllUsersByEmail(email){
+  	 return this.dao.doGetAll(`SELECT * FROM users WHERE email = ?`, [email]);
+  }
+
+  getAllAdminsByName(name){
+     return this.dao.doGetAll(`SELECT * FROM admins WHERE name = ?`, [name]);
+  }
+
   getAllUsersCreatedBy(id) {
     return this.dao.doGetAll(`SELECT * FROM users WHERE creator_id = ?`, [id]);
   }
 
   getAllAwardsCreatedBy(id) {
-      return this.dao.doGetAll(`SELECT * FROM awards WHERE creator_id = ?`, [id]);
+    return this.dao.doGetAll(`SELECT * FROM awards WHERE creator_id = ?`, [id]);
   }
 
- getAllAwards() {
+getAllUsersMinusPasswords() {
+    return this.dao.doGetAll(`SELECT (id, name, email, region, last_login, login_attempts, creation_time)  FROM users`);
+  }
+
+  getAllAdminsMinusPasswords() {
+    return this.dao.doGetAll(`SELECT ((id, name, email, last_login, login_attempts, creation_time)  FROM admins`);
+  }
+
+  getAllAdminsCreatedBy(id) {
+    return this.dao.doGetAll(`SELECT * FROM admins WHERE creator_id = ?`, [id]);
+  }
+
+  getAllUsersCreatedBy(id) {
+    return this.dao.doGetAll(`SELECT * FROM users WHERE creator_id = ?`, [id]);
+  }
+
+  getAllAwardsCreatedBy(id) {
+    return this.dao.doGetAll(`SELECT * FROM awards WHERE creator_id = ?`, [id]);
+  }
+
+  getAllAwardsByRecipientName(name) {
+    return this.dao.doGetAll(`SELECT * FROM awards WHERE recipient_name = ?`, [name]);
+  }
+
+  getAllAwardsByRecipientEmail(email) {
+    return this.dao.doGetAll(`SELECT * FROM awards WHERE recipient_email = ?`, [email]);
+  }
+
+  getAllAwardsByType(award_type) {
+    return this.dao.doGetAll(`SELECT * FROM awards WHERE award_type = ?`, [award_type]);
+  }
+
+  getAllAwardsById(id) {
+    return this.dao.doGetAll(`SELECT * FROM awards WHERE id = ?`, [id]);
+  }
+
+  getAllUsersAndAdmins() {
+    return this.dao.doGetAll(`SELECT id, name, email FROM users UNION ALL SELECT id, name, email FROM admins`);
+  }
+
+  getAllAwards() {
     return this.dao.doGetAll(`SELECT * FROM awards`);
   }
 
- getAward(id) {
+  getAward(id) {
     return this.dao.doGet(`SELECT * FROM awards WHERE id = ?`, [id]);
   }
 

@@ -16,8 +16,11 @@ Tasks:
 - [X] Create Awards
 - [X] Create Users/Admins
 - [X] Create Authentication
-- [ ] BackEnd Work
-- [ ] FrontEnd Work
+- [X] BackEnd Work
+- [X] FrontEnd Work
+- [ ] testing/debugging
+
+
 
 
 ### Requirements

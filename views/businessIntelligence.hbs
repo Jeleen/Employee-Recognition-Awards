@@ -39,9 +39,8 @@
 	            var data = google.visualization.arrayToDataTable(gg);
 	    
 	            var options = {
-	            	sizeAxis: { minValue: 0, maxValue: 100 },
-			        region: '021', // Western Europe
-	    }
+			colorAxis: {colors: ['green', 'orange']} 
+	            };
 	            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 	    
 	            chart.draw(data, options);
@@ -139,7 +138,7 @@
             <h1 class="h2">{{{queryTitle}}}</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
             </div>
-            {{#if myJSON}}
+            {{#if myJSONcreationTimes}}
              <form method="post" action="/exportCSV">
                 <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
                 <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
@@ -201,6 +200,7 @@
        
       		</div>	
 	{{#if admins}}
+	
 		      		<hr></hr>
 
 		   <div class="table-responsive-sm">
@@ -359,10 +359,14 @@
   
   
    if({{{myJSONregions}}} != 0){
+   
+
+   
     	var regA = new Array();
        	regA.push([]);
        	regA.push([]);
        	var regJ = {{{myJSONregions}}};
+       	
       	for(var i = 0; i < regJ.length; i++){
       	 	regA[0][i] = regJ[i][0];
       	        regA[1][i] = regJ[i][1];
@@ -374,7 +378,17 @@
      	      datasets: [
      	        {
      	          label: "Country (millions)",
-     	          backgroundColor: ["blue","orange","green"],
+     	          backgroundColor: ['#FFF700', '#7FFFD4', '#CD7F32', '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'],
+     	        
      	          data: regA[1]
      	        }
      	      ]
@@ -393,7 +407,7 @@
   
   
   
-if({{{myJSONlogin}}} != 0){
+if({{{myJSONlogins}}} != 0){
 	var ctxL = document.getElementById("myChartLogins").getContext('2d');
 	var glog = new Array();	
   	glog.push([]);
@@ -401,7 +415,7 @@ if({{{myJSONlogin}}} != 0){
   	glog.push([]);
   	glog.push([]);
 
-  	var logs = {{{myJSONlogin}}};
+  	var logs = {{{myJSONlogins}}};
   	for(var i = 0; i < logs.length; i ++){
      		glog[0][i] = 'ID:' + logs[i][0];
      		glog[1][i] = logs[i][1];
@@ -443,11 +457,11 @@ if({{{myJSONlogin}}} != 0){
    }
    
    
-  if({{{myJSON}}} != 0){  
+  if({{{myJSONcreationTimes}}} != 0){  
 	  var ctx = document.getElementById("myChart").getContext('2d');
 	  var g = new Array();
 	  g.push([]);
-	  var da = {{{myJSON}}};
+	  var da = {{{myJSONcreationTimes}}};
 	 
 	  g.push([]);
 	  g.push([]);
@@ -504,11 +518,11 @@ if({{{myJSONlogin}}} != 0){
   
   
   
-  if({{{myJSON2}}} != 0){
+  if({{{myJSONawardTypes}}} != 0){
     	var gg = new Array();
         gg.push([]);
   	gg.push([]);
-        var dag = {{{myJSON2}}};
+        var dag = {{{myJSONawardTypes}}};
       	for(var i = 0; i < dag.length; i++){
           gg[0][i] = dag[i][0];
           gg[1][i] = dag[i][1];
@@ -532,7 +546,7 @@ if({{{myJSONlogin}}} != 0){
 }
 
   
-/*  if({{{myJSON}}} != 0){
+/*  if({{{myJSONcreationTimes}}} != 0){
    var myChartLine = new Chart(ctxLine, {
         type: 'line',
         data: {
