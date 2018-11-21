@@ -18,7 +18,8 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var newEmail = req.body.new_email;
   if (!newEmail) {
-    res.render('edit_profile', { existing: newEmail, error: "Must specify an email" })
+    res.render('edit_profile', { existing: newEmail, error: "Must specify an email" });
+    return;
   }
   appRepo.editUser(req.session.loggedInId, newEmail)
     .then(() => res.render('edit_profile', { existing: newEmail, info: "Email successfully updated" }))
