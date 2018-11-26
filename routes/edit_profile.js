@@ -30,15 +30,11 @@ router.post('/upload', multipartMiddleware, function(req, res) {
   appRepo.getUserById(req.session.loggedInId)
     .then(user => {
       var file = req.files.upload;
-<<<<<<< HEAD
       if (file.size == 0) {
         res.render('edit_profile', { existing: user.email, error: "Must Specify a File"});
         return;
       }
       var sigImagePath = 'award/data/image/' + user.id + '_' + file.name;
-=======
-      var sigImagePath = 'award/data/sigs/' + user.id + '_' + file.name;
->>>>>>> parent of 8477d4d... Update edit_profile.js
       fs.renameSync(file.path, sigImagePath);
       appRepo.editUserImage(req.session.loggedInId, sigImagePath).then(() => {
         res.render('edit_profile', { existing: user.email, info: "Successfully uploaded image"})
