@@ -133,10 +133,26 @@ getAllUsersMinusPasswords() {
   getAllAwardsById(id) {
     return this.dao.doGetAll(`SELECT * FROM awards WHERE id = ?`, [id]);
   }
-
+  //* Business Intelligence 'And' Requests
   getAllUsersAndAdmins() {
-    return this.dao.doGetAll(`SELECT id, name, email FROM users UNION ALL SELECT id, name, email FROM admins`);
+    return this.dao.doGetAll(`SELECT id, name, email, login_attempts, last_login, creator_id FROM users UNION ALL SELECT id, name, email, login_attempts, last_login, creator_id FROM admins`);
   }
+
+  //Get all where there three variables AND one variable
+  getAllThreeAndOneA(a){
+	  return this.dao.doGetAll(a);
+	  //console.log("myID = " + myId.id);
+	  //return (this.dao.doGetAll(`SELECT * FROM admins WHERE id = ?`, [myId]), this.dao.doGet(`SELECT * FROM users WHERE id = ?`, [c]));
+
+  }
+  getAllThreeAndOneB(a){
+  	  return this.dao.doGetAll(a);
+  	  //console.log("myID = " + myId.id);
+  	  //return (this.dao.doGetAll(`SELECT * FROM admins WHERE id = ?`, [myId]), this.dao.doGet(`SELECT * FROM users WHERE id = ?`, [c]));
+
+  }
+
+
 
   getAllAwards() {
     return this.dao.doGetAll(`SELECT * FROM awards`);

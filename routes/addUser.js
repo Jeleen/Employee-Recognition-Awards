@@ -16,26 +16,30 @@ var countries = ["United States","Afghanistan","Albania","Algeria","Andorra","An
 		,"Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States Minor Outlying Islands","Uruguay"
 		,"Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
 
+/**************************************
+* Route for addUser main page
+**************************************/
 router.get('/', function(req, res, next) {
 	res.render('addUser',  { countries: countries, title: "Accounts" });
 });
 
+/**************************************
+* Route for adding user
+**************************************/
 router.post('/', function(req, res, next) {
 	if(req.body.cancel == "cancel"){
 		appRepo.getAllUsers().then((users) => {
 			res.render('accountsMain',  {users: users, title: "Accounts"});
 	  }).catch(error => console.log('Error getting all admin: ', error));
 	}
+	//adds new user with default password, returns to main user listing
 	else{
 		var d = new Date();
-				console.log(req.body);
-
 		appRepo.createUser(req.body.name, req.body.email, "12345", req.body.region, req.session.loggedInId )
-		.then((data) => console.log('Succesfully created user'))
+			.then((data) => console.log('Succesfully created user'))
 		.catch((error) => console.log('Error creating user', error));
-
 		appRepo.getAllUsers().then((users) => {
-		res.render('accountsMain',  {users: users, title: "Accounts"});
+			res.render('accountsMain',  {users: users, title: "Accounts"});
 	  }).catch(error => console.log('Error getting all admin: ', error));
 	}
 });

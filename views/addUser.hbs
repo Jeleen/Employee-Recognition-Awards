@@ -34,12 +34,10 @@
       </nav>
          <div class="sidebar">
       			<h3 class="headingA">{{{title}}}</h3>
-                                 <a href="/getAllAdmins" value="Admins">
-                                 Admins<span class="sr-only">(current)</span>
-                                 </a>
-                              
-                                 <a class="active" href="/getAllUsers">Users
-                                 </a>
+                                  <form action="/getAllAdmins" method="get">
+				     <a ><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
+				     </form>   <form action="/getAllUsers" method="get">
+    <a class="active"><button type="submit" value="allUsers" class="btn-link">Users</button></a>
                            
                   </div>
       <div class="container-fluid" >

@@ -23,90 +23,89 @@
            <li class="nav-item" >
              <a class="nav-link" href="/businessIntelligence">BI Reports</a>
            </li>
-   
          </ul>
+     </div>
+      <a href="/logout" >Logout</a>
+     </nav>
+	
+       <div class="sidebar">
+	<h3 class="headingA">Accounts</h3>
+	{{#if admins}}
+		<form action="/getAllAdmins" method="get">
+		<a class="active"><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
+		</form>   <form action="/getAllUsers" method="get">
+		<a><button type="submit" value="allUsers" class="btn-link">Users</button></a>
+		</form> 
+	{{/if}}
+	{{#if users}}
+	       <form action="/getAllAdmins" method="get">
+	       <a ><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
+	       </form>   <form action="/getAllUsers" method="get">
+	       <a class="active"><button type="submit" value="allUsers" class="btn-link">Users</button></a>
+	       </form> 
+	{{/if}}
+	{{#if main}}
+	    <form action="/getAllAdmins" method="get">
+	    <a ><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
+	    </form>   <form action="/getAllUsers" method="get">
+	    <a ><button type="submit" value="allUsers" class="btn-link">Users</button></a>
+	    </form> 
+        {{/if}}
        </div>
-                     <a href="/logout" >Logout</a>
 
-</nav>
-<div class="sidebar">
-<h3 class="headingA">Accounts</h3>
-{{#if admins}}
-  <a class="active" href="/getAllAdmins" value="Admins">Admins</a>
-   <a href="/getAllUsers" value="Users">Users</a>
- {{/if}}
-  {{#if users}}
-    <a href="/getAllAdmins" value="Admins">Admins</a>
-<a class="active" href="/getAllUsers" value="Users">Users</a>
-  {{/if}}
-  {{#if main}}
-    <a href="/getAllAdmins" value="Admins">Admins</a>
-    <a href="/getAllUsers" value="Users">Users</a>
-{{/if}}
-</div>
-
-
-  
-      <div class="container-fluid" >
+       <div class="container-fluid" >
         <div class="row">
-         
-          
-          
-          
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-	 {{#if admins}}
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-	   <div class="btn-toolbar mb-2 mb-md-0">
-         <form method="get" action="/addAdmin" >
-	      	  <button id="addAdmin" type="submit" name="addAdmin" value="+ Add" class="btn btn-sm btn-outline-secondary" >+ Add</button>
- 	</form>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+	   {{#if admins}}
+                 <form method="get" action="/addAdmin" >
+	  	 <button id="addAdmin" type="submit" name="addAdmin" value="+ Add" class="btn btn-sm btn-outline-secondary" >+ Add</button>
+ 		</form>
 	 {{/if}}
 	 {{#if users}}
-	 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-	              <div class="btn-toolbar mb-2 mb-md-0">
 	        <form method="get" action="/addUser" >
 		<button id="addUser" type="submit" name="addUser" value="+ Add" class="btn btn-sm btn-outline-secondary"/>+ Add </button></form>
 	 {{/if}}
-	 
-	     </div>
-            
-	 </div>
-	 <div class="table-responsive-sm">
-	              {{#if admins}}
-	               <table class="table table-sm">
-	 	       <thead class="thead-light">
-	                   <tr>
-	                     <th>ID</th>
-	                     <th>Name</th>
-	                     <th>Email</th>
-	                     <th>Last Login</th>
-	                     <th>Login Attempts</th>
-	                     <th>Created</th>
-	                     <th>Action</th>
-	                   </tr>
-	                 </thead>
-	                 <tbody>
-	                 {{#each admins}}
-	 		   <tr>
-	 		     <form method="post" action="/editAdmins" >
+	
+	<div class="table-responsive-sm">
+	 {{#if admins}}
+	     <input class="form-control" id="myInput" type="text" placeholder="Search Admins...">
+	     <p></p>
+	     <table class="table table-sm">
+	 	 <thead class="thead-light">
+	              <tr>
+	                   <th>ID</th>
+	                   <th>Name</th>
+	                   <th>Email</th>
+	                   <th>Last Login</th>
+	                   <th>Login Attempts</th>
+	                   <th>Created</th>
+	                   <th>Action</th>
+	              </tr>
+	         </thead>
+	         <tbody id="myTable">
+	         {{#each admins}}
+	 	     <tr>
+	 	     <form method="post" action="/editAdmins" >
 	 		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}" ></td>
 	 		   <td>{{this.name}}</td>
 	 		   <td><input type="text" name="email" id="email" value="{{this.email}}" ></td>
-	 		        <td>{{convertDate this.last_login}}</td>
-	 		      <td>{{this.login_attempts}}</td>
-	 		     <td>{{convertDate this.creation_time}}</td>
-	 		      <td><input id="Save" type="submit" name="Save" value="Save" >
-	 		    <input id="delete" type="submit" name="delete" value="delete" ></td>
-	 		      </form>
-	 		    </tr>
-	                  {{/each}}
-	                   {{/if}}
-	                 </tbody>
-	               </table>
+	 		   <td>{{convertDate this.last_login}}</td>
+	 		   <td>{{this.login_attempts}}</td>
+	 		   <td>{{convertDate this.creation_time}}</td>
+	 		   <td><input id="Save" type="submit" name="Save" value="Save" >
+	 		   <input id="delete" type="submit" name="delete" value="delete" ></td>
+	            </form>
+	            </tr>
+	        {{/each}}
+	      {{/if}}
+	      </tbody>
+	 </table>
 	               
-	 	{{#if users}}
+	 {{#if users}}
+	 	<input class="form-control" id="myInput" type="text" placeholder="Search Users...">
+	 	  <p></p>
 	            <table class="table table-sm">
-	 	   <thead class="thead-light">
+	 	   <thead class="thead-light" >
 	                   <tr>
 	                     <th>ID</th>
 	                     <th>Name</th>
@@ -117,10 +116,9 @@
 	                     <th>Created</th>
 	                     <th>Creator ID</th>
 	                     <th>Action</th>
-	 
 	                   </tr>
 	                 </thead>
-	                 <tbody>
+	                 <tbody id="myTable">
 	                 {{#each users}}
 	                   <tr>
 	                   <form method="post" action="/editUsers" >
@@ -138,8 +136,10 @@
 	                  {{/each}}
 	                   {{/if}}
 	                 </tbody>
-	               </table>
+	        </table>
             </div>
+            
+            
          <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
          <h1 class="h2"></h1>
@@ -154,5 +154,16 @@
 
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 </body>
 </html>

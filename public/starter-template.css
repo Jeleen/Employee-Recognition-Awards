@@ -1,229 +1,184 @@
 body {
-  padding-top: 56px;
-  padding-left: 0px;
+   padding-top: 56px;
+   padding-left: 0px;
 }
-
 .starter-template {
-  padding: 20px 1px;
-  text-align: left;
-}
-
-.hidbut{
-    background-color: rgb(34, 34, 34);
-    color: gray;
-    border: none;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    
+   padding: 20px 1px;
+   text-align: left;
 }
 #panel-body {
-    font-size: 14px;
-    padding-left: 10px;
-    
+   font-size: 14px;
+   padding-left: 10px;
 }
-
-
 .tableRow {
-	width: 150px;
-	    font-size: 14px;
-
+   width: 33%;
+   font-size: 14px;
 }
-
-//input {
-//    font-size: 14px;
-//    padding-left: 20px;
-//    width: 20px;
-    
-//}
+#andOr {
+   margin-left: 45%;
+}
 #chart_div_time {
-      padding-left: 0px;
-      background-color: rgb(34, 34, 34);
-
+   padding-left: 0px;
+   background-color: rgb(34, 34, 34);
 }
-
 #filter {
-	float: right;
-
+   float: right;
+   background-color: rgb(249, 249, 102);
+   margin-right: 50px;
+   color: rgb(38, 38, 37);
 }
-
+#addAdmin {
+   float: right;
+   margin-bottom: 10px;
+   background-color: rgb(249, 249, 102);
+   color: rgb(38, 38, 37);
+}
+#addUser {
+   float: right;
+   margin-bottom: 10px;
+   background-color: rgb(249, 249, 102);
+   color: rgb(38, 38, 37);
+}
 #exportButton {
-	float: right;
-	background-color: "pink";
+   float: right;
+   background-color: "pink";
 }
 .side-nav {
-	width:10px;
+   width: 10px;
 }
 .editMe {
-	width: 30px;
+   width: 30px;
 }
 .table {
-	padding-left:
-	overflow: scroll;
-	overflow-x: auto;
-	width: 95%;
-	height: 300px;
+   padding-left: overflow: scroll;
+   overflow-x: auto;
+   width: 95%;
+   height: 300px;
 }
-
-.btn-link{
-  border:none;
-  outline:none;
-  background:none;
-  cursor:pointer;
-  padding:0;
-  color:#0000EE;
-  text-decoration:none !important;
-  font-family:inherit;
-  font-size:inherit;
-  
+.btn-link {
+   border: none;
+   outline: none;
+   background: none;
+   cursor: pointer;
+   padding: 0;
+   color: #0000EE;
+   text-decoration: none !important;
+   font-family: inherit;
+   font-size: inherit;
 }
-.side-nav-heading{
-  border:none;
-  outline:none;
-  background:none;
-  cursor:pointer;
-  color:#1A1A1A;
-  padding:0;
-  text-decoration:none !important;
-  font-family:inherit;
-  font-size:inherit;
-  
+.side-nav-heading {
+   border: none;
+   outline: none;
+   background: none;
+   cursor: pointer;
+   color: #1A1A1A;
+   padding: 0;
+   text-decoration: none !important;
+   font-family: inherit;
+   font-size: inherit;
 }
-
-
 .column1 {
-    float: left;
-    width: 50%;
-    padding-left: 10px;
-    padding-right: 15px;
-    
+   float: left;
+   width: 50%;
+   padding-left: 10px;
+   padding-right: 15px;
 }
-
 .row1 {
-    height: 250px;      
+   height: 250px;
 }
-
 /* Clear floats after the columns */
+
 .row2 {
-    height: 250px;
-    
-    
+   height: 250px;
 }
 .backy {
-    background: #0000EE;
-    
+   background: #0000EE;
 }
- hr {
- 
-       display: block;
-       position: relative;
-       padding-top: 20px;
-       width: 100%;
-       font-size: 1px;
-       clear: both;
-       border-top: 1px solid #aaaaaa;
-       border-bottom: 1px solid #ffffff;
-    }
+hr {
+   display: block;
+   position: relative;
+   padding-top: 20px;
+   width: 100%;
+   font-size: 1px;
+   clear: both;
+   border-top: 1px solid #aaaaaa;
+   border-bottom: 1px solid #ffffff;
+}
 #cancel {
-	    display: inline-block;
-	    float: left;
-
+   display: inline-block;
+   float: left;
 }
 #Save {
-	    display: inline-block;
-	    float: left;
-
+   display: inline-block;
+   float: left;
 }
-
-
 .mainy {
-     margin-left: 202px;
-     padding-top: 10px;
-     
+   margin-left: 202px;
+   padding-top: 10px;
 }
-
 .headingA {
-	background-color: "none";
-	padding-bottom: 10px;
-	padding-top: 10px;
-	padding-left: 10px;
+   background-color: "none";
+   padding-bottom: 10px;
+   padding-top: 10px;
+   padding-left: 10px;
 }
-
- body .btn-secondary {
-    background-color: #FFFFFF;
-    border-color: #A9A9A9;
-    
-    }
-    
-    .sidebar-sticky a{
-    	float: left;
-    }
-  
-  .chartHeader {
-	text-align: center;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	padding-bottom: 10px;
-	padding-top: 30px;
-
-  }
-    
-    
-   /* The side navigation menu */
+body .btn-secondary {
+   background-color: #FFFFFF;
+   border-color: #A9A9A9;
+}
+.sidebar-sticky a {
+   float: left;
+}
+.chartHeader {
+   text-align: center;
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+   padding-bottom: 10px;
+   padding-top: 30px;
+}
+.sidebar {
+   margin: 0;
+   padding: 0;
+   width: 200px;
+   background-color: #f1f1f1;
+   position: fixed;
+   height: 100%;
+   overflow: auto;
+}
+.sidebar a {
+   display: block;
+   color: black;
+   padding: 16px;
+   text-decoration: none;
+}
+.sidebar a.active {
+   background-color: #a8a8a8;
+   color: white;
+}
+.sidebar a:hover:not(.active) {
+   background-color: #b7b7b7;
+   color: white;
+}
+div.content {
+   margin-left: 200px;
+   padding: 1px 16px;
+   height: 1000px;
+}
+@media screen and (max-width: 700px) {
    .sidebar {
-     margin: 0;
-     padding: 0;
-     width: 200px;
-     background-color: #f1f1f1;
-     position: fixed;
-     height: 100%;
-     overflow: auto;
+      width: 100%;
+      height: auto;
+      position: relative;
    }
-   
-   /* Sidebar links */
    .sidebar a {
-     display: block;
-     color: black;
-     padding: 16px;
-     text-decoration: none;
+      float: left;
    }
-   
-   /* Active/current link */
-   .sidebar a.active {
-     background-color: #a8a8a8;
-     color: white;
-   }
-   
-   /* Links on mouse-over */
-   .sidebar a:hover:not(.active) {
-     background-color: #b7b7b7;
-     color: white;
-   }
-   
-   
-   
-   
-   
-   /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
    div.content {
-     margin-left: 200px;
-     padding: 1px 16px;
-     height: 1000px;
+      margin-left: 0;
    }
-   
-   /* On screens that are less than 700px wide, make the sidebar into a topbar */
-   @media screen and (max-width: 700px) {
-     .sidebar {
-       width: 100%;
-       height: auto;
-       position: relative;
-     }
-     .sidebar a {float: left;}
-     div.content {margin-left: 0;}
+}
+@media screen and (max-width: 400px) {
+   .sidebar a {
+      text-align: center;
+      float: none;
    }
-   
-   /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-   @media screen and (max-width: 400px) {
-     .sidebar a {
-       text-align: center;
-       float: none;
-     }
 }

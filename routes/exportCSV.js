@@ -6,112 +6,57 @@ var http = require('http'),
     path = require('path');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
-
-
+/*****************************************************
+* Route for exporting Business Intelligence CSV files
+*****************************************************/
 router.post('/', function(req, res, next) {
-
 	if(req.body.thisReport == "allAdmins"){
-
-			appRepo.getAllAdmins().then((admins) => {
-			//if CSV report, get report and export to csv file 'data.csv'
-
-				writeToCSVadmin(admins);
-  			var filePath = path.join(__dirname, '../data.csv');
-  			    var stat = fileSystem.statSync(filePath);
-  			     res.writeHead(200, {
+		appRepo.getAllAdmins().then((admins) => {
+ 			writeToCSVadmin(admins);
+			var filePath = path.join(__dirname, '../data.csv');
+		    var stat = fileSystem.statSync(filePath);
+            res.writeHead(200, {
   			        'Content-Type': 'text/csv',
   			        'Content-Disposition': 'attachment;filename=data.csv'
-  			    });
-
-  				var readStream = fileSystem.createReadStream(filePath);
-      			// We replaced all the event handlers with a simple call to readStream.pipe()
-
-
-
-    			readStream.pipe(res);
+     	    });
+			var readStream = fileSystem.createReadStream(filePath);
+   			readStream.pipe(res);
 	    }).catch(error => console.log('Error getting all admins: ', error));
 	}
 
 	if(req.body.thisReport == "allUsers"){
 		appRepo.getAllUsers().then((users) => {
-					//if CSV report, get report and export to csv file 'data.csv'
+			writeToCSVuser(users);
+		  	var filePath = path.join(__dirname, '../data.csv');
+		  	var stat = fileSystem.statSync(filePath);
+		  	res.writeHead(200, {
+		  	      'Content-Type': 'text/csv',
+		  	      'Content-Disposition': 'attachment;filename=data.csv'
+		  	});
 
-						writeToCSVuser(users);
-		  			var filePath = path.join(__dirname, '../data.csv');
-		  			    var stat = fileSystem.statSync(filePath);
-		  			     res.writeHead(200, {
-		  			        'Content-Type': 'text/csv',
-		  			        'Content-Disposition': 'attachment;filename=data.csv'
-		  			    });
-
-		  				var readStream = fileSystem.createReadStream(filePath);
-		      			// We replaced all the event handlers with a simple call to readStream.pipe()
-		    			readStream.pipe(res);
+		  	var readStream = fileSystem.createReadStream(filePath);
+   			readStream.pipe(res);
 	    }).catch(error => console.log('Error getting all users: ', error));
 	}
 
-	if(req.body.thisReport == "allUsersByAdmin"){
-	    appRepo.getAllUsersCreatedBy(req.body.adminIdText).then((usersA) => {
-						//if CSV report, get report and export to csv file 'data.csv'
-
-							writeToCSVuser(usersA);
-			  			var filePath = path.join(__dirname, '../data.csv');
-			  			    var stat = fileSystem.statSync(filePath);
-			  			     res.writeHead(200, {
-			  			        'Content-Type': 'text/csv',
-			  			        'Content-Disposition': 'attachment;filename=data.csv'
-			  			    });
-
-			  				var readStream = fileSystem.createReadStream(filePath);
-			      			// We replaced all the event handlers with a simple call to readStream.pipe()
-			    			readStream.pipe(res);
-		    }).catch(error => console.log('Error getting all usersCreatedByAdmin: ', error));
-	}
-
-if(req.body.thisReport == "allAwards"){
+	if(req.body.thisReport == "allAwards"){
 		appRepo.getAllAwards().then((awards) => {
-						//if CSV report, get report and export to csv file 'data.csv'
-
-							writeToCSVaward(awards);
-			  			var filePath = path.join(__dirname, '../data.csv');
-			  			    var stat = fileSystem.statSync(filePath);
-			  			     res.writeHead(200, {
-			  			        'Content-Type': 'text/csv',
-			  			        'Content-Disposition': 'attachment;filename=data.csv'
-			  			    });
-
-			  				var readStream = fileSystem.createReadStream(filePath);
-			      			// We replaced all the event handlers with a simple call to readStream.pipe()
-			    			readStream.pipe(res);
-		    }).catch(error => console.log('Error getting all awards: ', error));
+			writeToCSVaward(awards);
+  			var filePath = path.join(__dirname, '../data.csv');
+		    var stat = fileSystem.statSync(filePath);
+            res.writeHead(200, {
+		        'Content-Type': 'text/csv',
+		        'Content-Disposition': 'attachment;filename=data.csv'
+		    });
+			var readStream = fileSystem.createReadStream(filePath);
+   			readStream.pipe(res);
+	    }).catch(error => console.log('Error getting all awards: ', error));
 	}
-if(req.body.thisReport == "allAwardsByUser"){
-		appRepo.getAllAwardsCreatedBy(req.body.userIdText).then((awards) => {
-						//if CSV report, get report and export to csv file 'data.csv'
-
-							writeToCSVaward(awards);
-			  			var filePath = path.join(__dirname, '../data.csv');
-			  			    var stat = fileSystem.statSync(filePath);
-			  			     res.writeHead(200, {
-			  			        'Content-Type': 'text/csv',
-			  			        'Content-Disposition': 'attachment;filename=data.csv'
-			  			    });
-
-			  				var readStream = fileSystem.createReadStream(filePath);
-			      			// We replaced all the event handlers with a simple call to readStream.pipe()
-			    			readStream.pipe(res);
-		    }).catch(error => console.log('Error getting all awards created by user: ', error));
-	}
-
-
 
 });
 
-
-
-//ADMIN: writes report to csv file for Admins
-function writeToCSVadmin(admins)
-{
+// writes Admin report to csv file
+function writeToCSVadmin(admins){
 	const csvWriter = createCsvWriter({
           path: './data.csv',
           header: [{
@@ -137,13 +82,13 @@ function writeToCSVadmin(admins)
             title: 'CREATOR ID'
           }]
 	});
-    csvWriter.writeRecords(admins) // returns a promise
+    csvWriter.writeRecords(admins)
        .then(() => {
        console.log('...Done');
     });
 }
 
-//USERS:  writes report to CSV file for users
+// writes user report to CSV file
 function writeToCSVuser(users){
 	const csvWriter = createCsvWriter({
 	          path: './data.csv',
@@ -179,13 +124,13 @@ function writeToCSVuser(users){
 	            title: 'CREATOR ID'
 	          }]
 	    });
-	 csvWriter.writeRecords(users) // returns a promise
+	 csvWriter.writeRecords(users)
 	     .then(() => {
 	      console.log('...Done');
      });
 }
 
-//AWARDS:  writes report to csv file for awards
+// writes Awards report to csv file
 function writeToCSVaward(awards){
 	const csvWriter = createCsvWriter({
 		path: './data.csv',
@@ -209,11 +154,10 @@ function writeToCSVaward(awards){
 	            title: 'CREATOR ID'
 	    }]
 	});
-	csvWriter.writeRecords(awards) // returns a promise
+	csvWriter.writeRecords(awards)
 	    .then(() => {
 	    console.log('...Done');
     });
 }
-
 
 module.exports = router;

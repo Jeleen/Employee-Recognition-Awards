@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/***************************************************
+* Route for Accounts "Users" gets all User accounts
+***************************************************/
 router.get('/', function(req, res, next) {
 appRepo.getAllUsers().then((users) => {
 	res.render('accountsMain',  {users: users, title: "Accounts" });
