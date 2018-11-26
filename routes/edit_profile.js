@@ -18,7 +18,8 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var newEmail = req.body.new_email;
   if (!newEmail) {
-    res.render('edit_profile', { existing: newEmail, error: "Must specify an email" })
+    res.render('edit_profile', { existing: newEmail, error: "Must specify an email" });
+    return;
   }
   appRepo.editUser(req.session.loggedInId, newEmail)
     .then(() => res.render('edit_profile', { existing: newEmail, info: "Email successfully updated" }))
@@ -29,6 +30,10 @@ router.post('/upload', multipartMiddleware, function(req, res) {
   appRepo.getUserById(req.session.loggedInId)
     .then(user => {
       var file = req.files.upload;
+      if (file.size == 0) {
+        res.render('edit_profile', { existing: user.email, error: "Must Specify a File"});
+        return;
+      }
       var sigImagePath = 'award/data/image/' + user.id + '_' + file.name;
       fs.renameSync(file.path, sigImagePath);
       appRepo.editUserImage(req.session.loggedInId, sigImagePath).then(() => {
