@@ -43,7 +43,6 @@ function getCreator(obj){
       obj.creator_name = cName.name
       console.log("Before", cName.sig_image_path);
       if(cName.sig_image_path == null){
-		console.log("FUCK YOU");
 		var sig_path = 'image/tempImage.png'
      }else{     
       var sig_path= cName.sig_image_path.substring(cName.sig_image_path.lastIndexOf("image"))
