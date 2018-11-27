@@ -98,12 +98,12 @@ class AppRepository {
     return this.dao.doGetAll(`SELECT * FROM awards WHERE creator_id = ?`, [id]);
   }
 
-getAllUsersMinusPasswords() {
-    return this.dao.doGetAll(`SELECT (id, name, email, region, last_login, login_attempts, creation_time)  FROM users`);
+  getAllUsersMinusPasswords() {
+    return this.dao.doGetAll(`SELECT id, name, email, region, last_login, login_attempts, creation_time FROM users`);
   }
 
   getAllAdminsMinusPasswords() {
-    return this.dao.doGetAll(`SELECT ((id, name, email, last_login, login_attempts, creation_time)  FROM admins`);
+    return this.dao.doGetAll(`SELECT id, name, email, last_login, login_attempts, creation_time FROM admins`);
   }
 
   getAllAdminsCreatedBy(id) {
@@ -134,8 +134,9 @@ getAllUsersMinusPasswords() {
     return this.dao.doGetAll(`SELECT * FROM awards WHERE id = ?`, [id]);
   }
 
-  getAllUsersAndAdmins() {
-    return this.dao.doGetAll(`SELECT id, name, email FROM users UNION ALL SELECT id, name, email FROM admins`);
+  //Get all for custom BI, gets first three parameters and 2nd row
+  getAllThreeAndOneA(a){
+	  return this.dao.doGetAll(a);
   }
 
   getAllAwards() {

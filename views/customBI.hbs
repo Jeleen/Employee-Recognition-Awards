@@ -8,567 +8,180 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link href="../starter-template.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-<!-- <script>
-$(window).load(function() {
-var t = document.getElementById("searchType1b");
-  $( t ).hide();
-});
-</script>  -->
-
-<script type="text/javascript">
-       
-        if({{{myJSONorgchart}}} != 0){
-        	google.charts.load('current', {'packages':['orgchart']});
-        	google.charts.setOnLoadCallback(drawChart2);
-        }
-	       if({{{myJSONregions}}} != 0){  
-	         google.charts.load('current', {
-	            'packages':['geochart'],
-	            // Note: you will need to get a mapsApiKey for your project.
-	            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-	            'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
-	          });
-	          google.charts.setOnLoadCallback(drawRegionsMap);
-	    var gg = new Array();
-	            gg.push([]);
-	      	     gg[0][0] = "Country";
-	      	     gg[0][1] = "Popularity";
-	      	     
-	            var dag = {{{myJSONregions}}};
-	          	for(var i = 0; i < dag.length; i++){
-	              gg.push([]);
-	              gg[i + 1][0] = dag[i][0];
-	              gg[i + 1][1] = dag[i][1];
-	          	}
-      
-	          function drawRegionsMap() {
-	            var data = google.visualization.arrayToDataTable(gg);
-	    
-	            var options = {
-	            	sizeAxis: { minValue: 0, maxValue: 100 },
-			        region: '021', // Western Europe
-	    }
-	            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-	    
-	            chart.draw(data, options);
-	          }
-  		}
-       	
-      //ORGANIZATION CHART
-      function drawChart2() {
-	var da = {{{myJSONorgchart}}};
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Name');
-        data.addColumn('string', 'Manager');
-        data.addColumn('string', 'ToolTip');
-        var p = 'Admin:';
-        var q = p + da[0][2].toString();
-        data.addRow([q,'', '']);
-        for(var i = 0; i < da.length; i ++){
-           data.addRow([da[i][1], q, '']); 
-        }
-        // Create the chart.
-        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
-        // Draw the chart, setting the allowHtml option to true for the tooltips.
-        chart.draw(data, {allowHtml:true});
-      }
-      
-   </script>
  </head>
 
-<body>
+ <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Employee Recognition Awards System</a> 
     <button aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item" >
-          <a class="nav-link" href="/adminProfile">My Profile <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/adminProfile">My Profile <span class="sr-only">(</span></a>
         </li>
         <li class="nav-item" >
-          <a class="nav-link" href="/accountsMain">Accounts <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/accountsMain">Accounts <span class="sr-only"></span></a>
         </li>
         <li class="nav-item active" >
           <a class="nav-link" href="/businessIntelligence">Business Intelligence</a>
         </li>
-          
       </ul>
     </div>
-              <a href="/logout" >Logout</a>
+    <a href="/logout" >Logout</a>
   </nav>
- 
- 
- <div class="sidebar">
-
-<form action="/businessIntelligence" method="post">
-<h3 class="headingA">Business Intelligence</h3>
-
-  <a><button type="submit" name="adminRadio" value="allAdmins" class="btn-link">Admins</button></a>
-   <a><button type="submit" name="userRadio" value="allUsers" class="btn-link">Users</button></a>
-    <a><button type="submit" name="awardRadio" value="allAwards" class="btn-link">Awards</button></a>
-    <a class="active"><button type="submit" name="custom" value="custom" class="btn-link">Custom Report</button></a>
-
-</form>
-</div>
-
-<div class="mainy">  
-
-
-
-	
-<form method="post" action="/customBI" >
-<button id="filter" name="filter" class="btn btn-sm btn-outline-secondary" type="submit" >Submit Query </button><p>Select search parameters from one or more columns below, then select Submit Query.</p>
-<p></p>
-<table class="table table-bordered table-dark">
-<thead>
-	<tr >
-		<th>Search parameter</th>
-		<th>(Optional) <p> Add another parameter</p></th>
-		<th>(Optional)<p>   Data parameter</p></th>
-	</tr>
-</thead>
-<tbody>
-<tr >
-<td class="tableRow">
-<div class="form-group">
-<select name="searchType1" id="searchType1a" class="form-control">
-	       <option>Select data to target:</option>
-	       <option>Admin</option>
-	       <option>User</option>
-	       <option>Award</option>
-	       </select>
-	<p></p>
- 	     
-	   </td>
-
-<td class="tableRow">
-       <p>   Optional:</p>
-	    <input type="checkbox" name="column2And" > AND </input>
-	     <br><input type="checkbox" name="column2AndNot" > AND NOT </input>
-</td>	 
-
-	  
-	  
-
-<td class="tableRow">
-	      <select class="form-control" name="searchType3">
- 		<option>Select:</option>
-	       <option>Admin</option>
-	       <option>User</option>
-	       <option>Award</option>
- 		<option>All Admins</option>
-	       <option>All Users</option>
-	       <option>All Awards</option>           
-	       </select>
-       <p></p>
-	     <h5>Optional:</h5>
- 	     <select class="form-control" name="searchType3" id="searchType3">
-	        <option>Select:</option>
-		<option>ID</option>
-	       <option>Name</option>
-	       <option>Email</option>
-	       <option>Last Login</option>
-	       <option>Login Attempts</option>
-	       <option>Creation Date</option>
-	       <option>Creator ID</option>
-	       <option>Region</option>
-	       <option>Award Type</option>
-	       <option>Recipient Name</option>
-	       <option>Recipient Email</option>	       
-	       </select>
-	       	<input class="form-control" type="text" width="20px" name="formInput1" placeholder="Enter value..."></input>
-  </td>   
-        
-	 
-
-
-	  
-	   
-</form>
-	   
-
-</tr>
-</tbody>
-</table>
-{{#if admin}}
-	
-		      		<hr></hr>
- <form method="post" action="/exportCSV">
-                <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
-                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
-             </form>
-		   <div class="table-responsive-sm">
-		                  <table class="table table-sm">
-	 	       <thead class="thead-light"> 
-		   <h4>Admin Account</h4>
-			     <tr>
-			       <th>ID</th>
-			       <th>Email</th>
-			       <th>Login Attempts</th> 
-			       <th>Last Login</th>
-			       <th>Creation Time</th>
-			       <th>Creator ID</th>
-
-			       </tr>
-			</thead>
-			  <tbody>
-			    {{#each admin}}
-			 <tr>
-			       <td>{{this.id}}</td>
-			       <td>{{this.email}}</td>
-			       <td>{{this.login_attempts}}</td>
-			       <td>{{convertDate this.last_login}}</td>
-			       <td>{{convertDate this.creation_time}}</td>
-			       <td>{{this.creator_id}}</td>
-			    </tr>
-			    {{/each}}
-			  </tbody>
-		  </table>
-		  </div>  
-		  {{/if}}
   
- {{#if user}} 
-              		<hr></hr>
- <form method="post" action="/exportCSV">
-                <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
-                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
-             </form>
-<h4>User Accounts:</h4>
-<div class="table-responsive-sm">
-               <table class="table table-sm">
-	 	       <thead class="thead-light"> 
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Region</th>
-                <th>Last Login</th>
-                <th>Login Attempts</th>
-                <th>Creation Time</th>
-		<th>Creator ID</th>
-                
-              </tr>
-            </thead>
-            <tbody>
-            {{#each user}}
-              <tr>
-                <td>{{this.id}}</td>
-                <td>{{this.name}}</td>
-                <td>{{this.email}}</td>
-                <td>{{this.region}}</td>
-                <td>{{convertDate this.last_login}}</td>
-                <td>{{this.login_attempts}}</td>
-                <td>{{convertDate this.creation_time}}</td>
-                <td>{{this.creator_id}}</td>
-              </tr>
-              {{/each}}
-            </tbody>
-          </table>
-          </div>{{/if}} 
-  {{#if award}} 
-                		<hr></hr>
-   <form method="post" action="/exportCSV">
-                  <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
-               </form>
-  <h4>{{{searchtitle}}}</h4>
-  <div class="table-responsive-sm">
-                 <table class="table table-sm">
-  	 	       <thead class="thead-light"> 
-                <tr>
-                  <th>ID</th>
-                  <th>Recipient Name</th>
-                  <th>Recipient Email</th>
-                  <th>Award Type</th>
-                  <th>Creation Time</th>
-  		<th>Creator ID</th>
-                  
-                </tr>
-              </thead>
-              <tbody>
-              {{#each award}}
-                <tr>
-                  <td>{{this.id}}</td>
-                  <td>{{this.recipient_name}}</td>
-                  <td>{{this.recipient_email}}</td>
-                  <td>{{this.award_type}}</td>
-                  <td>{{convertDate this.creation_time}}</td>
-                  <td>{{this.creator_id}}</td>
-                </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          </div>{{/if}} 
-
-
-{{#if both}}
-<hr></hr>
- <form method="post" action="/exportCSV">
-                <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
-                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exportButton" id="exportButton">Export CSV file</button>
-             </form>
-		   <div class="table-responsive-sm">
-		                  <table class="table table-sm">
-	 	       <thead class="thead-light"> 
-		   <h4>Admin Account</h4>
-			     <tr>
-			       <th>ID</th>
-			       <th>Name</th>
-			       <th>Email</th> 
-			         </tr>
-			</thead>
-			  <tbody>
-			    {{#each both}}
-			 <tr>
-			       <td>{{this.id}}</td>
-			       <td>{{this.name}}</td>
-			       <td>{{this.email}}</td>
-			       
-			    </tr>
-			    {{/each}}
-			  </tbody>
-		  </table>
-		  </div>  
-		  {{/if}}
-  
-  
+  <div class="sidebar">
+    <form action="/businessIntelligence" method="post">
+    <h3 class="headingA">Business Intelligence</h3>
+     <a><button type="submit" name="adminRadio" value="allAdmins" class="btn-link">Admins</button></a>
+     <a><button type="submit" name="userRadio" value="allUsers" class="btn-link">Users</button></a>
+     <a><button type="submit" name="awardRadio" value="allAwards" class="btn-link">Awards</button></a>
+     <a class="active"><button type="submit" name="custom" value="custom" class="btn-link">Custom Report</button></a>
+    </form>
   </div>
   
-  
-  
-  
-  
-  
-  <script>
-  
+  <div class="mainy">  
+   <form method="post" action="/customBI" >
+     <button id="filter" name="filter" class="btn btn-sm btn-outline-secondary" type="submit" >Submit Query </button>
+     <p>Select search parameters from one or more columns below.  Then select "Submit Query".</p>
+     <p></p>
+     
+     <table class="table table-bordered table-dark">
+	<thead>
+   	  <tr >
+	    <th>Table</th>
+	    <th>Attribute (optional)</th>
+	    <th>Value (optional)</th>
+	  </tr>
+	 </thead>
+	 <tbody>
+	  <tr>
+	    <td class="tableRow" >
+	    <select name="searchType1a" id="searchType1a" class="form-control">
+	       <option>Select...</option>
+	       <option>Admin(s)</option>
+	       <option>User(s)</option>
+	       <option>Award(s)</option>
+  	    </select> 
+	    </td>
+	    <td class="tableRow" >
+	     <select class="form-control" name="searchType1b" id="searchType1b">
+		<option >Select...</option>
+		<option>id</option>
+		<option>name</option>
+		<option>email</option>
+		<option>creator_id</option>
+	     </select>
+	     <div id="replaceSearchType1b" name="replaceSearchType1b"></div>
+	     </td>
+	     <td class="tableRow">
+		<div id="removeme" name="removeme">	<input class="form-control" type="text" width="20px" id="searchType1c" name="searchType1c" placeholder="Enter value..."></input></div>
+		<div id="replaceSearchType1c" name="replaceSearchType1c"></div>
+		</td>
+   	   </tr>
+	   <tr id="addyRow" name="addyRow"><td><a type="text" value="add" id="addy" name="addy">+ Add another parameter</a><td></tr>
+	   <tr id="slider" name="slider">
+	      <td class="tableRow" >
+		<p><input type="radio" id="andOr" name="andOr" value="and" > AND</input></p>
+		<p><p><input type="radio" id="andOr" name="andOr" value="or" > OR</input></p></p>
+	      </td>
+	       <td class="tableRow" >
+	         <select class="form-control" name="searchType2b" id="searchType2b">
+	   	   <option >Select...</option>
+		   <option>id</option>
+		   <option>name</option>
+		   <option>email</option>
+		   <option>creator_id</option>
+		 </select>
+		 <div id="replaceSearchType3b" name="replaceSearchType3b"></div>
+		</td>
+		<td class="tableRow">
+		   <input class="form-control" type="text" width="20px" id="searchType2c" name="searchType2c" placeholder="Enter value..."></input>
+		</td>
+	       </tr>   
+	     </tbody>
+           </table>
+          </form>
+	   
+	{{#if noData}}
+	   <h5>{{{noData}}}</h5>
+	{{/if}}
+	
+ 	{{#if results}}
+ 	<hr></hr>
+ 	 <form method="post" action="/customBI">
+           <input type="hidden" name="csvReport1" id="csvReport1" value="{{{csvReport1}}}" />
+            <button type="submit" class="btn btn-sm btn-outline-secondary" id="filter" name="filter">Export CSV file</button>
+         </form>
+         <div class="table-responsive-sm">
+  	  <table class="table table-sm table-bordered">
+  	    <thead class="thead-light"> 
+  	     <h4>{{{resultsTitle}}}</h4>
+  	     <tr>
+  	       {{#each resultsHeaders}}
+	       	<th>{{@key}}</th>
+	       {{/each}}
+  	     </tr>
+  	    </thead>
+  	    <tbody >
+  	       {{#each results}}
+  		 <tr>
+  	         {{#each this}}
+	           <td>{{this}}</td>
+	 	 {{/each}}
+  		 </tr>
+  	       {{/each}}
+  	    </tbody>
+  	   </table>
+          </div>  
+  	  {{/if}}		  
+		
+    	</div>	
  
-  
-  
-  
-  
-  
-   if({{{myJSONregions}}} != 0){
-    	var regA = new Array();
-       	regA.push([]);
-       	regA.push([]);
-       	var regJ = {{{myJSONregions}}};
-      	for(var i = 0; i < regJ.length; i++){
-      	 	regA[0][i] = regJ[i][0];
-      	        regA[1][i] = regJ[i][1];
-    	}
-     	new Chart(document.getElementById("pie-chart-2"), {
-     	    type: 'pie',
-     	    data: {
-     	      labels: regA[0],
-     	      datasets: [
-     	        {
-     	          label: "Country (millions)",
-     	          backgroundColor: ["blue","orange","green"],
-     	          data: regA[1]
-     	        }
-     	      ]
-     	    },
-     	    options: {
-     	      
-     	    }
-    	});
-}  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-if({{{myJSONlogin}}} != 0){
-	var ctxL = document.getElementById("myChartLogins").getContext('2d');
-	var glog = new Array();	
-  	glog.push([]);
-  	  	glog.push([]);
-  	glog.push([]);
-  	glog.push([]);
-
-  	var logs = {{{myJSONlogin}}};
-  	for(var i = 0; i < logs.length; i ++){
-     		glog[0][i] = 'ID:' + logs[i][0];
-     		glog[1][i] = logs[i][1];
-     		glog[2][i] = 'green';
-    	glog[3][i] = 'green';
-  	}
-  	
-   	var myChartL = new Chart(ctxL, {
-         type: 'bar',
-         data: {
-             labels: glog[0],
-             datasets: [{
-                 label: '# login attempts per ID',
-                 data: glog[1],
-                 backgroundColor: glog[2],
-                 borderColor: glog[3],
-                 borderWidth: 1
-             }]
-         },
-         options: {
-             scales: {
-                 yAxes: [{
-                	  
-                     ticks: {
-   			beginAtZero: true,
-                           callback: function (value) { if (Number.isInteger(value)) { return value; } },
-                           stepSize: 5                  }
-                 }],
-                 xAxes: [{
-                     ticks: {
-   	                min: glog[0][0],
-   	                autoSkip: false
-                    }
-                 }]
-             }
-         }
-     });
-  
-   }
-   
-   
-  if({{{myJSON}}} != 0){  
-	  var ctx = document.getElementById("myChart").getContext('2d');
-	  var g = new Array();
-	  g.push([]);
-	  var da = {{{myJSON}}};
-	 
-	  g.push([]);
-	  g.push([]);
-	  g.push([]);
-	  if(da.length == 1){
-		g[0][0] = 0;
-		g[1][0] = '';
-		g[0][1] = da[0][0];
-		g[1][1] = da[0][1];
-		g[0][2] = 0;
-		g[1][2] = '';
-	  }
-	  else{
-	  for(var i = 0; i < da.length; i ++){
-		g[0][i] = da[i][0];
-		g[1][i] = da[i][1];
-		g[2][i] = 'none';
-		g[3][i] = 'blue';
-	  }
-	  }
-
-	  var myChart = new Chart(ctx, {
-	      type: 'line',
-	      data: {
-		  labels: g[0],
-		  datasets: [{
-		      label: '# created',
-		      data: g[1],
-		      backgroundColor: 'rgba(153, 153, 176, 0.5)',
-		      borderColor: 'rgba(153, 153, 176)',
-		      borderWidth: 1
-		  }]
-	      },
-	      options: {
-	      	  scales: {
-		      yAxes: [{
-
-			  ticks: {
-				beginAtZero: true,
-				callback: function (value) { if (Number.isInteger(value)) { return value; } },
-				stepSize: 1                  }
-		      }],
-		      xAxes: [{
-			  ticks: {
-				min: g[0][0],
-				autoSkip: false
-			 }
-		      }]
-		  }
-	      }
-	  });
-  
-  }
-  
-  
-  
-  if({{{myJSON2}}} != 0){
-    	var gg = new Array();
-        gg.push([]);
-  	gg.push([]);
-        var dag = {{{myJSON2}}};
-      	for(var i = 0; i < dag.length; i++){
-          gg[0][i] = dag[i][0];
-          gg[1][i] = dag[i][1];
-      	}
-      new Chart(document.getElementById("pie-chart"), {
-           type: 'pie',
-           data: {
-             labels: gg[0],
-             datasets: [
-               {
-                 label: "Population (millions)",
-                 backgroundColor: ["blue","orange","green"],
-                 data: gg[1]
-               }
-             ]
-           },
-           options: {
-             
-           }
-});
-}
-
-  
-/*  if({{{myJSON}}} != 0){
-   var myChartLine = new Chart(ctxLine, {
-        type: 'line',
-        data: {
-            labels: g[0],
-            datasets: [{
-                label: '# created',
-                data: g[1],
-                backgroundColor: g[2],
-                borderColor: g[3],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-               	  
-                    ticks: {
-  			beginAtZero: true,
-                          callback: function (value) { if (Number.isInteger(value)) { return value; } },
-                          stepSize: 5                  }
-                }],
-                xAxes: [{
-                   
-  	         ticks: {
-  		                     min: g[0][0],
-  		                     autoSkip: false
-                  }
-                }]
-            }
-        }
-  });
-  }*/
-</script>
-  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js">
- 
-  
   </script> 
+  <script>
+	$("#slider" ).ready(function(){
+		$('#slider').hide();
+	});
 
-<script>
+	$("#addy" ).click(function(){
+		$('#slider').show();
+		$('#addyRow').hide();
+	});
 
-$( "#searchType1a" ).change(function() {
-if(!(document.getElementById("searchType1b"))){
-$('#searchType1a').after('<p></p><select class="form-control" name="searchType1b" id="searchType1b"><option>Select attribute:</option><option>ID</option><option>Name</option><option>Email</option><option>Last Login</option> <option>Login Attempts</option><option>Creation Date</option>	       <option>Creator ID</option>	       <option>Region</option>	       <option>Award Type</option>	       <option>Recipient Name</option>	      <option>Recipient Email</option>	    </select> <input class="form-control" type="text" width="20px" id="searchType1c" name="searchType1c" placeholder="Enter value..."></input>');
-}
-
-});
-</script>
-</body>
+	$( "#searchType1a" ).change(function() {
+		if(document.getElementById("searchType1b")){
+			$('#searchType1b').remove();
+			$('#searchType2b').remove();
+			if(document.getElementById("searchType1a").value == "Admin(s)"){
+				$('#replaceSearchType1b').before('<select class="form-control" name="searchType1b" id="searchType1b"><option>Select...</option><option>id</option><option>name</option><option>email</option>  <option>creator_id</option>	       </select> ');
+				$('#replaceSearchType3b').before('<select class="form-control" name="searchType2b" id="searchType2b"><option >Select...</option><option>id</option><option>name</option><option>email</option>  <option>creator_id</option>	       </select> ');
+			}
+			if(document.getElementById("searchType1a").value == "User(s)"){
+				$('#replaceSearchType1b').before('<select class="form-control" name="searchType1b" id="searchType1b"><option>Select...</option><option>id</option><option>name</option><option>email</option>  <option>creator_id</option>	       <option>region</option>	         </select> ');
+				$('#replaceSearchType3b').before('<select class="form-control" name="searchType2b" id="searchType2b"><option>Select...</option><option>id</option><option>name</option><option>email</option>  <option>creator_id</option>	       <option>region</option>	         </select> ');
+			}
+			if(document.getElementById("searchType1a").value == "Award(s)"){
+				$('#replaceSearchType1b').before('<select class="form-control" name="searchType1b" id="searchType1b"><option>Select...</option><option>id</option><option>creator_id</option>	        <option>award_type</option>	       <option>recipient_name</option>	      <option>recipient_email</option>	    </select> ');
+				$('#replaceSearchType3b').before('<select class="form-control" name="searchType2b" id="searchType2b"><option>Select...</option><option>id</option><option>creator_id</option>	        <option>award_type</option>	       <option>recipient_name</option>	      <option>recipient_email</option>	    </select> ');
+			}
+		}
+		else{
+			if(document.getElementById("searchType1a").value == "Admin(s)"){
+				$('#replaceSearchType1b').before('<select class="form-control" name="searchType1b" id="searchType1b"><option>Select...</option><option>id</option><option>name</option><option>email</option>  <option>creator_id</option>	       </select> ');
+				$('#replaceSearchType3b').before('<select class="form-control" name="searchType2b" id="searchType2b"><option>Select...</option><option>id</option><option>name</option><option>email</option>  <option>creator_id</option>	       </select> ');
+			}
+			if(document.getElementById("searchType1a").value == "User(s)"){
+				$('#replaceSearchType1b').before('<select class="form-control" name="searchType1b" id="searchType1b"><option>Select...</option><option>id</option><option>name</option><option>email</option>  <option>creator_id</option>	       <option>region</option>	         </select> ');
+				$('#replaceSearchType3b').before('<select class="form-control" name="searchType2b" id="searchType2b"><option>Select...</option><option>id</option><option>name</option><option>email</option>  <option>creator_id</option>	       <option>region</option>	         </select> ');
+			}
+			if(document.getElementById("searchType1a").value == "Award(s)"){
+				$('#replaceSearchType1b').before('<select class="form-control" name="searchType1b" id="searchType1b"><option>Select...</option><option>id</option><option>creator_id</option>	        <option>award_type</option>	       <option>recipient_name</option>	      <option>recipient_email</option>	    </select> ');
+				$('#replaceSearchType3b').before('<select class="form-control" name="searchType2b" id="searchType2b"><option>Select...</option><option>id</option><option>creator_id</option>	        <option>award_type</option>	       <option>recipient_name</option>	      <option>recipient_email</option>	    </select> ');
+			}
+		}
+	});
+     </script>
+  </body>
 </html>

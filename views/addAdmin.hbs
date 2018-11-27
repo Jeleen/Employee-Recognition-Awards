@@ -29,28 +29,21 @@
                </li>
             </ul>
          </div>
-                       <a href="/logout" >Logout</a>
-
+        <a href="/logout" >Logout</a>
       </nav>
-      
-                  <div class="sidebar">
-			<h3 class="headingA">{{{title}}}</h3>
-                           <a class="active" href="/getAllAdmins" value="Admins">
-                           Admins<span class="sr-only">(current)</span>
-                           </a>
-                        
-                           <a href="/getAllUsers">Users
-                           </a>
-                     
-                  </div>
-        
-      
-      
-      
+      <div class="sidebar">
+	<h3 class="headingA">{{{title}}}</h3>
+        <form action="/getAllAdmins" method="get">
+	   <a class="active"><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
+	</form>   
+	<form action="/getAllUsers" method="get">
+	   <a><button type="submit" value="allUsers" class="btn-link">Users</button></a>
+	</form> 
+      </div>
+     
       <div class="container-fluid" >
       <div class="row">
-         
-         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor">
                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                   <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
@@ -62,8 +55,7 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                <h1 class="h2"></h1>
             </div>
-            
-            
+         
             <div class="btn-toolbar mb-2 mb-md-0">
                <div class="btn-group mr-2">
 	           <div class="table-responsive-sm">
@@ -81,10 +73,8 @@
                            <div class="form-group">
                               <form method="post" action="/addAdmin" >
                                  <td><input type="text" class="form-control" id="name" name="name" placeholder="Enter name"/></td>
-                                 <td><input type="text" class="form-control" id="email" name="email" placeholder="Enter email"/></td>
-				                              
-				
-                                 <td><input class="form-control" id="save" type="submit" name="save" value="Save" /></td>
+                                 <td><input type="text" class="form-control" id="email" name="email" placeholder="Enter email"/></td>			                             				
+                                <td><input class="form-control" id="save" type="submit" name="save" value="Save" /></td>
                                 <td> <input class="form-control" id="cancel" type="submit" name="Cancel" value="Cancel" />
                                  </td>
                               </form>
@@ -97,12 +87,7 @@
          </main>
          </div>
       </div>
-      <!-- Bootstrap core JavaScript
-         ================================================== -->
-      <!-- Placed at the end of the document so the pages load faster -->
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    
-     
    </body>
 </html>

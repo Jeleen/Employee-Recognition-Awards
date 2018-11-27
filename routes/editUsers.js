@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/********************************************
+* Route for saving and deleting user accounts
+********************************************/
 router.post('/', function(req, res, next) {
 	if(req.body.delete == "delete"){
 	   appRepo.removeUser(req.body.id)

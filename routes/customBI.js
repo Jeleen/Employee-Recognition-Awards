@@ -2,176 +2,269 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 
+const csvdata = require('csvdata');
+var http = require('http'),
+    fileSystem = require('fs'),
+    path = require('path');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
-
-
-
+/**************************************
+* Route for BI Custom BI main page
+**************************************/
 router.get('/', function(req, res, next) {
-	appRepo.getAllUsers().then((users) => {
-		appRepo.getAllAdmins().then((admins) => {
-	         appRepo.getAllAwards().then((awards) => {
-                 res.render('customBI', { admins: admins, awards: awards, users: users, title: "Business Intelligence Reports"});
-		    }).catch(error => console.log('Error getting all admins: ', error));
-	    }).catch(error => console.log('Error getting all admins: ', error));
-    }).catch(error => console.log('Error getting all admins: ', error));
+    res.render('customBI');
 });
 
-router.post('/', function(req, res, next){
-		if(req.body['column2And']){
-				appRepo.getAllUsersAndAdmins().then((both) => {
-					console.log(both);
-					 res.render('customBI', { both: both });
-				}).catch(error => console.log('Error getting admin by Id: ', error));
-			}
-		else if(req.body['searchType1'] == "Admin"){
-			if(req.body['searchType2'] != "AND"){
-				switch(req.body['searchType1b']){
-					case "ID":
-						appRepo.getAllAdminsById(req.body['searchType1c']).then((admin) => {
-							console.log(admin);
-							 res.render('customBI', { admin: admin });
-						}).catch(error => console.log('Error getting admin by Id: ', error));
-						break;
-					case "Name":
-						appRepo.getAllAdminsByName(req.body['searchType1c']).then((admin) => {
-							 res.render('customBI', { admin: admin });
-						}).catch(error => console.log('Error getting admin by Id: ', error));					break;
-					case "Email":
-						appRepo.getAllAdminsByEmail(req.body['searchType1c']).then((admin) => {
-							 res.render('customBI', { admin: admin });
-						}).catch(error => console.log('Error getting admin by Id: ', error));					break;
-					case "Last Login":
-						sdf
-						break;
-					case "Login Attempts":
-						sdf
-						break;
-					case "Creator ID":
-						appRepo.getAllAdminsCreatedBy(req.body['searchType1c']).then((admins) => {
-							 res.render('customBI', { admins: admins });
-						}).catch(error => console.log('Error getting admin by Id: ', error));						break;
-					default:
+/**************************************
+* Route for Custom BI searches
+**************************************/
+router.post('/', function(req, res, next) {
+     //assign table names and name/region/email strings for sqlite strings
+    var table1 = setSearchTerm(req.body['searchType1a']);
+    var table1c = JSON.stringify(req.body['searchType1c']);
+    var table2c = JSON.stringify(req.body['searchType2c']);
+    //Check for exporting csv report
+    if (req.body['csvReport1'] == "csvReport1" || req.body['csvReport2'] == "csvReport2") {
+        checkExportCSV(res, req.body);
+    }
 
-						break;
-				}
-			}
+    /*************************************
+    If a table is specified
+    *************************************/
+    else if(req.body['searchType1a'] != "Select..."){
+      /*************************************
+        one attribute specified in 1st row
+        *************************************/
+        if ((req.body['searchType1b'] != "Select...") && (req.body['searchType2b'] == "Select...") && (req.body['searchType1c'] != "" )) {
+            var search_string = "SELECT * FROM " + table1 + " WHERE " + req.body['searchType1b'] + " = " + table1c;
+            //Get report for 1st table and attribute
+            appRepo.getAllThreeAndOneA(search_string).then((results) => {
+                //remove password field and convert dates
+                    for (var i = 0; i < results.length; i++) {
+                        delete(results[i].password);
+                        results[i].creation_time = convertDate(results[i].creation_time);
+                        if(results[i].last_login){
+                            results[i].last_login = convertDate(results[i].last_login);
+                        }
+                    }
+                //check for no data, create message
+                if (results.length == 0) {
+                    var noData = createNoDataMessage(req.body);
+                }
+                //Save to csv file for possible user export
+                writeToLocalCSV('./data.csv', results);
+                res.render('customBI', {
+                    csvReport1: "csvReport1",
+                    results: results,
+                    resultsHeaders: results[0],
+                    resultsTitle: req.body['searchType1a'] + " " + req.body['searchType1b'] + " " + table1c,
+                    noData: noData
+                });
+            }).catch(error => console.log('Error getting ' + search_string, error));
+        }
 
-		//	res.render('customBI', { savedSearch: req.body, empties: empties, admin: 1 } );
-		}
-		else if(req.body['searchType1'] == "User"){
-			switch(req.body['searchType1b']){
-				case "ID":
-					appRepo.getAllUsersById(req.body['searchType1c']).then((user) => {
-						console.log(user);
-		                 res.render('customBI', { user: user });
-				    }).catch(error => console.log('Error getting user by Id: ', error));
-					break;
-				case "Name":
-					appRepo.getAllUsersByName(req.body['searchType1c']).then((user) => {
-		                 res.render('customBI', { user: user });
-				    }).catch(error => console.log('Error getting user by Name: ', error));					break;
-				case "Email":
-					appRepo.getAllUsersByEmail(req.body['searchType1c']).then((user) => {
-		                 res.render('customBI', { user: user });
-				    }).catch(error => console.log('Error getting user by Email: ', error));					break;
-				case "Last Login":
-					sdf
-					break;
-				case "Login Attempts":
-					sdf
-					break;
-				case "Creator ID":
-					appRepo.getAllUsersCreatedBy(req.body['searchType1c']).then((user) => {
-						console.log(user);
-		                 res.render('customBI', { user: user });
-				    }).catch(error => console.log('Error getting user by Creator Id: ', error));						break;
-				default:
+        /*************************************
+        one attribute specified in 2nd row
+        *************************************/
+        else if ((req.body['searchType1b'] == "Select...") && (req.body['searchType2b'] != "Select...") && (req.body['searchType2c'] != " " )) {
+            //get report
+            var search_string = "SELECT * FROM " + table1 + " WHERE " + req.body['searchType2b'] + " = " + table2c;
+            appRepo.getAllThreeAndOneA(search_string).then((results) => {
+                //remove password field and convert dates
+                for (var i = 0; i < results.length; i++) {
+                    delete(results[i].password);
+                    results[i].creation_time = convertDate(results[i].creation_time);
+                    if(results[i].last_login){
+                        results[i].last_login = convertDate(results[i].last_login);
+                    }
+                }
+                if (results.length == 0) {
+                    var noData = createNoDataMessage(req.body);
+                }
+                //save report to csv file for potential export
+                writeToLocalCSV('./data.csv', results);
+                res.render('customBI', {
+                    csvReport1: "csvReport1",
+                    results: results,
+                    resultsHeaders: results[0],
+                    resultsTitle: req.body['searchType1a'] + " " + req.body['searchType2b'] + " " + table2c,
+                    noData: noData
+                });
+            }).catch(error => console.log('Error getting ' + search_string, error));
+        }
 
-					break;
-			}
-		}
+        /*************************************
+         two attributes specified
+        *************************************/
+        else if ((req.body['searchType1b'] != "Select...") && (req.body['searchType2b'] != "Select...") && (req.body['searchType1c'] != "" ) && (req.body['searchType2c'] != "" )) {
+            //check for and/or and apply to sql search string
+            if (req.body['andOr'] == "or") {
+                var search_string = "SELECT * FROM " + table1 + " WHERE " + req.body['searchType1b'] +
+                    " = " + table1c + " OR " + req.body['searchType2b'] + " = " + table2c;
+            } else {
+                var search_string = "SELECT * FROM " + table1 + " WHERE " + req.body['searchType1b'] +
+                    " = " + table1c + " AND " + req.body['searchType2b'] + " = " + table2c;
+            }
+            //get report
+            appRepo.getAllThreeAndOneA(search_string).then((results) => {
+                //remove password field and convert dates
+                for (var i = 0; i < results.length; i++) {
+                    delete(results[i].password);
+                    results[i].creation_time = convertDate(results[i].creation_time);
+                    if(results[i].last_login){
+                        results[i].last_login = convertDate(results[i].last_login);
+                    }
+                }
+                // if results, create title for table
+                if (results.length != 0) {
+                    var resultsTitle = req.body['searchType1a'] + " where " + req.body['searchType1b'] + " = " + table1c + req.body['andOr'] + " " + req.body['searchType2b'] + " = " + table2c;
+                }
+                //if no results, create noData message
+                if (results.length == 0) {
+                    var noData = createNoDataMessage(req.body);
+                }
+                //Save to csv file for potential exporting
+                writeToLocalCSV('./data.csv', results);
+                res.render('customBI', {
+                    csvReport1: "csvReport1",
+                    results: results,
+                    resultsHeaders: results[0],
+                    resultsTitle: resultsTitle,
+                    noData: noData
+                });
+            }).catch(error => console.log('Error getting ' + search_string, error));
+        }
+        /*************************************
+         no attributes specified
+        *************************************/
+        else if (req.body['searchType1b'] == "Select..." && req.body['searchType2b'] == "Select...") {
+            var search_string = "SELECT * FROM " + table1;
+            appRepo.getAllThreeAndOneA(search_string).then((results) => {
+                //Delete password fields and convert date
+                for (var i = 0; i < results.length; i++) {
+                    delete(results[i].password);
+                    results[i].creation_time = convertDate(results[i].creation_time);
+                    if(results[i].last_login){
+                       results[i].last_login = convertDate(results[i].last_login);
+                    }
+                }
+                //if no data, create no data message
+                if (results.length == 0) {
+                    var noData = createNoDataMessage(req.body);
+                }
+                if (results.length != 0) {
+                    var resultsTitle = "All " + req.body['searchType1a'];
+                }
+                writeToLocalCSV('./data.csv', results);
+                res.render('customBI', {
+                    csvReport1: "csvReport1",
+                    results,
+                    resultsHeaders: results[0],
+                    resultsTitle: resultsTitle,
+                    noData: noData
+                });
+            }).catch(error => console.log('Error getting all admins: ', error));
+        }
+    }
 
-		else if(req.body['searchType1'] == "Award"){
-			switch(req.body['searchType1b']){
-				case "ID":
-					appRepo.getAllAwardsById(req.body['searchType1c']).then((award) => {
-						console.log(award);
-						var searchtitle = "Award with ID = " + req.body['searchType1c'];
-		                 res.render('customBI', { award: award, searchtitle: searchtitle });
-				    }).catch(error => console.log('Error getting award by Id: ', error));
-					break;
-				case "Recipient Name":
-					appRepo.getAllAwardsByRecipientName(req.body['searchType1c']).then((award) => {
-		                 res.render('customBI', { award: award });
-				    }).catch(error => console.log('Error getting award by Recipient Name: ', error));					break;
-				case "Recipient Email":
-					appRepo.getAllAwardsByRecipientEmail(req.body['searchType1c']).then((award) => {
-		                 res.render('customBI', { award: award });
-				    }).catch(error => console.log('Error getting award by Recipient Email: ', error));					break;
-				case "Last Login":
-					sdf
-					break;
-				case "Award Type":
-					appRepo.getAllAwardsByType(req.body['searchType1c']).then((award) => {
-						console.log(award);
-		                 res.render('customBI', { award: award });
-				    }).catch(error => console.log('Error getting award by award type: ', error));						break;
-									break;
-				case "Creator ID":
-					appRepo.getAllAwardsCreatedBy(req.body['searchType1c']).then((award) => {
-						console.log(award);
-		                 res.render('customBI', { award: award });
-				    }).catch(error => console.log('Error getting award by Creator Id: ', error));						break;
-				default:
-
-					break;
-			}
-		}
-
-
-		else{
-			console.log(req.body);
-			appRepo.getAdminById(req.body.adminID).then((admin) => {
-			var searchContent = req.body;
-			res.render('customBI', { admin: 1, searchContent: searchContent } );
-		}).catch(error => console.log('Error getting all admins: ', error));
-
-		}
-
+    /************************************
+    Else there's an error
+    *************************************/
+    else {
+        res.render('customBI', {
+            noData: "Error processing request\n" + createNoDataMessage(req.body)
+        });
+    }
 });
 
+/**************************************
+*   Creates 'no data message' and string
+*   containing invalid search criteria
+**************************************/
+function createNoDataMessage(reqBody) {
+    //if no results, prepare 'no data' message
+    var noData = "No data for: " + reqBody['searchType1a'];
+    if(reqBody['searchType1b'] != "Select..."){
+        noData += " " + reqBody['searchType1b'] + " = " + reqBody['searchType1c'];
+    }
+    if(reqBody['andOr'] == "and" || reqBody['andOr'] == "or"){
+        noData += " " + reqBody['andOr'];
+    }
+    if(reqBody['searchType2b'] != "Select..."){
+        noData += " " + reqBody['searchType2b'] + " = " + reqBody['searchType2c'];
+    }
 
-function checkColumns(queryBody){
-	var myArray = new Array();
-	myArray[0] = true;
-	myArray[1] = true;
-	myArray[2] = true;
-	myArray[3] = true;
-	myArray[4] = true;
-	if(queryBody['column1Admin']){
-		myArray[0] = false;
-	}
-	if(queryBody['column1User']){
-		myArray[1] = false;
-	}
-	if(queryBody['column1Award']){
-		myArray[2] = false;
-	}
-	if(queryBody['column2CreatedBy']){
-		myArray[3] = false;
-	}
-	if(queryBody['column2WithAttribute']){
-		myArray[4] = false;
-	}
-
-	var myObj = {};
-
-	for(var i = 0; i < myArray.length; i++){
-		if(myArray[i] == true){
-			var akey = "empty" + (i + 1);
-			myObj[akey] = 'true';
-		}
-	}
-	return myObj;
+    return noData;
 }
+
+/**************************************************
+ *    If exportCSV button was pressed, export
+ *    locally saved csv file
+ ***************************************************/
+function checkExportCSV(res, req) {
+    if (req['csvReport1'] == "csvReport1") {
+        var filePath = path.join(__dirname, '../data.csv');
+        var stat = fileSystem.statSync(filePath);
+        res.writeHead(200, {
+            'Content-Type': 'text/csv',
+            'Content-Disposition': 'attachment;filename=data.csv'
+        });
+        var readStream = fileSystem.createReadStream(filePath);
+        readStream.pipe(res);
+    } else if (req['csvReport2'] == "csvReport2") {
+        var filePath = path.join(__dirname, '../data2.csv');
+        var stat = fileSystem.statSync(filePath);
+        res.writeHead(200, {
+            'Content-Type': 'text/csv',
+            'Content-Disposition': 'attachment;filename=data2.csv'
+        });
+        var readStream = fileSystem.createReadStream(filePath);
+        readStream.pipe(res);
+    }
+}
+
+/**************************************************
+ *    Set sqlite friendly table search terms
+ ***************************************************/
+function setSearchTerm(table) {
+    var tableTerm;
+    if (table == "Admin(s)") {
+        tableTerm = "admins";
+    } else if (table == "User(s)") {
+        tableTerm = "users";
+    } else if (table == "Award(s)") {
+        tableTerm = "awards";
+    }
+    return tableTerm;
+}
+
+/***************************************************
+ *    Write report to CSV file for
+ *    potential user export
+ ***************************************************/
+function writeToLocalCSV(file, reportData) {
+    if (reportData.length != 0) {
+        var myheader = Object.keys(reportData[0]);
+        var mh = myheader.join();
+        csvdata.write(file, reportData, {
+            header: mh
+        });
+    }
+}
+
+/****************************************************
+ *    Convert Dates for last login and login attempts
+ ***************************************************/
+function convertDate(myDate){
+    var date1 = new Date(myDate);
+    var year = date1.getFullYear();
+    var month = ('0' + (date1.getMonth() + 1)).slice(-2);
+    var date = ('0' + date1.getDate()).slice(-2);
+    var hours = ('0' + date1.getUTCHours()).slice(-2);
+    var minutes = ('0' + date1.getUTCMinutes()).slice(-2);
+    var seconds = ('0' + date1.getUTCSeconds()).slice(-2);
+    var shortDate = month + '/' + date + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' UTC';
+    return shortDate;
+}
+
 module.exports = router;

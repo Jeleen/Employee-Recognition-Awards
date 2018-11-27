@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+/**********************************************
+* Route for saving edits or deleting accounts.
+**********************************************/
 router.post('/', function(req, res, next) {
 	if(req.body.delete == "delete"){
 	   appRepo.removeAdmin(req.body.id)
