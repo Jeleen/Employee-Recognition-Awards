@@ -1,3 +1,4 @@
+%sources referenced: https://tex.stackexchange.com/questions/46406/package-for-certificates
 \documentclass[a4paper,15pt]{scrartcl}%allows for custom fonts
 \usepackage[utf8]{inputenc}%necessary for non ACII chars to display INPUT encode
 
@@ -72,49 +73,55 @@
   \curlyframe[.9\columnwidth]{
 		%============heading
 		{
+		\begin{minipage}[b][.15cm]{.50\textwidth}
 		\singlespacing
 		\textcolor{red!30!black!90}
-		{\small Congratulations!}
+		{\Huge Congratulations!}
+		\end{minipage}
 		}
+		\vfill
+		\vfill
+		\vfill
 		%verbage=====center detail
 		%{\centering
 		{\singlespacing	
 		\begin{minipage}{1\textwidth}
-	      In recognition for you valued dedication and outstanding \mbox{performance} I herby award:
+	      In recognition for you valued dedication and outstanding \mbox{performance} I herby award to:
 		\end{minipage}
 		} %======employee of the 
 	      \smallskip
 	      \vfill
-	      {\begin{minipage}{.375\textwidth}
-		\textcolor{red!30!black!90}
-		{\textit{Employee of the}}
-		{\bfseries \color{FireBrick}{\typeAward}}
+		 {\begin{minipage}[b][2.75cm][c]{.2\textwidth}
+		\emph{\fontsize{50}{60}\selectfont\sffamily\color{name}{{{\color{DarkRed}\fontfamily{lmr}\selectfont{\bfseries \honoree}}}}}
 		\end{minipage}
-		}
-		\smallskip
-		\vfill
-		 {\begin{minipage}{.55\textwidth}
-		to:\uuline{\emph{\large\sffamily\color{name}{{{\color{DarkRed}\fontfamily{frc}\selectfont{\bfseries \honoree}}}}}}
-		\end{minipage}
-		}
+		}%==end minipage
 		\vspace{.5in}
 		%}
 		%
-		%Date awarded==============middle beneath
+		%
 		\begin{minipage}[c]{\linewidth}%
 		{\singlespacing
 		%\vfill
-		\vspace{1.5in}
-		    \hspace{3.5in}
-		   Awarded on:
-		   \vfill
-		   \hspace{3in}
-		    {\large\bfseries\color{phd}{\awardDate}}
+		\vspace{.40in}
+		    \hspace{2.5in}%===employee of the year
+		       {\begin{minipage}[t][.5cm]{.375\textwidth}
+		\textcolor{red!30!black!90}
+		{\fontsize{30}{20}\selectfont\textit Employee of the}
+		\vfill		
+		\vspace{1cm}
+		\begin{minipage}[t][.5cm]{1.5\textwidth}
+		\hspace{.7in}
+		{\bfseries\fontsize{40}{30}\selectfont\color{FireBrick}\textsc{\typeAward}}
+		\vspace{.2cm}
+		\end{minipage}
+		\end{minipage}
+		}%==end minipage
 		  }%END CURLY FRAME==
 		 \end{minipage}
 		  %
 		  %creator id and signature==============bottom left
-	    {\singlespacing
+	   \vspace{2.3cm}
+	   {\singlespacing
 	    \vfill
 	    \hspace{-30pt}
 	%   \vspace{5in}
@@ -124,7 +131,7 @@
 		 % \end{minipage}%
 		%  \begin{minipage}[b]{2.25in}
 		\graphicspath{{sigy}}
-		\sigskip \signature{\includegraphics[trim=2cm 1cm 0 -1cm]{\sigy}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
+		\sigskip \signature{\hspace{2cm}\includegraphics[trim=2cm 1cm 0 -1cm]{\sigy}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
 		\end{minipage}
 		\hfill
 		%grapic========================middlle bottom
@@ -135,7 +142,12 @@
 		}%============================bottom right
 		\hfill
 		\begin{minipage}[r]{2.25in}
-			\sigskip \signature{}{\phantom{p}Some other Dude\phantom{g} \\ Special Title}
+		%Date awarded==============middle beneath
+			%\sigskip \signature{}{\phantom{p}Some other Dude\phantom{g} \\ Special Title}
+		   Awarded on:
+		   \vfill
+		   \hspace{3in}
+		    {\large\bfseries\color{phd}{\awardDate}}
 		\end{minipage}
 		\vfill
  } %\end{minipage}

@@ -5,7 +5,6 @@
 \usepackage{tikz,latexsym}
 \usepackage{pdflscape}
 \usetikzlibrary{decorations.text}
-%\usetikzlibrary{shadings}
 \usepackage[active,tightpage]{preview}
 \PreviewEnvironment{tikzpicture}
 \usepackage{mathpazo}
@@ -14,7 +13,7 @@
 \DTLloaddb{names}{namelist.csv}
 %
 \begin{document}
-\def\shadowradius{3pt}
+
 \DTLforeach{names}{%   %%% these constitute running content
 		\honoree=Hname, \awardDate=Date, \creator=Cname, \typeAward=Type}{%
 \DTLiflastrow{
