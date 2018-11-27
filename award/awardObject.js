@@ -49,10 +49,7 @@ function getCreator(obj){
       var sig_path= cName.sig_image_path.substring(cName.sig_image_path.lastIndexOf("image"))
 	};
       console.log(sig_path);
-
-      var sig_path= cName.sig_image_path.substring(cName.sig_image_path.lastIndexOf("image"));
-    //  console.log(sig_path);
-    //  cName.sig_image_path.substring(0, cName.sig_image_path.lastIndexOf("/"));
+ 
       obj.creator_sig=sig_path
       array.push(obj)
     //console.log(array);
