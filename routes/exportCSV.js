@@ -11,8 +11,13 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 *****************************************************/
 router.post('/', function(req, res, next) {
 	if(req.body.thisReport == "allAdmins"){
-		appRepo.getAllAdmins().then((admins) => {
- 			writeToCSVadmin(admins);
+		appRepo.getAllAdminsMinusPasswords().then((admins) => {
+	        //convert dates
+            for (var i = 0; i < admins.length; i++) {
+                admins[i].creation_time = convertDate(admins[i].creation_time);
+   	            admins[i].last_login = convertDate(admins[i].last_login);
+            }
+            writeToCSVadmin(admins);
 			var filePath = path.join(__dirname, '../data.csv');
 		    var stat = fileSystem.statSync(filePath);
             res.writeHead(200, {
@@ -25,8 +30,12 @@ router.post('/', function(req, res, next) {
 	}
 
 	if(req.body.thisReport == "allUsers"){
-		appRepo.getAllUsers().then((users) => {
-			writeToCSVuser(users);
+		appRepo.getAllUsersMinusPasswords().then((users) => {
+			for (var i = 0; i < users.length; i++) {
+                users[i].creation_time = convertDate(users[i].creation_time);
+   	            users[i].last_login = convertDate(users[i].last_login);
+            }
+            writeToCSVuser(users);
 		  	var filePath = path.join(__dirname, '../data.csv');
 		  	var stat = fileSystem.statSync(filePath);
 		  	res.writeHead(200, {
@@ -41,7 +50,10 @@ router.post('/', function(req, res, next) {
 
 	if(req.body.thisReport == "allAwards"){
 		appRepo.getAllAwards().then((awards) => {
-			writeToCSVaward(awards);
+			for (var i = 0; i < awards.length; i++) {
+                awards[i].creation_time = convertDate(awards[i].creation_time);
+            }
+            writeToCSVaward(awards);
   			var filePath = path.join(__dirname, '../data.csv');
 		    var stat = fileSystem.statSync(filePath);
             res.writeHead(200, {
@@ -63,11 +75,11 @@ function writeToCSVadmin(admins){
             id: 'id',
             title: 'ID'
           }, {
+	        id: 'name',
+	        title: 'NAME'
+	      }, {
             id: 'email',
             title: 'EMAIL'
-          }, {
-            id: 'password',
-            title: 'PASSWORD'
           }, {
             id: 'last_login',
             title: 'LAST LOGIN'
@@ -101,9 +113,6 @@ function writeToCSVuser(users){
 	          }, {
 	            id: 'email',
 	            title: 'EMAIL'
-	          }, {
-	            id: 'password',
-	            title: 'PASSWORD'
 	          }, {
 	            id: 'region',
 	            title: 'REGION'
@@ -158,6 +167,21 @@ function writeToCSVaward(awards){
 	    .then(() => {
 	    console.log('...Done');
     });
+}
+
+/****************************************************
+ *    Convert Dates for last login and login attempts
+ ***************************************************/
+function convertDate(myDate){
+    var date1 = new Date(myDate);
+    var year = date1.getFullYear();
+    var month = ('0' + (date1.getMonth() + 1)).slice(-2);
+    var date = ('0' + date1.getDate()).slice(-2);
+    var hours = ('0' + date1.getUTCHours()).slice(-2);
+    var minutes = ('0' + date1.getUTCMinutes()).slice(-2);
+    var seconds = ('0' + date1.getUTCSeconds()).slice(-2);
+    var shortDate = month + '/' + date + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' UTC';
+    return shortDate;
 }
 
 module.exports = router;
