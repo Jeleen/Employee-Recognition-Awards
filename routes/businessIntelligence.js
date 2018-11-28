@@ -131,26 +131,28 @@ function getRegions(group){
 	myarray2[0][0] = group[0].region;
 	myarray2[0][1] = 1;
 	for(var i = 0; i < group.length; i++){
-	   	if(i == 0){
-			if(myarray2[0][0] == group[1].region){
-			    var temp = myarray2[0][1];
-			    myarray2[0][1] = 2;
-			}
-			else{
-				myarray2.push([]);
-				myarray2[1][0] = group[1].region;
-				myarray2[1][1] = 1;
-			}
-		}else{
-			if(myarray2[myarray2.length - 1][0] == group[i].region){
-			    var temp = myarray2[myarray2.length - 1][1];
-			    temp++;
-			    myarray2[myarray2.length - 1][1] = temp;
-			}
-			else{
-				myarray2.push([]);
-				myarray2[myarray2.length - 1][0] = group[i].region;
-				myarray2[myarray2.length - 1][1] = 1;
+	   	if(group.length > 1){
+			if(i == 0){
+				if(myarray2[0][0] == group[1].region){
+					var temp = myarray2[0][1];
+					myarray2[0][1] = 2;
+				}
+				else{
+					myarray2.push([]);
+					myarray2[1][0] = group[1].region;
+					myarray2[1][1] = 1;
+				}
+			}else{
+				if(myarray2[myarray2.length - 1][0] == group[i].region){
+					var temp = myarray2[myarray2.length - 1][1];
+					temp++;
+					myarray2[myarray2.length - 1][1] = temp;
+				}
+				else{
+					myarray2.push([]);
+					myarray2[myarray2.length - 1][0] = group[i].region;
+					myarray2[myarray2.length - 1][1] = 1;
+				}
 			}
 		}
 	}
