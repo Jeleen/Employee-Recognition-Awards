@@ -58,7 +58,7 @@
  % 
 \newcount\rowIdx
 \DTLforeach{names}
-    {\honoree=Hname, \awardDate=Date, \creator=Cname, \typeAward=Type}{
+    {\honoree=Hname, \awardDate=Date, \creator=Cname, \typeAward=Type, \sigy=Sigy}{
 \DTLiflastrow{
 %tile the background
   \TileWallPaper{4cm}{4cm}{background/JOrbs.png}% Loads faster
@@ -70,30 +70,49 @@
   \vspace{-2in}
   {\centering
   \curlyframe[.9\columnwidth]{
-		%
+		%============heading
 		{
+		\begin{minipage}{\textwidth}
 		\singlespacing
 		\textcolor{red!30!black!90}
-		{\small Employee of}
+		{\Huge Congratulations!}
+		\end{minipage}
 		}
+		\vfill
+		\vfill
+		\vfill
 		%verbage=====center detail
 		%{\centering
-		 % \vspace{2in}
-		 % \hspace{4.25in}
-		\singlespacing	
-	      This is to certify that \uuline{\emph{\large\sffamily\color{name}{{{\color{DarkRed}\fontfamily{frc}\selectfont{\bfseries \honoree}}}}}},
-		has been awarded Employee of the {\bfseries \color{FireBrick}{\typeAward}}
+		{\singlespacing	
+		\begin{minipage}{1\textwidth}
+	      In recognition for you valued dedication and outstanding \mbox{performance} I herby award to:
+		\end{minipage}
+		} %======employee of the 
+	      \smallskip
+	      \vfill
+		\smallskip
+		\vfill
+		\smallskip
+		\vfill
+		 {\begin{minipage}[b][3cm]{.2\textwidth}
+		\emph{\large\sffamily\color{name}{{{\color{DarkRed}\fontfamily{frc}\selectfont{\bfseries \honoree}}}}}
+		\end{minipage}
+		}%==end minipage
+		\vspace{.5in}
 		%}
 		%
-		%Date awarded==============middle beneath
+		%
 		\begin{minipage}[c]{\linewidth}%
 		{\singlespacing
-		    %\vspace{1in}
-		    \hspace{4.5in}
-		   Awarded on:
-		   \vfill
-		   \hspace{4in}
-		    {\large\bfseries\color{phd}{\awardDate}}
+		%\vfill
+		\vspace{1.5in}
+		    \hspace{3.25in}%===employee of the year
+		       {\begin{minipage}{.375\textwidth}
+		\textcolor{red!30!black!90}
+		{\textit Employee of the}
+		{\bfseries \large \color{FireBrick}\textsc{\typeAward}}
+		\end{minipage}
+		}%==end minipage
 		  }%END CURLY FRAME==
 		 \end{minipage}
 		  %
@@ -101,12 +120,14 @@
 	    {\singlespacing
 	    \vfill
 	    \hspace{-30pt}
-	  %  \vspace{5in}
+	%   \vspace{5in}
 		\begin{minipage}[l]{2.5in}%
+		%\vspace{3in}
 		 Awarded by:
 		 % \end{minipage}%
 		%  \begin{minipage}[b]{2.25in}
-		\sigskip \signature{\includegraphics[trim=2cm 1cm 0 -1cm]{sig.png}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
+		\graphicspath{{sigy}}
+		\sigskip \signature{\includegraphics[trim=2cm 1cm 0 -1cm]{\sigy}}{\phantom{p}{\color{DarkGreen}{\bfseries \creator}}\phantom{g} \\ Creator}
 		\end{minipage}
 		\hfill
 		%grapic========================middlle bottom
@@ -117,7 +138,12 @@
 		}%============================bottom right
 		\hfill
 		\begin{minipage}[r]{2.25in}
-			\sigskip \signature{}{\phantom{p}Some other Dude\phantom{g} \\ Special Title}
+		%Date awarded==============middle beneath
+			%\sigskip \signature{}{\phantom{p}Some other Dude\phantom{g} \\ Special Title}
+		   Awarded on:
+		   \vfill
+		   \hspace{3in}
+		    {\large\bfseries\color{phd}{\awardDate}}
 		\end{minipage}
 		\vfill
  } %\end{minipage}

@@ -42,9 +42,14 @@ function getCreator(obj){
       console.log("WHAT IS IN cNAME", cName);
       obj.creator_name = cName.name
       console.log("Before", cName.sig_image_path);
-      var sig_path= cName.sig_image_path.substring(cName.sig_image_path.lastIndexOf("image"));
-    //  console.log(sig_path);
-    //  cName.sig_image_path.substring(0, cName.sig_image_path.lastIndexOf("/"));
+
+      if(cName.sig_image_path == null){
+		var sig_path = 'image/tempImage.png'
+     }else{     
+      var sig_path= cName.sig_image_path.substring(cName.sig_image_path.lastIndexOf("image"))
+	};
+      console.log(sig_path);
+ 
       obj.creator_sig=sig_path
       array.push(obj)
     //console.log(array);
