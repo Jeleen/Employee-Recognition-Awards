@@ -44,23 +44,15 @@
       <div class="container-fluid" >
       <div class="row">
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor">
-               <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                  <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-               </div>
-               <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                  <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-               </div>
-            </div>
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-               <h1 class="h2"></h1>
-            </div>
          
-            <div class="btn-toolbar mb-2 mb-md-0">
-               <div class="btn-group mr-2">
+           
+         
+              <p></p>
+
+
 	           <div class="table-responsive-sm">
 	               <table class="table table-sm">
-	 	       <h4>Add Admin Account</h4>
+	 	       <h4 id="addTitle">Add Admin Account</h4>
 	 	       <thead class="thead-light"> 
                            <tr>
                               <th>Name</th>
@@ -74,16 +66,15 @@
                               <form method="post" action="/addAdmin" >
                                  <td><input type="text" class="form-control" id="name" name="name" placeholder="Enter name"/></td>
                                  <td><input type="text" class="form-control" id="email" name="email" placeholder="Enter email"/></td>			                             				
-                                <td><input class="form-control" id="save" type="submit" name="save" value="Save" /></td>
-                                <td> <input class="form-control" id="cancel" type="submit" name="Cancel" value="Cancel" />
+                                <td><input class="form-control" id="Save" type="submit" name="Save" value="Save" /></td>
+                                <td> <input class="form-control" id="Cancel" type="submit" name="Cancel" value="Cancel" />
                                  </td>
                               </form>
                               </div>
                            </tr>
                         </tbody>
                      </table>
-                  </div>
-               </div>
+                
          </main>
          </div>
       </div>

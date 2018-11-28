@@ -1,6 +1,7 @@
 body {
    padding-top: 56px;
    padding-left: 0px;
+   background-color: #F7F7F7;
 }
 .starter-template {
    padding: 20px 1px;
@@ -21,6 +22,11 @@ body {
    padding-left: 0px;
    background-color: rgb(34, 34, 34);
 }
+#addTitle {
+   padding-top: 30px;
+   color: rgb(112, 107, 107);
+   display: inline;
+}
 #filter {
    float: right;
    background-color: rgb(249, 249, 102);
@@ -29,15 +35,22 @@ body {
 }
 #addAdmin {
    float: right;
-   margin-bottom: 10px;
    background-color: rgb(249, 249, 102);
    color: rgb(38, 38, 37);
+   margin-right: 5%;
+   display: inline;
+   margin-bottom: 10px;  
 }
 #addUser {
    float: right;
-   margin-bottom: 10px;
    background-color: rgb(249, 249, 102);
    color: rgb(38, 38, 37);
+   margin-right: 5%;
+   display: inline;
+   margin-bottom: 10px;  
+}
+.form-control {
+   width: 95%;
 }
 #exportButton {
    float: right;
@@ -54,6 +67,7 @@ body {
    overflow-x: auto;
    width: 95%;
    height: 300px;
+   background-color: rgb(255, 255, 255);
 }
 .btn-link {
    border: none;
@@ -78,16 +92,20 @@ body {
    font-size: inherit;
 }
 .column1 {
+   display: inline;
    float: left;
    width: 50%;
-   padding-left: 10px;
-   padding-right: 15px;
+   padding-bottom: 15px;
+}
+.column2 {
+   display: inline;
+   float: left;
+   width: 50%;
+   padding-bottom: 15px;
 }
 .row1 {
    height: 250px;
 }
-/* Clear floats after the columns */
-
 .row2 {
    height: 250px;
 }
@@ -96,13 +114,12 @@ body {
 }
 hr {
    display: block;
-   position: relative;
    padding-top: 20px;
-   width: 100%;
+   width: 95%;
    font-size: 1px;
    clear: both;
-   border-top: 1px solid #aaaaaa;
-   border-bottom: 1px solid #ffffff;
+   border-top: 20px solid #F7F7F7;
+   border-bottom: 1px solid #F7F7F7;
 }
 #cancel {
    display: inline-block;
@@ -113,7 +130,7 @@ hr {
    float: left;
 }
 .mainy {
-   margin-left: 202px;
+   margin-left: 220px;
    padding-top: 10px;
 }
 .headingA {

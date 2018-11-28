@@ -44,19 +44,27 @@
 	       <a class="active"><button type="submit" value="allUsers" class="btn-link">Users</button></a>
 	       </form> 
 	{{/if}}
-	{{#if main}}
-	    <form action="/getAllAdmins" method="get">
-	    <a ><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
-	    </form>   <form action="/getAllUsers" method="get">
-	    <a ><button type="submit" value="allUsers" class="btn-link">Users</button></a>
-	    </form> 
-        {{/if}}
+	{{#if userToEdit}}
+		<form action="/getAllAdmins" method="get">
+		<a ><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
+		</form>   <form action="/getAllUsers" method="get">
+		<a class="active"><button type="submit" value="allUsers" class="btn-link">Users</button></a>
+		</form> 
+	{{/if}}
+	{{#if adminToEdit}}
+		<form action="/getAllAdmins" method="get">
+		<a class="active"><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
+		</form>   <form action="/getAllUsers" method="get">
+		<a ><button type="submit" value="allUsers" class="btn-link">Users</button></a>
+		</form> 
+	{{/if}}
        </div>
 
        <div class="container-fluid" >
         <div class="row">
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-	   {{#if admins}}
+	           <p></p>
+{{#if admins}}
                  <form method="get" action="/addAdmin" >
 	  	 <button id="addAdmin" type="submit" name="addAdmin" value="+ Add" class="btn btn-sm btn-outline-secondary" >+ Add</button>
  		</form>
@@ -66,8 +74,85 @@
 		<button id="addUser" type="submit" name="addUser" value="+ Add" class="btn btn-sm btn-outline-secondary"/>+ Add </button></form>
 	 {{/if}}
 	
-	<div class="table-responsive-sm">
+	
+	<div class="table-responsive-sm" >
+		 {{#if adminToEdit}}
+	 		 <h4 id="addTitle">{{{subTitle}}}</h4>
+		     <table class="table table-sm class="table-editable"">
+		 	 <thead class="thead-light">
+		              <tr>
+		                   <th>ID</th>
+		                   <th>Name</th>
+		                   <th>Email</th>
+		                   <th>Last Login</th>
+		                   <th>Login Attempts</th>
+		                   <th>Created</th>
+		                   <th>Creator ID </th>
+		                   <th>Action</th>
+		              </tr>
+		         </thead>
+		         <tbody id="myTable">
+		 	     <tr> 
+		 	     <div class="form-group">
+		 	     <form method="post" action="/editAdmins" >
+		 		   <td>{{adminToEdit.id}}<input type="hidden" name="id" id="id" value="{{adminToEdit.id}}" ></td>
+		 		   <td><input class="form-control" type="text" name="name" id="name" value="{{adminToEdit.name}}" /></td>
+		 		   <td><input class="form-control" type="text" name="email" id="email" value="{{adminToEdit.email}}" /></td>
+		 		   <td>{{convertDate adminToEdit.last_login}}</td>
+		 		   <td>{{adminToEdit.login_attempts}}</td>
+		 		   <td>{{convertDate adminToEdit.creation_time}}</td>
+		 		   <td>{{adminToEdit.creator_id}}</td>
+		 		   <td><input class="form-control" id="Save" type="submit" name="Save" value="Save" >
+		 		   <input class="form-control" id="Cancel" type="submit" name="Cancel" value="Cancel" ></td>
+		            </form>
+		            </div>
+		            </tr>
+		      {{/if}}
+		      </tbody>
+	 </table>
+	 
+	 <div class="table-responsive-sm" >
+	 		 {{#if userToEdit}}
+	 		 <h4 id="addTitle">{{{subTitle}}}</h4>
+	 		     <table class="table table-sm class="table-editable"">
+	 		 	 <thead class="thead-light">
+	 		              <tr>
+	 		                   <th>ID</th>
+	 		                   <th>Name</th>
+	 		                   <th>Email</th>
+	 		                   <th>Region</th>
+					   <th>Last Login</th>
+	 		                   <th>Login Attempts</th>
+	 		                   <th>Created</th>
+	 		                   <th>Creator ID</th>
+	 		                   <th>Action</th>
+	 		              </tr>
+	 		         </thead>
+	 		         <tbody id="myTable">
+	 		 	     <tr>
+	 		 	     <div class="form-control">
+	 		 	     <form method="post" action="/editUsers" >
+	 		 		   <td>{{userToEdit.id}}<input type="hidden" name="id" id="id" value="{{userToEdit.id}}" ></td>
+	 		 		   <td><input class="form-control" type="text" name="name" id="name" value="{{userToEdit.name}}" /></td>
+	 		 		   <td><input class="form-control" type="text" name="email" id="email" value="{{userToEdit.email}}" /></td>
+	 		 		   <td>{{userToEdit.region}}</td>
+					   <td>{{convertDate userToEdit.last_login}}</td>
+	 		 		   <td>{{userToEdit.login_attempts}}</td>
+	 		 		   <td>{{convertDate userToEdit.creation_time}}</td>
+	 		 		   <td>{{userToEdit.creator_id}}</td>
+	 		 		   <td><input class="form-control" id="Save" type="submit" name="Save" value="Save" >
+	 		 		   <input class="form-control" id="Cancel" type="submit" name="Cancel" value="Cancel" ></td>
+	 		            </form>
+	 		            </div>
+	 		            </tr>
+	 		      {{/if}}
+	 		      </tbody>
+	 </table>
+	 
+	
+	<div class="table-responsive-sm" >
 	 {{#if admins}}
+	<h4 id="addTitle">Admin accounts</h4>
 	     <input class="form-control" id="myInput" type="text" placeholder="Search Admins...">
 	     <p></p>
 	     <table class="table table-sm">
@@ -79,6 +164,7 @@
 	                   <th>Last Login</th>
 	                   <th>Login Attempts</th>
 	                   <th>Created</th>
+	                   <th>Creator ID</th>
 	                   <th>Action</th>
 	              </tr>
 	         </thead>
@@ -86,14 +172,15 @@
 	         {{#each admins}}
 	 	     <tr>
 	 	     <form method="post" action="/editAdmins" >
-	 		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}" ></td>
+	 		   <td>{{this.id}}<input class="form-control" type="hidden" name="id" id="id" value="{{this.id}}" ></td>
 	 		   <td>{{this.name}}</td>
-	 		   <td><input type="text" name="email" id="email" value="{{this.email}}" ></td>
+	 		   <td>{{this.email}}</td>
 	 		   <td>{{convertDate this.last_login}}</td>
 	 		   <td>{{this.login_attempts}}</td>
 	 		   <td>{{convertDate this.creation_time}}</td>
-	 		   <td><input id="Save" type="submit" name="Save" value="Save" >
-	 		   <input id="delete" type="submit" name="delete" value="delete" ></td>
+		 	   <td>{{this.creator_id}}</td>
+	 		   <td><input  class="form-control"id="Edit" type="submit" name="Edit" value="Edit" >
+	 		   <input  class="form-control"id="Delete" type="submit" name="Delete" value="Delete" ></td>
 	            </form>
 	            </tr>
 	        {{/each}}
@@ -102,7 +189,8 @@
 	 </table>
 	               
 	 {{#if users}}
-	 	<input class="form-control" id="myInput" type="text" placeholder="Search Users...">
+	 <h4 id="addTitle">User accounts</h4>
+	<input class="form-control" id="myInput" type="text" placeholder="Search Users...">
 	 	  <p></p>
 	            <table class="table table-sm">
 	 	   <thead class="thead-light" >
@@ -120,18 +208,18 @@
 	                 </thead>
 	                 <tbody id="myTable">
 	                 {{#each users}}
-	                   <tr>
+	                   <tr> 
 	                   <form method="post" action="/editUsers" >
 	  		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}"></td>
 	 		   <td>{{this.name}}</td>
-	                    <td><input type="text" name="email" id="email" placeholder="{{this.email}}" ></td>
+	                    <td>{{this.email}}</td>
 	 		   <td>{{this.region}}</td>
 	 		   <td>{{convertDate this.last_login}}</td>
 	                    <td>{{this.login_attempts}}</td>
 	                    <td>{{convertDate this.creation_time}}</td>
 	                    <td>{{this.creator_id}}</td>
-				<td><input id="save" type="submit" name="save" value="Save" >
-	                     <input id="delete" type="submit" name="delete" value="delete" ></td>
+				<td><input class="form-control" id="Edit" type="submit" name="Edit" value="Edit" >
+	                     <input class="form-control" id="Delete" type="submit" name="Delete" value="Delete" ></td>
 	                   </tr></form>
 	                  {{/each}}
 	                   {{/if}}
@@ -164,6 +252,12 @@ $(document).ready(function(){
     });
   });
 });
+
+$(document).on('click', function(){
+  $(this).remove();
+});
+
+
 </script>
 </body>
 </html>

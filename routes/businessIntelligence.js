@@ -6,9 +6,25 @@ var _ = require('lodash');
 * Route for BI main page
 **************************************/
 router.get('/', function(req, res, next) {
-  res.render('businessIntelligence', {
-    main: "main", title: "Business Intelligence Reports"
-  });
+  appRepo.getAllAdmins().then((admins) => {
+  			//Sort admins and group by time of account creation
+  			var sortedAdmins = _.orderBy(admins, ['creation_time'], ['asc']);
+  			var myJSONcreationTimes = JSON.stringify(getCreationTimes(sortedAdmins));
+  			var myJSONlogins = JSON.stringify(getLoginAttempts(admins));
+              //render page
+  			res.render('businessIntelligence', {
+  				admins: admins,
+  		        title: "Business Intelligence",
+  		        queryTitle: "Admins",
+  		        myJSONcreationTimes: myJSONcreationTimes, myJSONlogins: myJSONlogins,
+  		        myJSONawardTypes: 0, myJSONorgchart: 0, myJSONregions: 0,
+  		        chartTitleAU: "Admin Account Creations By Date",
+  		        chartTitleLogin: "Admin Login Attempts",
+  		        chartTitleLastLogin: "Admin Last Login",
+  		        thisReport: "allAdmins"
+
+  		    });
+	    }).catch(error => console.log('Error getting all admins: ', error));
 });
 
 /*************************************************************
