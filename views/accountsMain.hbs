@@ -77,7 +77,7 @@
 	
 	<div class="table-responsive-sm" >
 		 {{#if adminToEdit}}
-	 		 <h5>{{{subTitle}}}</h5>
+	 		 <h4 id="addTitle">{{{subTitle}}}</h4>
 		     <table class="table table-sm class="table-editable"">
 		 	 <thead class="thead-light">
 		              <tr>
@@ -92,18 +92,20 @@
 		              </tr>
 		         </thead>
 		         <tbody id="myTable">
-		 	     <tr>
+		 	     <tr> 
+		 	     <div class="form-group">
 		 	     <form method="post" action="/editAdmins" >
 		 		   <td>{{adminToEdit.id}}<input type="hidden" name="id" id="id" value="{{adminToEdit.id}}" ></td>
-		 		   <td><input type="text" name="name" id="name" value="{{adminToEdit.name}}" /></td>
-		 		   <td><input type="text" name="email" id="email" value="{{adminToEdit.email}}" /></td>
+		 		   <td><input class="form-control" type="text" name="name" id="name" value="{{adminToEdit.name}}" /></td>
+		 		   <td><input class="form-control" type="text" name="email" id="email" value="{{adminToEdit.email}}" /></td>
 		 		   <td>{{convertDate adminToEdit.last_login}}</td>
 		 		   <td>{{adminToEdit.login_attempts}}</td>
 		 		   <td>{{convertDate adminToEdit.creation_time}}</td>
 		 		   <td>{{adminToEdit.creator_id}}</td>
-		 		   <td><input id="Save" type="submit" name="Save" value="Save" >
-		 		   <input id="Cancel" type="submit" name="Cancel" value="Cancel" ></td>
+		 		   <td><input class="form-control" id="Save" type="submit" name="Save" value="Save" >
+		 		   <input class="form-control" id="Cancel" type="submit" name="Cancel" value="Cancel" ></td>
 		            </form>
+		            </div>
 		            </tr>
 		      {{/if}}
 		      </tbody>
@@ -111,7 +113,7 @@
 	 
 	 <div class="table-responsive-sm" >
 	 		 {{#if userToEdit}}
-	 		 <h5>{{{subTitle}}}</h5>
+	 		 <h4 id="addTitle">{{{subTitle}}}</h4>
 	 		     <table class="table table-sm class="table-editable"">
 	 		 	 <thead class="thead-light">
 	 		              <tr>
@@ -128,18 +130,20 @@
 	 		         </thead>
 	 		         <tbody id="myTable">
 	 		 	     <tr>
+	 		 	     <div class="form-control">
 	 		 	     <form method="post" action="/editUsers" >
 	 		 		   <td>{{userToEdit.id}}<input type="hidden" name="id" id="id" value="{{userToEdit.id}}" ></td>
-	 		 		   <td><input type="text" name="name" id="name" value="{{userToEdit.name}}" /></td>
-	 		 		   <td><input type="text" name="email" id="email" value="{{userToEdit.email}}" /></td>
+	 		 		   <td><input class="form-control" type="text" name="name" id="name" value="{{userToEdit.name}}" /></td>
+	 		 		   <td><input class="form-control" type="text" name="email" id="email" value="{{userToEdit.email}}" /></td>
 	 		 		   <td>{{userToEdit.region}}</td>
 					   <td>{{convertDate userToEdit.last_login}}</td>
 	 		 		   <td>{{userToEdit.login_attempts}}</td>
 	 		 		   <td>{{convertDate userToEdit.creation_time}}</td>
 	 		 		   <td>{{userToEdit.creator_id}}</td>
-	 		 		   <td><input id="Save" type="submit" name="Save" value="Save" >
-	 		 		   <input id="Cancel" type="submit" name="Cancel" value="Cancel" ></td>
+	 		 		   <td><input class="form-control" id="Save" type="submit" name="Save" value="Save" >
+	 		 		   <input class="form-control" id="Cancel" type="submit" name="Cancel" value="Cancel" ></td>
 	 		            </form>
+	 		            </div>
 	 		            </tr>
 	 		      {{/if}}
 	 		      </tbody>
@@ -151,7 +155,7 @@
 	<h4 id="addTitle">Admin accounts</h4>
 	     <input class="form-control" id="myInput" type="text" placeholder="Search Admins...">
 	     <p></p>
-	     <table class="table table-sm class="table-editable"">
+	     <table class="table table-sm">
 	 	 <thead class="thead-light">
 	              <tr>
 	                   <th>ID</th>
@@ -168,15 +172,15 @@
 	         {{#each admins}}
 	 	     <tr>
 	 	     <form method="post" action="/editAdmins" >
-	 		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}" ></td>
+	 		   <td>{{this.id}}<input class="form-control" type="hidden" name="id" id="id" value="{{this.id}}" ></td>
 	 		   <td>{{this.name}}</td>
 	 		   <td>{{this.email}}</td>
 	 		   <td>{{convertDate this.last_login}}</td>
 	 		   <td>{{this.login_attempts}}</td>
 	 		   <td>{{convertDate this.creation_time}}</td>
 		 	   <td>{{this.creator_id}}</td>
-	 		   <td><input id="Edit" type="submit" name="Edit" value="Edit" >
-	 		   <input id="Delete" type="submit" name="Delete" value="Delete" ></td>
+	 		   <td><input  class="form-control"id="Edit" type="submit" name="Edit" value="Edit" >
+	 		   <input  class="form-control"id="Delete" type="submit" name="Delete" value="Delete" ></td>
 	            </form>
 	            </tr>
 	        {{/each}}
@@ -204,7 +208,7 @@
 	                 </thead>
 	                 <tbody id="myTable">
 	                 {{#each users}}
-	                   <tr>
+	                   <tr> 
 	                   <form method="post" action="/editUsers" >
 	  		   <td>{{this.id}}<input type="hidden" name="id" id="id" value="{{this.id}}"></td>
 	 		   <td>{{this.name}}</td>
@@ -214,8 +218,8 @@
 	                    <td>{{this.login_attempts}}</td>
 	                    <td>{{convertDate this.creation_time}}</td>
 	                    <td>{{this.creator_id}}</td>
-				<td><input id="Edit" type="submit" name="Edit" value="Edit" >
-	                     <input id="Delete" type="submit" name="Delete" value="Delete" ></td>
+				<td><input class="form-control" id="Edit" type="submit" name="Edit" value="Edit" >
+	                     <input class="form-control" id="Delete" type="submit" name="Delete" value="Delete" ></td>
 	                   </tr></form>
 	                  {{/each}}
 	                   {{/if}}

@@ -15,7 +15,7 @@ router.post('/', function(req, res, next) {
 	     }
 	     else if(req.body['Edit'] == "Edit"){
 			appRepo.getUserById(req.body.id).then((userToEdit) => {
-	   			res.render('accountsMain',  {userToEdit: userToEdit, title: "Accounts", subTitle: "Edit User " + req.body.id });
+	   			res.render('accountsMain',  {userToEdit: userToEdit, title: "Accounts", subTitle: "Edit User" });
 		  }).catch((error) => console.log('Error editing user', error));
 		 }
 		 else if(req.body['Save'] == "Save"){
