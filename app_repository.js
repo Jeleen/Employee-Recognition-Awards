@@ -179,6 +179,14 @@ class AppRepository {
     	return this.dao.doRun(`UPDATE admins SET login_attempts = login_attempts + 1 WHERE email = ?`, [email]);
   }
 
+  updateAdminNameAndEmail(id, name, email){
+    	return this.dao.doRun(`UPDATE admins SET name = ?, email = ? WHERE id = ?`, [name, email, id]);
+  }
+
+  updateUserNameAndEmail(id, name, email){
+    	return this.dao.doRun(`UPDATE users SET name = ?, email = ? WHERE id = ?`, [name, email, id]);
+  }
+
   updateUserLastLogin(id){
 	var d = new Date();
 	return this.dao.doRun(`UPDATE users SET last_login = ? WHERE id = ?`, [d.getTime(), id]);
@@ -188,7 +196,6 @@ class AppRepository {
     var d = new Date();
 	return this.dao.doRun(`UPDATE admins SET last_login = ? WHERE id = ?`, [d.getTime(), id]);
   }
-
 
   createUsersTable() {
     return this.dao.doRun(`

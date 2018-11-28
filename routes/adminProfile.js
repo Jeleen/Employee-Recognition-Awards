@@ -6,8 +6,8 @@ var router = express.Router();
 * displays currently logged in admin info
 **************************************/
 router.get('/', function(req, res, next){
-	  appRepo.getAdminById(req.session.loggedInId).then((admin) => {
-		res.render('adminProfile',  {admin: admin, timeC: convertDate(admin.creation_time), timeLL: convertDate(admin.last_login), title: "My Profile" });
+	  appRepo.getAdminById(req.session.loggedInId).then((adminMain) => {
+		res.render('adminProfile',  {adminMain: adminMain, timeC: convertDate(adminMain.creation_time), timeLL: convertDate(adminMain.last_login), title: "My Profile" });
     }).catch(error => console.log('Error getting admin: ', error));
 });
 

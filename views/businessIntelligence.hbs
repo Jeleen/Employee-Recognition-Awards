@@ -101,71 +101,58 @@
      <div class="container-fluid" >
      <div class="row">
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" >
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">{{{queryTitle}}}</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-            </div>
-            {{#if myJSONcreationTimes}}
+          <p></p>	 	       <h4 id="addTitle">{{{queryTitle}}}</h4>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            
+          
+            
+	     </div>
+	  <div class="row1">
+
+	{{#if chartTitleAU}}
+	<div class="card border-light column1"> 
+  <h5 class="chartHeader">{{{chartTitleAU}}}</h5>
+	  <canvas id="myChart" class="charty"></canvas>
+       </div>
+
+       <div class="card border-light column2">
+  <h5 class="chartHeader">{{{chartTitleLogin}}}</h5>
+	  <canvas id="myChartLogins" class="charty"></canvas>
+       </div> 
+
+    {{/if}}
+  	{{#if users}}
+  	<div class="card border-light column1">
+	<h5 class="chartHeader">{{{chartTitleRegion}}}</h5>
+	  <canvas id="pie-chart-2" class="charty" ></canvas>
+	</div>
+    <div class="card border-light column2">
+ 	<h5 class="chartHeader">Map of Users by Region</h5>
+	<div id="regions_div" ></div>
+	</div>
+	{{/if}}		  	
+    
+	
+    {{#if chartTitleA}}
+    <div class="card border-light column1"> 
+        <h5 class="chartHeader">{{{chartTitleA}}}</h5>
+      	   <canvas id="myChart" ></canvas>
+      </div>
+    <div class="card border-light column2">
+        <h5 class="chartHeader">{{{chartTitle3}}}</h5>
+      	   <canvas id="pie-chart" ></canvas>
+      	</div>
+    {{/if}}  
+     </div>
+     
+	<hr>
+	{{#if admins}}
+	{{#if myJSONcreationTimes}}
              <form method="post" action="/exportCSV">
                 <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
                 <button type="submit" class="btn btn-sm btn-outline-secondary" id="filter" name="filter"">Export CSV file</button>
              </form>
 	        {{/if}}
-	     </div>
-	  <div class="row1">
-
-	{{#if chartTitleAU}}
-	<div class="column1"> 
-	  <h5 class="chartHeader">{{{chartTitleAU}}}</h5>
-	  <canvas id="myChart" class="charty"></canvas>
-       </div>
-       <div class="column1">
-	  <h5 class="chartHeader">{{{chartTitleLogin}}}</h5>
-	  <canvas id="myChartLogins" class="charty"></canvas>
-       </div>
-    {{/if}}
-
-  	{{#if users}}
-  	<div class="column1">
-	<h5 class="chartHeader">{{{chartTitleRegion}}}</h5>
-	  <canvas id="pie-chart-2" class="column3" ></canvas>
-	</div>
-    <div class="column1">
- 	<h5 class="chartHeader">Map of Users by Region</h5>
-	<div id="regions_div" ></div>
-	</div>
-	{{/if}}
-			  	
-        
-    {{#if chartTitleOrg}}
-      <div class="column1"> 
-        <h5 class="chartHeader">{{{chartTitle}}}</h5>
-        <canvas id="myChart" ></canvas>
-      </div>
-      <div class="column1">
-        <h5 class="chartHeader">{{{chartTitleLogin}}}</h5>
-        <canvas id="myChartLogins" ></canvas>
-      </div>
-      <div class="column1">
-	   <h5 class="chartHeader">{{{chartTitleOrg}}}</h5>
- 	   <div id="chart_div" ></div>
-      </div>
-    {{/if}}
-	
-    {{#if chartTitleA}}
-    <div class="column1"> 
-        <h5 class="chartHeader">{{{chartTitleA}}}</h5>
-      	   <canvas id="myChart" ></canvas>
-      </div>
-    <div class="column1">
-        <h5 class="chartHeader">{{{chartTitle3}}}</h5>
-      	   <canvas id="pie-chart" ></canvas>
-      	</div>
-    {{/if}}  
-     </div>	
-	
-	{{#if admins}}
-	<hr></hr>
         <div class="table-responsive-sm">
         <table class="table table-sm table-bordered">
 	  <thead class="thead-light"> 
@@ -195,40 +182,15 @@
 	</div>  
 	{{/if}}
 
-    {{#if usersAndAwards}} 
-      <hr></hr>
-       <h4>Awards Created by Users:</h4>
-       <div class="table-responsive-sm">
-          <table class="table table-sm table-bordered">
-	    <thead class="thead-light"> 
-              <tr>
-                <th>ID</th>
-                <th>Recipient Name</th>
-                <th>Recipient Email</th>
-                <th>Creation Time</th>
-                <th>Award Type</th>
-                <th>Creator ID</th>
-              </tr>
-            </thead>
-            <tbody>
-            {{#each usersAndAwards}}
-              <tr>
-                <td>{{this.id}}</td>
-                <td>{{this.recipient_name}}</td>
-                <td>{{this.recipient_email}}</td>
-                <td>{{convertDate this.creation_time}}</td>
-         	<td>{{this.award_type}}</td>
-        	<td>{{this.creator_id}}</td>
-              </tr>
-             {{/each}}
-             </tbody>
-           </table>
-      </div>
-    {{/if}}
-        
+   
     {{#if users}} 
-      <hr></hr>
-       <h4>User Accounts:</h4>
+    {{#if myJSONcreationTimes}}
+             <form method="post" action="/exportCSV">
+                <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+                <button type="submit" class="btn btn-sm btn-outline-secondary" id="filter" name="filter"">Export CSV file</button>
+             </form>
+	        {{/if}}
+	        <h4>User Accounts:</h4>
           <div class="table-responsive-sm">
            <table class="table table-sm table-bordered">
             <thead class="thead-light"> 
@@ -263,8 +225,13 @@
      {{/if}}
          
     {{#if awards}} 
-        <hr></hr>
-	<h4>Awards:</h4>
+	{{#if myJSONcreationTimes}}
+             <form method="post" action="/exportCSV">
+                <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+                <button type="submit" class="btn btn-sm btn-outline-secondary" id="filter" name="filter"">Export CSV file</button>
+             </form>
+	        {{/if}}
+	        <h4>Awards:</h4>
 	<div class="table-responsive-sm">
 	 <table class="table table-sm table-bordered">
 	  <thead class="thead-light"> 
@@ -292,7 +259,6 @@
 	  </table>
 	  </div>
    {{/if}}
-	
 	</div>
    </div>
   </div>
@@ -351,8 +317,8 @@
   	  for(var i = 0; i < logs.length; i ++){
      		glog[0][i] = 'ID:' + logs[i][0];
      		glog[1][i] = logs[i][1];
-     		glog[2][i] = 'green';
-    	        glog[3][i] = 'green';
+     		glog[2][i] = 'rgb(0, 205, 0)';
+    	        glog[3][i] = 'rgb(0, 205, 0)';
   	  }
    	  var myChartL = new Chart(ctxL, {
             type: 'bar',
@@ -417,8 +383,8 @@
 			  datasets: [{
 			      label: '# created',
 			      data: g[1],
-			      backgroundColor: 'rgba(153, 153, 176, 0.5)',
-			      borderColor: 'rgba(153, 153, 176)',
+			      backgroundColor: 'rgba(0, 255, 255, 0.5)',
+			      borderColor: 'rgba(0, 255, 255)',
 			      borderWidth: 1
 			  }]
 	  	    },

@@ -31,17 +31,26 @@
                <a href="/logout" >Logout</a>
   </nav>
    <div class="sidebar">
-                      <h3 class="headingA">My Profile</h3>
-                      
-                        <form action="/adminProfile" method="post">
-              
-                                      <a >
-                                         <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
-                                  </a>
-                           
-                  </form>
-                   
-                    </div>
+       <h3 class="headingA">My Profile</h3>
+        <form action="/adminProfile" method="post">
+         {{#if edit}}
+         <a class="active">
+         <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
+        </a>
+        {{else}}
+        {{#if admin}}
+	         <a >
+	                 <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
+	        </a>
+           {{/if}}
+         {{/if}}
+         {{#if adminMain}}
+         <a >
+                 <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
+        </a>
+           {{/if}}
+         </form>
+       </div>
      <div class="container-fluid" >
         <div class="row">
 
@@ -64,7 +73,18 @@
                   <tbody>
                       <tr>
                       <div class="form-group">
+                        {{#if adminMain}}
                          <form method="post" action="/adminProfile" >
+			  <td>{{adminMain.id}}</td>
+                          <td>{{adminMain.name}}</td>
+                  	  <td>{{adminMain.email}}</td>
+                          <td>{{convertDate adminMain.last_login}}</td>
+                          <td>{{adminMain.login_attempts}}</td>
+                          <td>{{convertDate adminMain.creation_time}}</td>
+                          </form>			</div>
+			{{/if}}
+
+                        <form method="post" action="/adminProfile" >
                           {{#if edit}}
                           <td>{{admin.id}}<input class="form-control" type="hidden" name="id" id="id" value="{{admin.id}}"></td>
                             <td><input type="text" class="form-control" name="name" id="name" value="{{admin.name}}" ></td>
