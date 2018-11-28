@@ -1,9 +1,6 @@
 const path = require('path');
 const { join, resolve } =path
 const absolutePath = path.join(__dirname,'../');
-
-
-
 //necessary libarary
 var awardPDF = require('../award/createPDF.js');
 var createSeal = require('../award/createSeal.js');
@@ -29,21 +26,18 @@ function sleeper(ms) {
   };
 }
 
-
-
-
 /*
 * csvFee(obj) takes object array,  and with csvWriter
 * 	       creates the csv file for latex and passes array object 0 to pdf creator
 *          soruce: https://www.npmjs.com/package/csv-writer
-*/
+*		Delay added to give latex time to generate
+**/
 function csvFee(records){
 csvWriter.writeRecords(records)
 .then(()=>{console.log('DONE with csv')
   createSeal()})
   .then(sleeper(3000))
   .then(() =>
-  //console.log(records[0].award_id);
   awardPDF(records[0].award_id));
 
 }

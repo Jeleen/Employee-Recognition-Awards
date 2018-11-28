@@ -11,14 +11,9 @@ const award =require('../award/awardObject.js')
 const AwardDao = require('../dao');
 const AppRepository = require('../app_repository');
 
-//global object to share among functions
-
-
-//createMail(7);
-
-
-//TODO:create a gmail accnt with hidden details in file
-
+/*  CreateMail
+*   Takes award Id, assigns to result object, translates time, and passes it to getCreator func
+*/
 function createMail(id){
 const moment =require('../node_modules/moment')
 
@@ -40,23 +35,15 @@ return appRepo.getAward(id)
 
 
 function getCreator(obj, id){
-
   return appRepo.getUserById(obj.creator_id)
   .then(cName => {
       obj.creator_name = cName.name
       obj.creator_email=cName.email
-    //  mailAwardObj = obj;
-    console.log("EMAIL AND NAME", obj.creator_email, obj.creator_name);
-    //send to wrapper function
     transportWrapper(obj, id);
   })
-//console.log(mailAwardObj);
 }
 
 
-// Generate test SMTP service account from ethereal.email
-// Only needed if you don't have a real mail account for testing
-//nodemailer.createTestAccount((err, account) => {
 /*
 * function: transportWrapper
 *  @params: obj --award info;  id--award id number
@@ -81,8 +68,7 @@ function transportWrapper(obj, id){
         }
     });
 
-    // setup email configuration
-    //from, to, cc, bcc, subjet, text, html, attachments
+
     var subjectLine= obj.recipient_name +"'s Employee of the " +obj.award_type+ " Award"
 
     let mailOptions = {
@@ -91,7 +77,7 @@ function transportWrapper(obj, id){
         subject: subjectLine, // Subject line
         text: 'Congratulations!', // plain text body optional
         //use html to embed images with "cid" value
-        html: '<B>You are a...<b><br/><br /> DOWNLOAD your PDF!<img src="cid:picture@hah@2a.com"/>', // html body
+        html: '<B>You are a...<b><br/><br /> DOWNLOAD your PDF!<img 				src="cid:picture@hah@2a.com"/>', // html body
         //setup the pdf attachment here
   attachments: [{
 		filename: id+'.pdf',
@@ -112,16 +98,9 @@ function transportWrapper(obj, id){
         if (error) {
             return console.log(error);
         }
-        //console.log('Message sent: %s', info.messageId);
-        // Preview only available when sending through an Ethereal account
-        //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
-        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 
     });
     transporter.close();
-//});
 };
 
 module.exports = createMail;
