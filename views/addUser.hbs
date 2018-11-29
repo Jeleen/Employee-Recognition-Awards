@@ -11,88 +11,80 @@
    	<link href="../starter-template.css" rel="stylesheet">
    </head>
    <body>
-      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" *ngIf="!showNav">
-         <a class="navbar-brand" href="#">Employee Recognition Awards System</a>
-         <button class="navbar-toggler" id="hideMe5" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" Id="navbarNavDropdown">
-            <ul class="navbar-nav">
-               <li class="nav-item" >
-                  <a class="nav-link" href="/adminProfile">My Profile <span class="sr-only">(current)</span></a>
-               </li>
-               <li class="nav-item active" >
-                  <a class="nav-link" href="/accountsMain">Accounts <span class="sr-only">(current)</span></a>
-               </li>
-               <li class="nav-item" >
-                  <a class="nav-link" href="/businessIntelligence">BI Reports</a>
-               </li>
-            </ul>
-         </div>
-                       <a href="/logout" >Logout</a>
+       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" *ngIf="!showNav">
+           <a class="navbar-brand" href="#">Employee Recognition Awards System</a>
+           <button class="navbar-toggler" id="hideMe5" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+           </button>
+           <div class="collapse navbar-collapse" Id="navbarNavDropdown">
+               <ul class="navbar-nav">
+                   <li class="nav-item">
+                       <a class="nav-link" href="/adminProfile">My Profile <span class="sr-only">(current)</span></a>
+                   </li>
+                   <li class="nav-item active">
+                       <a class="nav-link" href="/getAllAdmins">Accounts <span class="sr-only">(current)</span></a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="/businessIntelligence">BI Reports</a>
+                   </li>
+               </ul>
+           </div>
+           <a href="/logout">Logout</a>
 
-      </nav>
-         <div class="sidebar">
-      			<h3 class="headingA">{{{title}}}</h3>
-                                  <form action="/getAllAdmins" method="get">
-				     <a ><button type="submit" value="allAdmins" class="btn-link">Admins</button></a>
-				     </form>   <form action="/getAllUsers" method="get">
-    <a class="active"><button type="submit" value="allUsers" class="btn-link">Users</button></a>
-  </form>
-                  </div>
-      <div class="container-fluid" >
-      <div class="row">
+       </nav>
+       <div class="sidebar">
+           <h3 class="headingA">Accounts</h3>
+           <a href="/getAllAdmins" class="nav-link">Admins</a>
+           <a href="/getAllUsers" class="nav-link active">Users</a>
+       </div>
+       <div class="container-fluid">
+           <div class="row">
 
-         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <p></p>
+               <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                   <br />
+                   <h4 id="addTitle">Add User Account</h4><br />
+                   <p></p>
+                   <div class="table-responsive-sm">
+                       <form method="post" action="/addUser">
+                           <table class="table table-sm">
+                               <thead class="thead-light">
+                                   <tr>
+                                       <th>Name</th>
+                                       <th>Email</th>
+                                       <th>Region</th>
+                                       <th>Action</th>
+                                       <th></th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <tr>
+                                       <td><input type="text" class="form-control" id="name" name="name" placeholder="Enter name" /></td>
+                                       <td><input type="text" class="form-control" id="email" name="email" placeholder="Enter email" /></td>
+                                       <td>
+                                           <select class="form-control" name="region">
+                                               {{#each countries}}
+                                               <option name="region" value="{{this}}">{{this}}</option>
+                                               {{/each}}
+                                           </select>
+                                       </td>
 
-
-            <div class="btn-toolbar mb-2 mb-md-0">
-               <div class="btn-group mr-2">
-	           <div class="table-responsive-sm">
-
-
-                 <h4 id="addTitle">Add User Account</h4>
-                 <form method="post" action="/addUser" >
-	               <table class="table table-sm">
-	 	       <thead class="thead-light">
-                           <tr>
-                              <th>Name</th>
-                              <th>Email</th>
-                              <th>Region</th>
-                              <th>Action</th><th></th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                                 <td><input type="text" class="form-control" id="name" name="name" placeholder="Enter name"/></td>
-                                 <td><input type="text" class="form-control" id="email" name="email" placeholder="Enter email"/></td>
-				<td>
-				  <select class="form-control" name="region">
-				  {{#each countries}}
-				    <option name="region" value="{{this}}">{{this}}</option>
-				   {{/each}}
-				  </select>
-				</td>
-
-                                 <td><input class="form-control" id="save" type="submit" name="save" value="Save" /></td>
-                                <td> <input class="form-control" id="cancel" type="submit" name="Cancel" value="Cancel" />
-                                 </td>
-                              </div>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </form>
-                  </div>
-               </div>
-         </main>
-         </div>
-      </div>
-      <!-- Bootstrap core JavaScript
-         ================================================== -->
-      <!-- Placed at the end of the document so the pages load faster -->
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+                                       <td><input class="form-control" id="save" type="submit" name="save" value="Save" /></td>
+                                       <td>
+                                           <input class="form-control" id="cancel" type="submit" name="Cancel" value="Cancel" />
+                                       </td>
+                                   </tr>
+                               </tbody>
+                           </table>
+                       </form>
+                   </div>
+               </main>
+           </div>
+       </div>
+       <!-- Bootstrap core JavaScript
+       ================================================== -->
+       <!-- Placed at the end of the document so the pages load faster -->
+       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+       <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 
 
    </body>

@@ -28,7 +28,7 @@ var logoutRouter = require('./routes/logout');
 var userDashboardRouter = require('./routes/user_dashboard');
 var createAwardRouter = require('./routes/create_award');
 var editProfileRouter = require('./routes/edit_profile');
-var accountsMainRouter = require('./routes/accountsMain');
+var getAllAdminsRouter = require('./routes/getAllAdmins');
 var adminProfileRouter = require('./routes/adminProfile');
 var addUserRouter = require('./routes/addUser');
 var addAdminRouter = require('./routes/addAdmin');
@@ -80,7 +80,7 @@ app.use(function(req, res, next) {
     next();
   }
 })
-app.use('/accountsMain', accountsMainRouter);
+app.use('/getAllAdmins', getAllAdminsRouter);
 app.use('/adminProfile', adminProfileRouter);
 app.use('/getAllAdmins', getAllAdminsRouter);
 app.use('/getAllUsers', getAllUsersRouter);

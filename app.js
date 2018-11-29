@@ -28,7 +28,6 @@ var logoutRouter = require('./routes/logout');
 var userDashboardRouter = require('./routes/user_dashboard');
 var createAwardRouter = require('./routes/create_award');
 var editProfileRouter = require('./routes/edit_profile');
-var accountsMainRouter = require('./routes/accountsMain');
 var adminProfileRouter = require('./routes/adminProfile');
 var addUserRouter = require('./routes/addUser');
 var addAdminRouter = require('./routes/addAdmin');
@@ -41,7 +40,8 @@ var awardRouter = require('./routes/award');
 var exportCSVRouter = require('./routes/exportCSV');
 var customBIRouter = require('./routes/customBI');
 var forgotPasswordRouter = require('./routes/forgotPassword');
-
+var adminProfileChangePasswordRouter = require('./routes/adminProfileChangePassword');
+var adminProfileEditRouter = require('./routes/adminProfileEdit');
 var app = express();
 
 // view engine setup
@@ -80,8 +80,9 @@ app.use(function(req, res, next) {
     next();
   }
 })
-app.use('/accountsMain', accountsMainRouter);
 app.use('/adminProfile', adminProfileRouter);
+app.use('/adminProfileEdit', adminProfileEditRouter);
+app.use('/adminProfileChangePassword', adminProfileChangePasswordRouter);
 app.use('/getAllAdmins', getAllAdminsRouter);
 app.use('/getAllUsers', getAllUsersRouter);
 app.use('/editAdmins', editAdminsRouter);

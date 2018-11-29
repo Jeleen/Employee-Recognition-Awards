@@ -5,7 +5,7 @@ var router = express.Router();
 * Route for 'Add Admin' main page
 **************************************/
 router.get('/', function(req, res, next) {
-	res.render('addAdmin',  { title: "Accounts" });
+	res.render('addAdmin');
 });
 
 /**************************************
@@ -14,9 +14,7 @@ router.get('/', function(req, res, next) {
 **************************************/
 router.post('/', function(req, res, next) {
 	if(req.body.cancel == "cancel"){
-		appRepo.getAllAdmins().then((admins) => {
-			res.render('accountsMain',  {admins: admins, title: "Accounts"});
-	  }).catch(error => console.log('Error getting all admin: ', error));
+			res.render('getAllAdmins');
 	}
 	//Creates new admin account with default password
 	else{
@@ -24,10 +22,7 @@ router.post('/', function(req, res, next) {
 		appRepo.createAdmin(req.body.name, req.body.email, "12345", req.session.loggedInId)
 		.then((data) => console.log('Succesfully created admin'))
 		.catch((error) => console.log('Error creating admin', error));
-
-		appRepo.getAllAdmins().then((admins) => {
-		res.render('accountsMain',  {admins: admins, title: "Accounts"});
-	  }).catch(error => console.log('Error getting all admin: ', error));
+		res.redirect('getAllAdmins');
 	}
 });
 

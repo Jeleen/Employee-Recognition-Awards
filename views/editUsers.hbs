@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link href="../starter-template.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Employee Recognition Awards System</a>
+        <button aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/adminProfile">My Profile <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/getAllAdmins">Accounts <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/businessIntelligence">Business Intelligence</a>
+                </li>
+            </ul>
+        </div>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="sidebar">
+        <h3 class="headingA">Accounts</h3>
+        <a href="/getAllAdmins" class="nav-link">Admins</a>
+        <a href="/getAllUsers" class="nav-link active">Users</a>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <p></p><br />
+                <form method="post" action="/editUsers">
+                    <div class="table-responsive-sm">
+                        <h4 id="addTitle">Edit User</h4><p></p>
+                        <table class="table table-sm">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <Th>Name</Th>
+                                    <th>Email</th>
+                                    <th>Region</th>
+                                    <th>Last Login</th>
+                                    <th>Login Attempts</th>
+                                    <th>Created</th>
+                                    <th>Creator ID</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{user.id}}<input class="form-control" type="hidden" name="id" id="id" value="{{user.id}}"></td>
+                                    <td><input type="text" class="form-control" name="name" id="name" value="{{user.name}}"></td>
+                                    <td><input type="text" class="form-control" name="email" id="email" value="{{user.email}}"></td>
+                                    <td>{{user.region}}</td>
+                                    <td>{{convertDate user.last_login}}</td>
+                                    <td>{{user.login_attempts}}</td>
+                                    <td>{{convertDate user.creation_time}}</td>
+                                    <td>{{user.creator_id}}</td>
+                                    <td>
+                                        <input class="form-control" id="Save" type="submit" name="Save" value="Save">
+                                        <input class="form-control" id="Cancel" type="submit" name="Cancel" value="Cancel">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
+

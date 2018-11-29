@@ -6,7 +6,7 @@ var router = express.Router();
 ***************************************************/
 router.get('/', function(req, res, next) {
 appRepo.getAllUsers().then((users) => {
-	res.render('accountsMain',  {users: users, title: "Accounts" });
+	res.render('getAllUsers',  {users: users});
   }).catch(error => console.log('Error getting all admin: ', error));
 });
 

@@ -20,7 +20,7 @@ var countries = ["United States","Afghanistan","Albania","Algeria","Andorra","An
 * Route for addUser main page
 **************************************/
 router.get('/', function(req, res, next) {
-	res.render('addUser',  { countries: countries, title: "Accounts" });
+	res.render('addUser',  { countries});
 });
 
 /**************************************
@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 	if(req.body.cancel == "cancel"){
 		appRepo.getAllUsers().then((users) => {
-			res.render('accountsMain',  {users: users, title: "Accounts"});
+			res.render('getAllUsers');
 	  }).catch(error => console.log('Error getting all admin: ', error));
 	}
 	//adds new user with default password, returns to main user listing
@@ -38,9 +38,7 @@ router.post('/', function(req, res, next) {
 		appRepo.createUser(req.body.name, req.body.email, "12345", req.body.region, req.session.loggedInId )
 			.then((data) => console.log('Succesfully created user'))
 		.catch((error) => console.log('Error creating user', error));
-		appRepo.getAllUsers().then((users) => {
-			res.render('accountsMain',  {users: users, title: "Accounts"});
-	  }).catch(error => console.log('Error getting all admin: ', error));
+			res.redirect('getAllUsers');
 	}
 });
 
