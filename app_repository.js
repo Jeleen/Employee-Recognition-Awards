@@ -47,7 +47,8 @@ class AppRepository {
   getAdminByName(name) {
     return this.dao.doGet(`SELECT * FROM admins WHERE name = ?`, [name]);
   }
- getAdminByEmail(email) {
+
+  getAdminByEmail(email) {
     return this.dao.doGet(`SELECT * FROM admins WHERE email = ?`, [email]);
   }
   getUserById(id) {

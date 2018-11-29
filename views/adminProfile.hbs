@@ -25,39 +25,68 @@
          <li class="nav-item" >
            <a class="nav-link" href="/businessIntelligence">Business Intelligence</a>
          </li>
-           
        </ul>
      </div>
-               <a href="/logout" >Logout</a>
+    <a href="/logout" >Logout</a>
   </nav>
    <div class="sidebar">
        <h3 class="headingA">My Profile</h3>
         <form action="/adminProfile" method="post">
          {{#if edit}}
-         <a class="active">
-         <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
-        </a>
+           <a class="active">
+              <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
+           </a>
+           <a >
+	      <button type="submit" name="changePassword" value="changePassword" class="btn-link">Change Password</button>
+           </a>
         {{else}}
         {{#if admin}}
-	         <a >
-	                 <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
-	        </a>
+	   <a>
+	      <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
+	   </a>
+           <a>
+	      <button type="submit" name="changePassword" value="changePassword" class="btn-link">Change Password</button>
+           </a>
            {{/if}}
-         {{/if}}
-         {{#if adminMain}}
-         <a >
-                 <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
-        </a>
-           {{/if}}
-         </form>
-       </div>
-     <div class="container-fluid" >
-        <div class="row">
-
-    
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"> 
-     	 	       
-	 <div class="table-responsive-sm">
+        {{/if}}
+       
+        {{#if adminMain}}
+           <a >
+              <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
+           </a>
+           <a >
+	      <button type="submit" name="changePassword" value="changePassword" class="btn-link">Change Password</button>
+           </a>
+        {{/if}}
+        {{#if changePassword}}
+	   <a>
+	      <button type="submit" name="edit" value="edit" class="btn-link">Edit</button>
+	   </a>
+	   <a class="active">
+	      <button type="submit" name="changePassword" value="changePassword" class="btn-link">Change Password</button>
+	   </a>
+        {{/if}}
+       </form>
+  </div>
+  <div class="container-fluid" >
+    <div class="row">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">  
+        <p></p> 
+       
+	{{#if changePassword}}
+   	 <form action="/adminProfile/password" method="post">
+   	    <div class="form-group">
+   	      <label>Old Password</label>
+   	      <input class="form-control" type="password" class="form-control" name="old">
+   	      <br>
+   	      <label>New Password</label>
+   	      <input class="form-control" type="password" class="form-control" name="new">
+   	      <br>
+   	      <button type="submit" id="filter">Change Password</button>
+   	    </div>
+   	    </form>
+	{{else}}
+	<div class="table-responsive-sm">
                <table class="table table-sm">
 	 	       <thead class="thead-light"> 
 	 	       <tr>
@@ -93,7 +122,6 @@
                             <td>{{admin.login_attempts}}</td>
                             <td>{{convertDate admin.creation_time}}</td>
                             <td><input class="form-control" id="Save" type="submit" name="Save" value="Save" > 
-                           
 
                           {{else}}
                           {{#if admin}}
@@ -106,12 +134,15 @@
                           </form>
                           </div>
 			{{/if}}
-			{{/if}}   </tr>
-
+			{{/if}}  
+		      </tr>
                    </tbody>
-              </table>
+                </table>
+                {{/if}}
               </div>
-              
+             {{#if info}}
+	        <a id="info">{{{info}}}</a>
+             {{/if}}
           </main>
         </div>
       </div>

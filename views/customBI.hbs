@@ -108,9 +108,9 @@
 	{{/if}}
 	
  	{{#if results}}
- 	<hr></hr>
+ 	<hr>
  	 <form method="post" action="/customBI">
-           <input type="hidden" name="csvReport1" id="csvReport1" value="{{{csvReport1}}}" />
+            <input type="hidden" name="csvReport1" id="csvReport1" value="{{{csvReport1}}}" />
             <button type="submit" class="btn btn-sm btn-outline-secondary" id="filter" name="filter">Export CSV file</button>
          </form>
          <div class="table-responsive-sm">
@@ -119,7 +119,7 @@
   	     <h4>{{{resultsTitle}}}</h4>
   	     <tr>
   	       {{#each resultsHeaders}}
-	       	<th>{{@key}}</th>
+	       	    <th>{{@key}}</th>
 	       {{/each}}
   	     </tr>
   	    </thead>
@@ -127,7 +127,7 @@
   	       {{#each results}}
   		 <tr>
   	         {{#each this}}
-	           <td>{{this}}</td>
+	            <td>{{this}}</td>
 	 	 {{/each}}
   		 </tr>
   	       {{/each}}

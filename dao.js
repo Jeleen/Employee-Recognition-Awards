@@ -4,7 +4,7 @@ class AwardDao {
   constructor(filePath) {
     this.db = new sqlite3.Database(filePath, function(error) {
       if (error) {
-        console.log('Error connectionto database', error);
+        console.log('Error connecting to database', error);
       } else {
         console.log('Successfully connected to database')
       }

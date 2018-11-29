@@ -12,8 +12,26 @@ router.get('/', function(req, res, next){
 });
 
 /**************************************
-* Route for adminProfile edit, returns
-* to adminProfile
+* Route for admin to change password
+**************************************/
+router.post('/password', function(req, res, next) {
+  var existing = req.body.old;
+  var newPassword = req.body.new;
+  appRepo.getAdminById(req.session.loggedInId)
+    .then(admin => {
+      if (admin.password == existing) {
+        appRepo.editAdminPassword(req.session.loggedInId, newPassword)
+          .then(() => res.render('adminProfile', { admin: admin, info: "Password successfully updated" }));
+      } else {
+        res.render('adminProfile', { admin: admin, info: "Incorrect password" });
+      }
+    })
+    .catch((error) => console.log(error));
+});
+
+/**************************************
+* Route for adminProfile edit
+* change
 **************************************/
 router.post('/', function(req, res, next){
 	if(req.body['edit'] == "edit"){
@@ -21,7 +39,9 @@ router.post('/', function(req, res, next){
 		res.render('adminProfile',  {admin: admin, edit: "edit", timeC: convertDate(admin.creation_time), timeLL: convertDate(admin.last_login), title: "My Profile" });
 	    }).catch(error => console.log('Error getting admin: ', error));
     }
-	else{
+	else if(req.body['changePassword'] == "changePassword"){
+		res.render('adminProfile',  { changePassword: "cp", title: "My Profile" });
+    }else{
 		appRepo.updateAdminEmail(req.body.email, req.body.id)
 	  		.then((data) => console.log('Succesfully updated admin email'))
 		.catch((error) => console.log('Error updating admin email', error));
