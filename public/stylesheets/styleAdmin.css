@@ -42,7 +42,7 @@ body {
 #infoCustom{
     color: #4286f4;
     display: inline;
-    float: right;
+    float: left;
     margin-right: 50%;
 }
 #addAdmin {

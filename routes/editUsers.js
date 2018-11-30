@@ -23,7 +23,7 @@ router.post('/', function (req, res, next) {
         appRepo.updateUserNameAndEmail(req.body.id, req.body.name, req.body.email).then((user) => {
         }).catch((error) => console.log('Error updating user', error));
         appRepo.getAllUsers().then((users) => {
-            res.render('getAllUsers', { info: "User " + req.body.id + " updated." });
+            res.render('getAllUsers', { users, info: "User ID: " + req.body.id + " updated." });
         }).catch((error) => console.log('Error getting all users', error));
     }
     else {
