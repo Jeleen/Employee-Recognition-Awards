@@ -56,7 +56,6 @@ function transportWrapper(obj, id){
     // create reusable object that is able to send mail
     let transporter = nodemailer.createTransport({
       //hostname or IP addr to connect to
-
         service: 'gmail',
         host: 'smtp.gmail.com',
         port: 587,
@@ -82,8 +81,6 @@ function transportWrapper(obj, id){
   attachments: [{
 		filename: id+'.pdf',
 		path: absolutePath+'award/'+id+'.pdf'},
-    //cid: <same as cid value in html
-//  {//filename, path, cid
 {
 		filename: 'winner.png',
 		path: absolutePath+'award/data/image/'+'winner.png',

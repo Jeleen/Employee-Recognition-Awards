@@ -11,7 +11,6 @@ const AppRepository = require('../app_repository');
 const createCSV = require('../award/createCSV.js');
 const moment =require('../node_modules/moment')
 
-//create a global constant:
 
 /*
 * awardObjec(id); id is the award id; the output is an object with the necesary award info
@@ -52,7 +51,7 @@ function getCreator(obj){
  
       obj.creator_sig=sig_path
       array.push(obj)
-    //console.log(array);
+
     createCSV(array);
   })
 
@@ -60,4 +59,4 @@ function getCreator(obj){
 
 
 module.exports.awardObject = awardObject;
-//module.exports.mailAwardObj=mailAwardObj;
+
