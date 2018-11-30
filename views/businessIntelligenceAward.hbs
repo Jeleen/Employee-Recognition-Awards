@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="../stylesheets/styleAdmin.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Employee Recognition Awards System</a>
+        <button aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminProfile">My Profile <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/getAllAdmins">Accounts <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/businessIntelligenceAdmin">Business Intelligence</a>
+                </li>
+            </ul>
+        </div>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="sidebar">
+        <h3 class="headingA">Business Intelligence</h3>
+        <a href="/businessIntelligenceAdmin" class="nav-link">Admins</a>
+        <a href="/businessIntelligenceUser" class="nav-link">Users</a>
+        <a href="/businessIntelligenceAward" class="nav-link active">Awards</a>
+        <a href="/customBI" class="nav-link">Custom Reports</a>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <p></p><h4 id="addTitle">Awards</h4>
+                <div class="row1">
+                    <div class="card border-light column1">
+                        <h5 class="chartHeader">Awards Created per Day</h5>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <div class="card border-light column2">
+                        <h5 class="chartHeader">Award Type</h5>
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+                <hr>
+               
+                <form method="post" action="/exportCSV">
+                    <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+                    <button type="submit" class="btn btn-sm btn-outline-secondary" id="filter" name="filter" ">Export CSV file</button>
+                </form>
+                <h4 id="addTitle">Awards</h4>
+                <div class="table-responsive-sm">
+                    <table class="table table-sm table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Recipient Name</th>
+                                <th>Recipient Email</th>
+                                <th>Creation Time</th>
+                                <th>Award Type</th>
+                                <th>Creator ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each awards}}
+                            <tr>
+                                <td>{{this.id}}</td>
+                                <td>{{this.recipient_name}}</td>
+                                <td>{{this.recipient_email}}</td>
+                                <td>{{convertDate this.creation_time}}</td>
+                                <td>{{this.award_type}}</td>
+                                <td>{{this.creator_id}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+	     var ctx = document.getElementById("myChart").getContext('2d');
+	     var creationChart = new Array();
+	     creationChart.push([]);
+	     var da = {{{myJSONcreationTimes}}};
+	     creationChart.push([]);
+	     creationChart.push([]);
+	     creationChart.push([]);
+	     if(da.length == 1){
+		     creationChart[0][0] = 0;
+		     creationChart[1][0] = '';
+		     creationChart[0][1] = da[0][0];
+			 creationChart[1][1] = da[0][1];
+			 creationChart[0][2] = 0;
+			 creationChart[1][2] = '';
+	     }
+	     else{
+  	    	for(var i = 0; i < da.length; i ++){
+	 			creationChart[0][i] = da[i][0];
+				creationChart[1][i] = da[i][1];
+				creationChart[2][i] = 'none';
+				creationChart[3][i] = 'blue';
+	    	}
+	  	}
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: creationChart[0],
+                datasets: [{
+                    label: '# created',
+                    data: creationChart[1],
+                    backgroundColor: 'rgba(0, 255, 255, 0.5)',
+                    borderColor: 'rgba(0, 255, 255)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function (value) { if (Number.isInteger(value)) { return value; } },
+                            stepSize: 1
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            min: creationChart[0][0],
+                            autoSkip: false
+                        }
+                    }]
+                }
+            }
+        });
+
+			var awardTypes = new Array();
+            awardTypes.push([]);
+            awardTypes.push([]);
+			var dag = {{{myJSONawardTypes}}};
+			for(var i = 0; i < dag.length; i++){
+                awardTypes[0][i] = dag[i][0];
+                awardTypes[1][i] = dag[i][1];
+			}
+			new Chart(document.getElementById("pie-chart"), {
+			   type: 'pie',
+			   data: {
+                   labels: awardTypes[0],
+				 datasets: [
+				   {
+					 label: "Population (millions)",
+					 backgroundColor: ["blue","orange","green"],
+                         data: awardTypes[1]
+				   }
+				 ]
+			   },
+			   options: {
+
+			   }
+		   });
+   		 
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+    </script>
+</body>
+</html>

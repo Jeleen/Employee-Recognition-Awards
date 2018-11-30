@@ -28,9 +28,7 @@ router.get('/', function(req, res, next) {
 **************************************/
 router.post('/', function(req, res, next) {
 	if(req.body.cancel == "cancel"){
-		appRepo.getAllUsers().then((users) => {
-			res.render('getAllUsers');
-	  }).catch(error => console.log('Error getting all admin: ', error));
+			res.redirect('getAllUsers');
 	}
 	//adds new user with default password, returns to main user listing
 	else{
@@ -38,8 +36,9 @@ router.post('/', function(req, res, next) {
 		appRepo.createUser(req.body.name, req.body.email, "12345", req.body.region, req.session.loggedInId )
 			.then((data) => console.log('Succesfully created user'))
 		.catch((error) => console.log('Error creating user', error));
-			res.redirect('getAllUsers');
-	}
+        appRepo.getAllUsers().then((users) => {
+            res.render('getAllUsers', {users, info: "User " + req.body.name + " added."});
+        }).catch(error => console.log('Error getting all users: ', error));	}
 });
 
 module.exports = router;

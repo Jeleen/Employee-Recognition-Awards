@@ -100,11 +100,11 @@ class AppRepository {
   }
 
   getAllUsersMinusPasswords() {
-    return this.dao.doGetAll(`SELECT id, name, email, region, last_login, login_attempts, creation_time FROM users`);
+    return this.dao.doGetAll(`SELECT id, name, email, region, last_login, login_attempts, creation_time, creator_id FROM users`);
   }
 
   getAllAdminsMinusPasswords() {
-    return this.dao.doGetAll(`SELECT id, name, email, last_login, login_attempts, creation_time FROM admins`);
+      return this.dao.doGetAll(`SELECT id, name, email, last_login, login_attempts, creation_time, creator_id FROM admins`);
   }
 
   getAllAdminsCreatedBy(id) {

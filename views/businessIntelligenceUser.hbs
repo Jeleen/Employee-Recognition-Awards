@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="../stylesheets/styleAdmin.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+
+    <script type="text/javascript">
+	
+		google.charts.load('current', {
+	 	    'packages':['geochart'],
+	        'mapsApiKey': 'AIzaSyBt7AESoiXmZcraNt3p19ZyWQCBLNHfyq0'
+	    });
+	    google.charts.setOnLoadCallback(drawRegionsMap);
+
+        var gg = new Array();
+        gg.push([]);
+	    gg[0][0] = "Country";
+        gg[0][1] = "Popularity";
+	    var dag = {{{myJSONregions}}};
+	  	for(var i = 0; i < dag.length; i++){
+	        gg.push([]);
+	        gg[i + 1][0] = dag[i][0];
+	        gg[i + 1][1] = dag[i][1];
+	   	}
+
+        function drawRegionsMap() {
+	    	var data = google.visualization.arrayToDataTable(gg);
+	        var options = {
+				colorAxis: {colors: ['green', 'orange']}
+	        };
+	        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+	        chart.draw(data, options);
+	    }
+    </script>
+</head>
+
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Employee Recognition Awards System</a>
+        <button aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminProfile">My Profile <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/getAllAdmins">Accounts <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/businessIntelligenceAdmin">Business Intelligence</a>
+                </li>
+            </ul>
+        </div>
+        <a href="/logout">Logout</a>
+    </nav>
+
+    <div class="sidebar">
+        <h3 class="headingA">Business Intelligence</h3>
+        <a href="/businessIntelligenceAdmin" class="nav-link ">Admins</a>
+        <a href="/businessIntelligenceUser" class="nav-link active">Users</a>
+        <a href="/businessIntelligenceAward" class="nav-link ">Awards</a>
+        <a href="/customBI" class="nav-link ">Custom Reports</a>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <p></p>	 	       
+                <h4 id="addTitle">Users</h4>
+                <div class="row1">
+
+                    <div class="card border-light column1">
+                        <h5 class="chartHeader">Accounts Created Per Day</h5>
+                        <canvas id="myChart" class="charty"></canvas>
+                    </div>
+
+                    <div class="card border-light column2">
+                        <h5 class="chartHeader">Login Attempts</h5>
+                        <canvas id="myChartLogins" class="charty"></canvas>
+                    </div>
+
+                    <div class="card border-light column1">
+                        <h5 class="chartHeader">Users By Region</h5>
+                        <canvas id="pie-chart-2" class="charty"></canvas>
+                    </div>
+                    <div class="card border-light column2">
+                        <h5 class="chartHeader">Map of Users</h5>
+                        <div id="regions_div"></div>
+                    </div>
+                 </div>
+                <hr>
+                <form method="post" action="/exportCSV">
+                    <input type="hidden" name="thisReport" id="thisReport" value="{{{thisReport}}}" />
+                    <button type="submit" class="btn btn-sm btn-outline-secondary" id="filter" name="filter">Export CSV file</button>
+                </form>
+                <h4 id="addTitle">User Accounts</h4>
+                <div class="table-responsive-sm">
+                    <table class="table table-sm table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Region</th>
+                                <th>Last Login</th>
+                                <th>Login Attempts</th>
+                                <th>Creation Time</th>
+                                <th>Creator ID</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each users}}
+                            <tr>
+                                <td>{{this.id}}</td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.email}}</td>
+                                <td>{{this.region}}</td>
+                                <td>{{convertDate this.last_login}}</td>
+                                <td>{{this.login_attempts}}</td>
+                                <td>{{convertDate this.creation_time}}</td>
+                                <td>{{this.creator_id}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+             
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+      	var regA = new Array();
+       	regA.push([]);
+       	regA.push([]);
+       	var regJ = {{{myJSONregions}}};
+
+      	for(var i = 0; i < regJ.length; i++){
+      	 	regA[0][i] = regJ[i][0];
+      	    regA[1][i] = regJ[i][1];
+    	}
+     	new Chart(document.getElementById("pie-chart-2"), {
+     	    type: 'pie',
+     	    data: {
+     	      labels: regA[0],
+     	      datasets: [
+     	        {
+     	          label: "Country",
+     	          backgroundColor: ['#FFF700', '#7FFFD4', '#CD7F32', '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'],
+
+     	          data: regA[1]
+     	        }
+     	      ]
+     	    },
+     	    options: {
+
+     	    }
+    	});
+      
+
+  	  var ctxL = document.getElementById("myChartLogins").getContext('2d');
+	  var glog = new Array();
+  	  glog.push([]);
+  	  glog.push([]);
+  	  glog.push([]);
+  	  glog.push([]);
+
+  	  var logs = {{{myJSONlogins}}};
+  	  for(var i = 0; i < logs.length; i ++){
+     		glog[0][i] = 'ID:' + logs[i][0];
+     		glog[1][i] = logs[i][1];
+     		glog[2][i] = 'rgb(0, 205, 0)';
+    	        glog[3][i] = 'rgb(0, 205, 0)';
+  	  }
+   	  var myChartL = new Chart(ctxL, {
+            type: 'bar',
+            data: {
+              labels: glog[0],
+              datasets: [{
+                 label: '# login attempts per ID',
+                 data: glog[1],
+                 backgroundColor: glog[2],
+                 borderColor: glog[3],
+                 borderWidth: 1
+              }]
+             },
+             options: {
+               scales: {
+                 yAxes: [{
+                    ticks: {
+   			beginAtZero: true,
+                           callback: function (value) { if (Number.isInteger(value)) { return value; } },
+                           stepSize: 5                  }
+                 }],
+                 xAxes: [{
+                     ticks: {
+   	                min: glog[0][0],
+   	                autoSkip: false
+                    }
+                 }]
+                }
+              }
+           });
+      
+
+	     var ctx = document.getElementById("myChart").getContext('2d');
+	     var g = new Array();
+	     g.push([]);
+	     var da = {{{myJSONcreationTimes}}};
+	     g.push([]);
+	     g.push([]);
+	     g.push([]);
+	     if(da.length == 1){
+		     g[0][0] = 0;
+		     g[1][0] = '';
+		     g[0][1] = da[0][0];
+			 g[1][1] = da[0][1];
+			 g[0][2] = 0;
+			 g[1][2] = '';
+	     }
+	     else{
+  	    	for(var i = 0; i < da.length; i ++){
+	 			g[0][i] = da[i][0];
+				g[1][i] = da[i][1];
+				g[2][i] = 'none';
+				g[3][i] = 'blue';
+	    	}
+	  	}
+
+	  	var myChart = new Chart(ctx, {
+	  	    type: 'line',
+	  	    data: {
+			  labels: g[0],
+			  datasets: [{
+			      label: '# created',
+			      data: g[1],
+			      backgroundColor: 'rgba(0, 255, 255, 0.5)',
+			      borderColor: 'rgba(0, 255, 255)',
+			      borderWidth: 1
+			  }]
+	  	    },
+	  	    options: {
+	  	    	  scales: {
+			      yAxes: [{
+					  ticks: {
+						beginAtZero: true,
+						callback: function (value) { if (Number.isInteger(value)) { return value; } },
+						stepSize: 1                  }
+				      }],
+			      xAxes: [{
+				  ticks: {
+					min: g[0][0],
+					autoSkip: false
+				 }
+			      }]
+			  }
+	  	    }
+	  	});
+
+		
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+    </script>
+</body>
+</html>

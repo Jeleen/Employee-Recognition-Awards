@@ -18,9 +18,9 @@ router.post('/', function (req, res, next) {
         .then(admin => {
             if (admin.password == existing) {
                 appRepo.editAdminPassword(req.session.loggedInId, newPassword)
-                    .then(() => res.render('adminProfile', { admin: admin, info: "Password successfully updated" }));
+                    .then(() => res.render('adminProfile', { admin: admin, info: "Password updated." }));
             } else {
-                res.render('adminProfile', { admin, info: "Incorrect password" });
+                res.render('adminProfile', { admin, info: "Incorrect password." });
             }
         })
         .catch((error) => console.log(error));

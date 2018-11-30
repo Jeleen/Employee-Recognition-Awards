@@ -10,9 +10,8 @@ router.post('/', function (req, res, next) {
         appRepo.removeUser(req.body.id)
             .then((data) => console.log('Succesfully removed user'))
             .catch((error) => console.log('Error removing user', error));
-        var info = "Deleted user ID = " + req.body.id;
         appRepo.getAllUsers().then((users) => {
-            res.render('getAllUsers', { info, users });
+            res.render('getAllUsers', { info: "User " + req.body.id + " deleted.", users });
         }).catch((error) => console.log('Error getting all users', error));
     }
     else if (req.body['Edit'] == "Edit") {
@@ -23,9 +22,10 @@ router.post('/', function (req, res, next) {
     else if (req.body['Save'] == "Save") {
         appRepo.updateUserNameAndEmail(req.body.id, req.body.name, req.body.email).then((user) => {
         }).catch((error) => console.log('Error updating user', error));
-        res.redirect('getAllUsers');
+        appRepo.getAllUsers().then((users) => {
+            res.render('getAllUsers', { info: "User " + req.body.id + " updated." });
+        }).catch((error) => console.log('Error getting all users', error));
     }
-
     else {
         res.redirect('getAllUsers');
     }

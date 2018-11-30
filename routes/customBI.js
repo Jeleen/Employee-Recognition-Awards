@@ -35,7 +35,7 @@ router.post('/', function(req, res, next) {
       /*************************************
         one attribute specified in 1st row
         *************************************/
-        if ((req.body['searchType1b'] != "Select...") && (req.body['searchType2b'] == "Select...") && (req.body['searchType1c'] != "" )) {
+        if ((req.body['searchType1b'] != "Select...") && (req.body['searchType2b'] == "Select...") && (req.body['searchType1c'] != " " )) {
             var search_string = "SELECT * FROM " + table1 + " WHERE " + req.body['searchType1b'] + " = " + table1c;
             //Get report for 1st table and attribute
             appRepo.getAllThreeAndOneA(search_string).then((results) => {
@@ -96,7 +96,7 @@ router.post('/', function(req, res, next) {
         /*************************************
          two attributes specified
         *************************************/
-        else if ((req.body['searchType1b'] != "Select...") && (req.body['searchType2b'] != "Select...") && (req.body['searchType1c'] != "" ) && (req.body['searchType2c'] != "" )) {
+        else if ((req.body['searchType1b'] != "Select...") && (req.body['searchType2b'] != "Select...") && (req.body['searchType1c'] != " " ) && (req.body['searchType2c'] != " " )) {
             //check for and/or and apply to sql search string
             if (req.body['andOr'] == "or") {
                 var search_string = "SELECT * FROM " + table1 + " WHERE " + req.body['searchType1b'] +

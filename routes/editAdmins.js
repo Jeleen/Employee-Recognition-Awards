@@ -14,7 +14,6 @@ router.post('/', function (req, res, next) {
         }
         else {
             var info = "Cannot delete logged in Admin account";
-
         }
         appRepo.getAllAdmins().then((admins) => {
             res.render('getAllAdmins', { info, admins });
@@ -28,8 +27,9 @@ router.post('/', function (req, res, next) {
 	 else if(req.body['Save'] == "Save"){
 	 		appRepo.updateAdminNameAndEmail(req.body.id, req.body.name, req.body.email).then((admin) => {
 	    	 }).catch((error) => console.log('Error updating admin', error));
-				res.redirect('getAllAdmins');
-	 }
+            appRepo.getAllAdmins().then((admins) => {
+                res.render('getAllAdmins', { info: "Admin " + req.body.id + " updated.", admins });
+            }).catch((error) => console.log('Error getting all admins', error));	 }
 
      else{
 			res.redirect('getAllAdmins');

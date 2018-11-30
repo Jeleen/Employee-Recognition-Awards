@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\bin",
+    "\\public",
+    "\\public\\stylesheets"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\app_repository.js",
   "PreviewInSolutionExplorer": false
 }
