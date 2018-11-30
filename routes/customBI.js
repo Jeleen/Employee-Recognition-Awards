@@ -24,7 +24,7 @@ router.post('/', function(req, res, next) {
     var table1c = JSON.stringify(req.body['searchType1c']);
     var table2c = JSON.stringify(req.body['searchType2c']);
     //Check for exporting csv report
-    if (req.body['csvReport1'] == "csvReport1" || req.body['csvReport2'] == "csvReport2") {
+    if (req.body['csvReport1'] == "csvReport1") {
         checkExportCSV(res, req.body);
     }
 
@@ -165,6 +165,11 @@ router.post('/', function(req, res, next) {
                 });
             }).catch(error => console.log('Error getting all admins: ', error));
         }
+        else {
+	        res.render('customBI', {
+	            noData: "Error processing request\n" + createNoDataMessage(req.body)
+	        });
+    	}
     }
 
     /************************************

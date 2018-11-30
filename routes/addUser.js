@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+
+/*Countries list for user region*/
 var countries = ["United States","Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas"
 		,"Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands"
 		,"Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica"
@@ -27,7 +29,7 @@ router.get('/', function(req, res, next) {
 * Route for adding user
 **************************************/
 router.post('/', function(req, res, next) {
-	if(req.body.cancel == "cancel"){
+	if(req.body['Cancel'] == "Cancel"){
 			res.redirect('getAllUsers');
 	}
 	//adds new user with default password, returns to main user listing

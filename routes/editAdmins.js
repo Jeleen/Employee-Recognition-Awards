@@ -10,10 +10,10 @@ router.post('/', function (req, res, next) {
             appRepo.removeAdmin(req.body.id)
                .then((data) => console.log('Succesfully removed admin'))
                 .catch((error) => console.log('Error removing admin', error));
-            var info = "Deleted Admin ID = " + req.body.id;
+            var info = "Deleted Admin ID: " + req.body.id;
         }
         else {
-            var info = "Cannot delete logged in Admin account";
+            var info = "Cannot delete your own account.";
         }
         appRepo.getAllAdmins().then((admins) => {
             res.render('getAllAdmins', { info, admins });
@@ -28,7 +28,7 @@ router.post('/', function (req, res, next) {
 	 		appRepo.updateAdminNameAndEmail(req.body.id, req.body.name, req.body.email).then((admin) => {
 	    	 }).catch((error) => console.log('Error updating admin', error));
             appRepo.getAllAdmins().then((admins) => {
-                res.render('getAllAdmins', { info: "Admin " + req.body.id + " updated.", admins });
+                res.render('getAllAdmins', { info: "Admin ID: " + req.body.id + " updated.", admins });
             }).catch((error) => console.log('Error getting all admins', error));	 }
 
      else{

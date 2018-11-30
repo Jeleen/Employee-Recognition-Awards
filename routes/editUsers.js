@@ -11,7 +11,7 @@ router.post('/', function (req, res, next) {
             .then((data) => console.log('Succesfully removed user'))
             .catch((error) => console.log('Error removing user', error));
         appRepo.getAllUsers().then((users) => {
-            res.render('getAllUsers', { info: "User " + req.body.id + " deleted.", users });
+            res.render('getAllUsers', { users, info: "User ID: " + req.body.id + " deleted." });
         }).catch((error) => console.log('Error getting all users', error));
     }
     else if (req.body['Edit'] == "Edit") {
